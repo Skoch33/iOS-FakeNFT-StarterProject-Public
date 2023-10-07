@@ -89,7 +89,7 @@ final class CatalogViewController: UIViewController {
 
 extension CatalogViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        55
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -100,7 +100,8 @@ extension CatalogViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CatalogCell.identifier,
                                                        for: indexPath) as? CatalogCell
         else { return UITableViewCell() }
-        cell.config()
+        cell.config(urlString: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/Beige.png",
+                    labelString: "Peach (11)")
         return cell
     }
 

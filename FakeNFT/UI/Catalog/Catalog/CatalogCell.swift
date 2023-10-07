@@ -1,4 +1,7 @@
 import UIKit
+import Kingfisher
+
+private let nulPhotoImage = UIImage(named: "Catalog.nulImage") ?? UIImage()
 
 final class CatalogCell: UITableViewCell {
     static let identifier = "CatalogCell"
@@ -51,10 +54,16 @@ final class CatalogCell: UITableViewCell {
         ])
     }
 
-    func config() {
+    func config(urlString: String, labelString: String) {
         self.selectionStyle = .none
-        collectionImage.image = UIImage(named: "MocImage")
-        nameLabel.text = "Peach (11)"
+
+        nameLabel.text = labelString
+
+        guard
+            let url = URL(string: urlString)
+        else { return }
+        collectionImage.kf.indicatorType = .activity
+        collectionImage.kf.setImage(with: url, placeholder: nulPhotoImage)
     }
 
 }
