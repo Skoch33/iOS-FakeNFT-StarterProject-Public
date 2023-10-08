@@ -32,7 +32,17 @@ final class CatalogViewController: UIViewController {
         setupNavigationBar()
         setupTableView()
 
-        catalogViewModel.load()
+        catalogViewModel.loadCollection()
+
+        catalogViewModel.$collections.bind { [weak self] _ in
+            guard let self else { return }
+            self.tableView.reloadData()
+        }
+
+        catalogViewModel.$errorString.bind { [weak self] _ in
+            guard let self else { return }
+            showErrorAlert(catalogViewModel.errorString)
+        }
     }
 
     private func setupNavigationBar() {
@@ -62,6 +72,7 @@ final class CatalogViewController: UIViewController {
                 style: .default
             ) { [weak self] _ in
                 self?.catalogViewModel.sort(sortingMode)
+                self?.tableView.reloadData()
             }
             alertController.addAction(sortingAction)
         }
@@ -85,11 +96,27 @@ final class CatalogViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
     }
+
+    private func showErrorAlert(_ alertString: String) {
+        let alert = UIAlertController(
+            title: nil,
+            message: alertString,
+            preferredStyle: .alert
+        )
+        let action = UIAlertAction(title: NSLocalizedString("Catalog.ErrorAlertButton",
+                                                            comment: ""),
+                                   style: .cancel) { [weak self] _ in
+            guard let self else { return }
+            self.catalogViewModel.loadCollection()
+        }
+        alert.addAction(action)
+        self.present(alert, animated: true)
+    }
 }
 
 extension CatalogViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        55
+        catalogViewModel.collections.count
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -100,8 +127,7 @@ extension CatalogViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CatalogCell.identifier,
                                                        for: indexPath) as? CatalogCell
         else { return UITableViewCell() }
-        cell.config(urlString: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/Beige.png",
-                    labelString: "Peach (11)")
+        cell.config(catalogViewModel.collections[indexPath.row])
         return cell
     }
 

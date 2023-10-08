@@ -37,6 +37,8 @@
 		715D0F3B2AD178FB00300497 /* CatalogSortingModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D0F3A2AD178FB00300497 /* CatalogSortingModes.swift */; };
 		715D0F3D2AD17D7100300497 /* CatalogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D0F3C2AD17D7100300497 /* CatalogCell.swift */; };
 		715D0F3F2AD197F600300497 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D0F3E2AD197F600300497 /* CollectionViewController.swift */; };
+		715D0F432AD28AEC00300497 /* CollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D0F422AD28AEC00300497 /* CollectionModel.swift */; };
+		715D0F472AD2A5D900300497 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D0F462AD2A5D900300497 /* Observable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +92,8 @@
 		715D0F3A2AD178FB00300497 /* CatalogSortingModes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogSortingModes.swift; sourceTree = "<group>"; };
 		715D0F3C2AD17D7100300497 /* CatalogCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogCell.swift; sourceTree = "<group>"; };
 		715D0F3E2AD197F600300497 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		715D0F422AD28AEC00300497 /* CollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionModel.swift; sourceTree = "<group>"; };
+		715D0F462AD2A5D900300497 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +192,7 @@
 		3F6806C629CBBC4E00B4F915 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				715D0F462AD2A5D900300497 /* Observable.swift */,
 				3FC8C38F29D245250081F015 /* Requests */,
 			);
 			path = Services;
@@ -241,6 +246,7 @@
 		3F6806D829CC979D00B4F915 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				715D0F422AD28AEC00300497 /* CollectionModel.swift */,
 				3F6806CA29CBBCC700B4F915 /* ExampleNetworkModel.swift */,
 			);
 			path = Network;
@@ -394,7 +400,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					3F68069229CBBAF100B4F915 = {
 						CreatedOnToolsVersion = 14.2;
@@ -416,6 +422,7 @@
 			knownRegions = (
 				en,
 				ru,
+				Base,
 			);
 			mainGroup = 3F68068A29CBBAF100B4F915;
 			packageReferences = (
@@ -493,9 +500,11 @@
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
+				715D0F432AD28AEC00300497 /* CollectionModel.swift in Sources */,
 				715D0F3B2AD178FB00300497 /* CatalogSortingModes.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				715D0F272AD1570000300497 /* ProfileViewController.swift in Sources */,
+				715D0F472AD2A5D900300497 /* Observable.swift in Sources */,
 				715D0F242AD1570000300497 /* StatisticsViewController.swift in Sources */,
 				715D0F3D2AD17D7100300497 /* CatalogCell.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,

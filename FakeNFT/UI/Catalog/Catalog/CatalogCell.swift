@@ -54,13 +54,13 @@ final class CatalogCell: UITableViewCell {
         ])
     }
 
-    func config(urlString: String, labelString: String) {
+    func config(_ collection: CollectionModel) {
         self.selectionStyle = .none
 
-        nameLabel.text = labelString
+        nameLabel.text = "\(collection.name) (\(collection.nfts.count))"
 
         guard
-            let url = URL(string: urlString)
+            let url = URL(string: collection.cover)
         else { return }
         collectionImage.kf.indicatorType = .activity
         collectionImage.kf.setImage(with: url, placeholder: nulPhotoImage)

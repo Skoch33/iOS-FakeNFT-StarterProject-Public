@@ -7,3 +7,5 @@
 "Catalog.Sorting.ByName" = "By name";
 "Catalog.Sorting.ByCount" = "By number of NFTs";
 "Catalog.Sorting.Close" = "Close";
+
+"Catalog.ErrorAlertButton" = "Retry";
