@@ -3,3 +3,12 @@
 "TabBarController.Basket" = "Корзина";
 "TabBarController.Statistics" = "Статистика";
 
+"Catalog.Sorting.Title" = "Сортировка";
+"Catalog.Sorting.ByName" = "По названию";
+"Catalog.Sorting.ByCount" = "По количеству NFT";
+"Catalog.Sorting.Close" = "Закрыть";
+
+"Catalog.ErrorAlertButton" = "Повторить";
+
+
+

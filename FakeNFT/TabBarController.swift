@@ -13,7 +13,8 @@ final class TabBarController: UITabBarController {
             tag: 0
         )
 
-        let catalogViewController = CatalogViewController()
+        let catalogViewModel = CatalogViewModel()
+        let catalogViewController = CatalogViewController(catalogViewModel: catalogViewModel)
         let catalogNavigationController = UINavigationController(rootViewController: catalogViewController)
         catalogNavigationController.tabBarItem = UITabBarItem(
             title: NSLocalizedString("TabBarController.Catalog", comment: ""),

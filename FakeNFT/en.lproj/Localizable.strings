@@ -3,3 +3,9 @@
 "TabBarController.Basket" = "Basket";
 "TabBarController.Statistics" = "Statistics";
 
+"Catalog.Sorting.Title" = "Sorting";
+"Catalog.Sorting.ByName" = "By name";
+"Catalog.Sorting.ByCount" = "By number of NFTs";
+"Catalog.Sorting.Close" = "Close";
+
+"Catalog.ErrorAlertButton" = "Retry";

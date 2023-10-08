@@ -5,23 +5,24 @@
 
 # Catalog Flow Decomposition
 
-## Экран Catalogue (est: 390 min; fact: x min).
+## Экран Catalogue (est: 390 min; fact: 370 min).
 
 ### Верстка
-- навигационный бар и кнопка сортировки (est: 20 min; fact: x min).
-- коллекция (est: 30 min; fact: x min).
-- ячейки коллекции: картинка, название, количество NFT (est: 60 min; fact: x min).
-- алерт сортировки (est: 30 min; fact: x min).
+- навигационный бар и кнопка сортировки (est: 20 min; fact: 20 min).
+- коллекция (est: 30 min; fact: 20 min).
+- ячейки коллекции: картинка, название, количество NFT (est: 60 min; fact: 90 min).
+- алерт сортировки (est: 30 min; fact: 10 min).
 
-`Total:` est: 140 min; fact: x min).
+`Total:` est: 140 min; fact: 140 min).
 
 ### Логика
-- загрузка каталога, индикатор загрузки (est: 180 min; fact: x min).
-- сортировка (est: 30 min; fact: x min).
-- сохранение порядка сортировки (est: 30 min; fact: x min).
-- переход на экран коллекции (est: 10 min; fact: x min).
+- загрузка каталога, индикатор загрузки (est: 180 min; fact: 150 min).
+- сортировка (est: 30 min; fact: 30 min).
+- сохранение порядка сортировки (est: 30 min; fact: 30 min).
+- переход на экран коллекции (est: 10 min; fact: 10 min).
+- алерт сетевых ошибок (fact: 10 min).
 
-`Total:` est: 250 min; fact: x min).
+`Total:` est: 250 min; fact: 230 min).
 
 ## Экран Collection (est: 590 min; fact: x min).
 
