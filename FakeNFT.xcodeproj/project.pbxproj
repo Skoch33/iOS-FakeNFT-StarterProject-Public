@@ -10,6 +10,8 @@
 		224B63392AD3340800084AC9 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 224B63382AD3340800084AC9 /* SF-Pro-Text-Regular.otf */; };
 		224B633C2AD335AB00084AC9 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 224B633B2AD335AB00084AC9 /* SF-Pro-Text-Bold.otf */; };
 		224B633E2AD3383A00084AC9 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 224B633D2AD3383A00084AC9 /* SF-Pro-Text-Medium.otf */; };
+		224B63402AD42CB100084AC9 /* Cart.md in Resources */ = {isa = PBXBuildFile; fileRef = 224B633F2AD42CB100084AC9 /* Cart.md */; };
+		224B63432AD432A400084AC9 /* CartViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224B63422AD432A400084AC9 /* CartViewCell.swift */; };
 		3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ECE29DB474E00F6D39E /* Colors.swift */; };
 		3F478ED129DB476500F6D39E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ED029DB476500F6D39E /* Fonts.swift */; };
 		3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3F603CCC29DB4A53000C43D7 /* ProgressHUD */; };
@@ -30,7 +32,7 @@
 		715D0F172AD156E300300497 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D0F162AD156E300300497 /* TabBarController.swift */; };
 		715D0F1A2AD156EF00300497 /* Catalog.md in Resources */ = {isa = PBXBuildFile; fileRef = 715D0F192AD156EF00300497 /* Catalog.md */; };
 		715D0F242AD1570000300497 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D0F1D2AD1570000300497 /* StatisticsViewController.swift */; };
-		715D0F252AD1570000300497 /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D0F1F2AD1570000300497 /* BasketViewController.swift */; };
+		715D0F252AD1570000300497 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D0F1F2AD1570000300497 /* CartViewController.swift */; };
 		715D0F262AD1570000300497 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D0F212AD1570000300497 /* CatalogViewController.swift */; };
 		715D0F272AD1570000300497 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D0F232AD1570000300497 /* ProfileViewController.swift */; };
 		715D0F2B2AD1577A00300497 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D0F2A2AD1577A00300497 /* UIColor+Extensions.swift */; };
@@ -60,6 +62,8 @@
 		224B63382AD3340800084AC9 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		224B633B2AD335AB00084AC9 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		224B633D2AD3383A00084AC9 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
+		224B633F2AD42CB100084AC9 /* Cart.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Cart.md; sourceTree = "<group>"; };
+		224B63422AD432A400084AC9 /* CartViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewCell.swift; sourceTree = "<group>"; };
 		3F478ECE29DB474E00F6D39E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		3F478ED029DB476500F6D39E /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		3F68069329CBBAF100B4F915 /* FakeNFT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FakeNFT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,7 +86,7 @@
 		715D0F162AD156E300300497 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		715D0F192AD156EF00300497 /* Catalog.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Catalog.md; sourceTree = "<group>"; };
 		715D0F1D2AD1570000300497 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
-		715D0F1F2AD1570000300497 /* BasketViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
+		715D0F1F2AD1570000300497 /* CartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		715D0F212AD1570000300497 /* CatalogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		715D0F232AD1570000300497 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		715D0F2A2AD1577A00300497 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -127,6 +131,15 @@
 				224B63382AD3340800084AC9 /* SF-Pro-Text-Regular.otf */,
 			);
 			path = FontsResources;
+			sourceTree = "<group>";
+		};
+		224B63412AD42E4B00084AC9 /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				715D0F1F2AD1570000300497 /* CartViewController.swift */,
+				224B63422AD432A400084AC9 /* CartViewCell.swift */,
+			);
+			path = Cart;
 			sourceTree = "<group>";
 		};
 		3F478ECD29DB473000F6D39E /* DesignSystem */ = {
@@ -272,6 +285,7 @@
 		715D0F182AD156EF00300497 /* Doc */ = {
 			isa = PBXGroup;
 			children = (
+				224B633F2AD42CB100084AC9 /* Cart.md */,
 				715D0F192AD156EF00300497 /* Catalog.md */,
 			);
 			path = Doc;
@@ -288,7 +302,7 @@
 		715D0F1E2AD1570000300497 /* Basket */ = {
 			isa = PBXGroup;
 			children = (
-				715D0F1F2AD1570000300497 /* BasketViewController.swift */,
+				224B63412AD42E4B00084AC9 /* Cart */,
 			);
 			path = Basket;
 			sourceTree = "<group>";
@@ -422,6 +436,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				224B63402AD42CB100084AC9 /* Cart.md in Resources */,
 				715D0F1A2AD156EF00300497 /* Catalog.md in Resources */,
 				224B63392AD3340800084AC9 /* SF-Pro-Text-Regular.otf in Resources */,
 				224B633C2AD335AB00084AC9 /* SF-Pro-Text-Bold.otf in Resources */,
@@ -484,13 +499,14 @@
 				715D0F272AD1570000300497 /* ProfileViewController.swift in Sources */,
 				715D0F242AD1570000300497 /* StatisticsViewController.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
+				224B63432AD432A400084AC9 /* CartViewCell.swift in Sources */,
 				715D0F2B2AD1577A00300497 /* UIColor+Extensions.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				715D0F172AD156E300300497 /* TabBarController.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
-				715D0F252AD1570000300497 /* BasketViewController.swift in Sources */,
+				715D0F252AD1570000300497 /* CartViewController.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				715D0F262AD1570000300497 /* CatalogViewController.swift in Sources */,
 			);
