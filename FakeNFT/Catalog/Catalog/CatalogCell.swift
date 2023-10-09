@@ -19,7 +19,7 @@ final class CatalogCell: UITableViewCell {
     private var nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.nftBlack
-        label.font = UIFont.boldSystemFont(ofSize: 17.0)
+        label.font = UIFont.bodyBold
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

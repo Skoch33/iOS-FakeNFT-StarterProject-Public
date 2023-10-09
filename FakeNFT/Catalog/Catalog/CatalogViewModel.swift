@@ -37,7 +37,7 @@ final class CatalogViewModel {
 
     struct CollectionRequest: NetworkRequest {
         var endpoint: URL? {
-            URL(string: "https://651ff0d9906e276284c3c20a.mockapi.io//api/v1/collections")
+            URL(string: "https://651ff0d9906e276284c3c20a.mockapi.io/api/v1/collections")
         }
         var httpMethod: HttpMethod = .get
         var dto: Encodable?
