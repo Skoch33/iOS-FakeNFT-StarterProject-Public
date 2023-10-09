@@ -3,3 +3,4 @@
 "TabBarController.Basket" = "Basket";
 "TabBarController.Statistics" = "Statistics";
 
+"CartViewController.paymentButtonTitle" = "Pay";

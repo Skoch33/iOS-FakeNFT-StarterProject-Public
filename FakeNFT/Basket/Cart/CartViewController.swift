@@ -2,10 +2,21 @@ import UIKit
 
 final class CartViewController: UIViewController {
 
+    private let layoutMargin = CGFloat(16)
+    private lazy var nftCountLabel = createCountLabel()
+    private lazy var nftPriceTotalLabel = createPriceTotalLabel()
+
+    private var nftCount: Int { 1 }
+    private var nftPriceTotal: Double { 0.0 }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupUI()
+    }
+
+    @objc private func payButtonDidTap() {
+
     }
 }
 
@@ -42,7 +53,6 @@ private extension CartViewController {
         view.addSubview(tableView)
 
         let paymentView = createPaymentView()
-        paymentView.backgroundColor = .nftLightgrey
         view.addSubview(paymentView)
 
         NSLayoutConstraint.activate([
@@ -69,7 +79,53 @@ private extension CartViewController {
 
     func createPaymentView() -> UIView {
         let view = UIView()
+        view.backgroundColor = .nftLightgrey
+        view.layer.cornerRadius = 16
+        view.layer.masksToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
+
+        let labelView = UIStackView(arrangedSubviews: [nftCountLabel, nftPriceTotalLabel])
+        labelView.axis = .vertical
+        labelView.alignment = .leading
+        labelView.spacing = 2
+        labelView.distribution = .fillEqually
+        labelView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(labelView)
+
+        let button = RoundedButton(
+            title: NSLocalizedString("CartViewController.paymentButtonTitle", comment: "")
+        )
+        button.addTarget(self, action: #selector(payButtonDidTap), for: .touchUpInside)
+        view.addSubview(button)
+
+        NSLayoutConstraint.activate([
+            labelView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: layoutMargin),
+            labelView.topAnchor.constraint(equalTo: view.topAnchor, constant: layoutMargin),
+            labelView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -layoutMargin),
+
+            button.widthAnchor.constraint(equalToConstant: 240),
+            button.topAnchor.constraint(equalTo: view.topAnchor, constant: layoutMargin),
+            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -layoutMargin),
+            button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -layoutMargin)
+        ])
         return view
+    }
+
+    func createCountLabel() -> UILabel {
+        let nftCountLabel = UILabel()
+        nftCountLabel.text = "\(nftCount) NFT"
+        nftCountLabel.font = .caption1
+        nftCountLabel.textColor = .nftBlack
+        nftCountLabel.translatesAutoresizingMaskIntoConstraints = false
+        return nftCountLabel
+    }
+
+    func createPriceTotalLabel() -> UILabel {
+        let nftPriceTotalLabel = UILabel()
+        nftPriceTotalLabel.text = String(format: "%.2f ETH", nftPriceTotal)
+        nftPriceTotalLabel.font = .bodyBold
+        nftPriceTotalLabel.textColor = .nftGreenUniversal
+        nftPriceTotalLabel.translatesAutoresizingMaskIntoConstraints = false
+        return nftPriceTotalLabel
     }
 }

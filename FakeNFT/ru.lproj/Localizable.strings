@@ -3,3 +3,4 @@
 "TabBarController.Basket" = "Корзина";
 "TabBarController.Statistics" = "Статистика";
 
+"CartViewController.paymentButtonTitle" = "К оплате";
