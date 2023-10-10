@@ -11,6 +11,7 @@
 		224B633C2AD335AB00084AC9 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 224B633B2AD335AB00084AC9 /* SF-Pro-Text-Bold.otf */; };
 		224B633E2AD3383A00084AC9 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 224B633D2AD3383A00084AC9 /* SF-Pro-Text-Medium.otf */; };
 		3762E8AF2AD40B75002F9A33 /* Profile.md in Resources */ = {isa = PBXBuildFile; fileRef = 3762E8AE2AD40B75002F9A33 /* Profile.md */; };
+		3762E8B32AD549D7002F9A33 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3762E8B22AD549D7002F9A33 /* EditProfileViewController.swift */; };
 		3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ECE29DB474E00F6D39E /* Colors.swift */; };
 		3F478ED129DB476500F6D39E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ED029DB476500F6D39E /* Fonts.swift */; };
 		3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3F603CCC29DB4A53000C43D7 /* ProgressHUD */; };
@@ -62,6 +63,7 @@
 		224B633B2AD335AB00084AC9 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		224B633D2AD3383A00084AC9 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
 		3762E8AE2AD40B75002F9A33 /* Profile.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = Profile.md; path = ../../Desktop/FakeNFT/Profile.md; sourceTree = "<group>"; };
+		3762E8B22AD549D7002F9A33 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		3F478ECE29DB474E00F6D39E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		3F478ED029DB476500F6D39E /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		3F68069329CBBAF100B4F915 /* FakeNFT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FakeNFT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,6 +139,14 @@
 				715D0F232AD1570000300497 /* ProfileViewController.swift */,
 			);
 			path = ProfileView;
+			sourceTree = "<group>";
+		};
+		3762E8B12AD549C9002F9A33 /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				3762E8B22AD549D7002F9A33 /* EditProfileViewController.swift */,
+			);
+			path = EditProfile;
 			sourceTree = "<group>";
 		};
 		3F478ECD29DB473000F6D39E /* DesignSystem */ = {
@@ -315,6 +325,7 @@
 		715D0F222AD1570000300497 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				3762E8B12AD549C9002F9A33 /* EditProfile */,
 				3762E8B02AD40C06002F9A33 /* ProfileView */,
 			);
 			path = Profile;
@@ -495,6 +506,7 @@
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				715D0F272AD1570000300497 /* ProfileViewController.swift in Sources */,
+				3762E8B32AD549D7002F9A33 /* EditProfileViewController.swift in Sources */,
 				715D0F242AD1570000300497 /* StatisticsViewController.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				715D0F2B2AD1577A00300497 /* UIColor+Extensions.swift in Sources */,

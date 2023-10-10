@@ -75,6 +75,7 @@ class ProfileViewController: UIViewController {
         profileTableView.dataSource = self
         profileTableView.separatorStyle = .none
         profileTableView.isScrollEnabled = false
+        profileTableView.backgroundColor = .clear
         profileTableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(profileTableView)
         return profileTableView
@@ -106,7 +107,8 @@ class ProfileViewController: UIViewController {
     // MARK: - Actions
     
     @objc func presentEditViewController() {
-
+        let editProfileViewController = EditProfileViewController()
+        present(editProfileViewController, animated: true)
     }
 }
 
@@ -120,8 +122,10 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.accessoryType = .disclosureIndicator
+        cell.accessoryView = UIImageView(image: UIImage(named: "forward"))
         cell.textLabel?.font = .bodyBold
         cell.selectionStyle = .none
+        cell.backgroundColor = .clear
         switch indexPath.row {
         case 0:
             cell.textLabel?.text = "Мои NFT (112)"

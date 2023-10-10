@@ -3,3 +3,25 @@
 "TabBarController.Basket" = "Basket";
 "TabBarController.Statistics" = "Statistics";
 
+// MARK: - Profile
+
+// MainScreen
+"ProfileViewController.myNFT" = "My NFT";
+"ProfileViewController.favouritesNFT" = "Favorites NFT";
+"ProfileViewController.aboutDeveloper" = "About developer";
+
+// EditScreen
+"EditProfileViewController.changePhoto" = "Change photo";
+"EditProfileViewController.name" = "Name";
+"EditProfileViewController.description" = "Description";
+"EditProfileViewController.site" = "Website";
+
+// MyNFTScreen
+"profile.myNFT.plug" = "You don't have NFT yet";
+"profile.myNFT.from" = "From";
+
+// FavouritesScreen
+"profile.favouritesNFT.plug" = "You don't have any NFT favorites yet";
+
+
+

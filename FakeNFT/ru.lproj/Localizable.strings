@@ -3,3 +3,16 @@
 "TabBarController.Basket" = "Корзина";
 "TabBarController.Statistics" = "Статистика";
 
+// MARK: - Profile
+
+// MainScreen
+"ProfileViewController.myNFT" = "Мои NFT";
+"profile.mainScreen.favouritesNFT" = "Избранные NFT";
+"profile.mainScreen.aboutDeveloper" = "О разработчике";
+
+// EditScreen
+"EditProfileViewController.changePhoto" = "Сменить фото";
+"EditProfileViewController.name" = "Имя";
+"EditProfileViewController.description" = "Описание";
+"EditProfileViewController.site" = "Cайт";
+
