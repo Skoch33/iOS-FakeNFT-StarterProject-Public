@@ -7,46 +7,45 @@
 # Profile Decomposition
 
 
-## Экран Profile (est 1880; fact x).
+## Экран Profile (est 1090; fact x).
 
 
 ### Module 1: Верстка экрана пользователя
 
-- Создание UIImageView, UILabel (est: 90 min; fact: x min)
-- Создание UITableView (est: 60 min; fact: x min)
-- Верстка кастомной ячейки (est: 60 min; fact: x min)
-- Создание модели (est: 60 min; fact: x min)
-- Написание сетевого слоя (est: 60 min; fact: x min)
+- Создание UIImageView, UILabel (est: 90 min; fact: 60 min)
+- Создание UITableView (est: 60 min; fact: 60 min)
+- Верстка кастомной ячейки (est: 60 min; fact: 40 min)
+- Создание модели (est: 60 min; fact: 40 min)
 
-`Total:` est: 480 min; fact: x min
+`Total:` est: 270 min; fact: 200 min
 
 ### Module 2: Экран редактирования профиля 
 
-- Создание UIImageView (est: 10 min; fact: x min) 
-- Создание UILabel для имени, описания и сайта (est: 30 min; fact: x min)
-- Создание UITextField для редактирования данных пользователя (est: 60 min; fact: x min)
+- Создание UIImageView (est: 10 min; fact: 10 min) 
+- Создание UILabel для имени, описания и сайта (est: 30 min; fact: 20 min)
+- Создание UITextField для редактирования данных пользователя (est: 60 min; fact: 30 min)
 - Создание сетевого слоя (est: 140 min; fact: x min)
 
 `Total:` est: 240 min; fact: x min
 
 ### Module 3: Экран мои NFT
 
-- Реализация NavigationBar (est: 30 min; fact: x min) 
-- Создание UITableView (est: 100 min; fact: x min) 
-- Верстка кастомной ячейки (est: 100 min; fact: x min) 
-- Реализация функции сортировки (est: 200 min; fact: x min) 
-- Создание модели (est: 20 min; fact: x min) 
-- Отображение UILabel (est: 60 min; fact: x min) 
+- Реализация NavigationBar (est: 30 min; fact: 20 min) 
+- Создание UITableView (est: 60 min; fact: 30 min) 
+- Верстка кастомной ячейки (est: 50 min; fact: 40 min) 
+- Реализация функции сортировки (est: 90 min; fact: x min) 
+- Создание модели (est: 20 min; fact: 20 min) 
+- Отображение UILabel (est: 60 min; fact: 40 min) 
 
-`Total:` est: 510 min; fact: x min
+`Total:` est: 310 min; fact: x min
 
 ### Module 4: Экран избранные NFT
 
 - Реализация NavigationBar (est: 30 min; fact: x min) 
-- Создание UICollectionView (est: 200 min; fact: x min) 
-- Верстка кастомной ячейки (est: 200 min; fact: x min) 
+- Создание UICollectionView (est: 60 min; fact: x min) 
+- Верстка кастомной ячейки (est: 60 min; fact: x min) 
 - Создание модели (est: 40 min; fact: x min) 
-- Взаимодействие со страницей каталога (est: 120 min; fact: x min) 
+- Взаимодействие со страницей каталога (est: 30 min; fact: x min) 
 - Отображение UILabel (est: 60 min; fact: x min) 
 
-`Total:` est: 650 min; fact: x min
+`Total:` est: 270 min; fact: x min
