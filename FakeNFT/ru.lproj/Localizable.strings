@@ -16,3 +16,8 @@
 "EditProfileViewController.description" = "Описание";
 "EditProfileViewController.site" = "Cайт";
 
+// MyNFTScreen
+
+"MyNFTViewController.mynft" = "Мои NFT";
+"MyNFTViewController.plug" = "У Вас еще нет NFT";
+"MyNFTViewController.from" = "От";

@@ -138,9 +138,22 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return cell
     }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            let myNFTViewController = MyNFTViewController()
+            myNFTViewController.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(myNFTViewController, animated: true)
+        case 1:
+            let qqq = 1
+            // переход 2
+        case 2:
+            let qqq = 1
+            // переход 3
+        default:
+            break
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

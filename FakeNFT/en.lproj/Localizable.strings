@@ -7,7 +7,7 @@
 
 // MainScreen
 "ProfileViewController.myNFT" = "My NFT";
-"ProfileViewController.favouritesNFT" = "Favorites NFT";
+"ProfileViewController.NFT" = "Favorites NFT";
 "ProfileViewController.aboutDeveloper" = "About developer";
 
 // EditScreen
@@ -17,11 +17,10 @@
 "EditProfileViewController.site" = "Website";
 
 // MyNFTScreen
-"profile.myNFT.plug" = "You don't have NFT yet";
-"profile.myNFT.from" = "From";
 
-// FavouritesScreen
-"profile.favouritesNFT.plug" = "You don't have any NFT favorites yet";
+"MyNFTViewController.mynft" = "My NFT";
+"MyNFTViewController.plug" = "You don't have NFT yet";
+"MyNFTViewController.from" = "From";
 
 
 
