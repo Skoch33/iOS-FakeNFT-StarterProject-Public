@@ -138,7 +138,7 @@ extension CatalogViewController: UITableViewDataSource {
 
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let collectionViewController = CollectionViewController(collectionId: catalogViewModel.collections[indexPath.row].id)
+        let collectionViewController = CollectionViewController(collection: catalogViewModel.collections[indexPath.row])
         navigationController?.pushViewController(collectionViewController, animated: true)
     }
 }

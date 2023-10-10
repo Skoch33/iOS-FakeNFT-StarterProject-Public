@@ -1,8 +1,6 @@
 import UIKit
 import Kingfisher
 
-private let nulPhotoImage = UIImage(named: "Catalog.nulImage") ?? UIImage()
-
 final class CatalogCell: UITableViewCell {
     static let identifier = "CatalogCell"
 
@@ -18,8 +16,8 @@ final class CatalogCell: UITableViewCell {
 
     private var nameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.nftBlack
-        label.font = UIFont.bodyBold
+        label.textColor = .nftBlack
+        label.font = .bodyBold
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -59,9 +57,7 @@ final class CatalogCell: UITableViewCell {
 
         nameLabel.text = "\(collection.name) (\(collection.nfts.count))"
 
-        guard
-            let url = URL(string: collection.cover)
-        else { return }
+        guard let url = URL(string: collection.cover) else { return }
         collectionImage.kf.indicatorType = .activity
         collectionImage.kf.setImage(with: url, placeholder: nulPhotoImage)
     }
