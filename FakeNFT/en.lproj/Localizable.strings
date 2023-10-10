@@ -4,3 +4,4 @@
 "TabBarController.Statistics" = "Statistics";
 
 "CartViewController.paymentButtonTitle" = "Pay";
+"CartViewCell.Price" = "Price";

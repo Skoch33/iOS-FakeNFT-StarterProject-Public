@@ -4,3 +4,4 @@
 "TabBarController.Statistics" = "Статистика";
 
 "CartViewController.paymentButtonTitle" = "К оплате";
+"CartViewCell.Price" = "Цена";

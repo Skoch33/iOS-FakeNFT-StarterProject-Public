@@ -7,7 +7,7 @@ final class CartViewController: UIViewController {
     private lazy var nftPriceTotalLabel = createPriceTotalLabel()
 
     private var nftCount: Int { 1 }
-    private var nftPriceTotal: Double { 0.0 }
+    private var nftPriceTotal: Decimal { 0.0 }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +28,26 @@ extension CartViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: CartViewCell.reuseIdentifier,
+            withIdentifier: CartViewCell.reuseId,
             for: indexPath
         ) as? CartViewCell
         else { return UITableViewCell() }
 
+        // mock для проверки верстки ячейки
+        cell.rating = 2
+        cell.nftPrice = 6.59
+        cell.nftName = "Rosie"
+        cell.delegate = self
+        cell.nftID = "93"
+        cell.nftImageURL = URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Brown/Rosie/1.png")
         return cell
+    }
+}
+
+// MARK: CartCellDelegate
+extension CartViewController: CartCellDelegate {
+    func deleteButtonDidTap(nftID: String) {
+        print("delete \(nftID)")
     }
 }
 
@@ -72,7 +86,7 @@ private extension CartViewController {
         let table = UITableView()
         table.delegate = self
         table.dataSource = self
-        table.register(CartViewCell.self, forCellReuseIdentifier: CartViewCell.reuseIdentifier)
+        table.register(CartViewCell.self, forCellReuseIdentifier: CartViewCell.reuseId)
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }
@@ -122,7 +136,7 @@ private extension CartViewController {
 
     func createPriceTotalLabel() -> UILabel {
         let nftPriceTotalLabel = UILabel()
-        nftPriceTotalLabel.text = String(format: "%.2f ETH", nftPriceTotal)
+        nftPriceTotalLabel.text = PriceFormatter.formattedPrice(nftPriceTotal)
         nftPriceTotalLabel.font = .bodyBold
         nftPriceTotalLabel.textColor = .nftGreenUniversal
         nftPriceTotalLabel.translatesAutoresizingMaskIntoConstraints = false
