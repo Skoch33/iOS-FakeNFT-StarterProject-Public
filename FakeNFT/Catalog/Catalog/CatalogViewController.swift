@@ -47,7 +47,7 @@ final class CatalogViewController: UIViewController {
 
     private func setupNavigationBar() {
         if let navigationBar = navigationController?.navigationBar {
-            let imageButton = UIImage(named: "Catalog.SortButton")?.withRenderingMode(.alwaysTemplate)
+            let imageButton = UIImage(named: "Catalog.sortButton")?.withRenderingMode(.alwaysTemplate)
 
             let rightItem = UIBarButtonItem(image: imageButton,
                                             style: .plain,
