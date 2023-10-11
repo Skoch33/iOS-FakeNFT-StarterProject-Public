@@ -5,9 +5,17 @@ final class CartViewController: UIViewController {
     private let layoutMargin = CGFloat(16)
     private lazy var nftCountLabel = createCountLabel()
     private lazy var nftPriceTotalLabel = createPriceTotalLabel()
+    private lazy var nftCartTableView = createTableView()
+    private lazy var nftPaymentView = createPaymentView()
+    private lazy var emptyCartPlaceholderView = createEmptyCartPlaceholder()
 
     private var nftCount: Int { 1 }
     private var nftPriceTotal: Decimal { 0.0 }
+    private var isEmptyCart: Bool = false {
+        didSet {
+            displayEmptyCartPlaceholder(isEmptyCart)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +30,20 @@ final class CartViewController: UIViewController {
     @objc private func sortButtonDidTap() {
         let alertController = createAlertController()
         present(alertController, animated: true)
+    }
+
+    private func displayEmptyCartPlaceholder(_ isPlaceHolderVisible: Bool) {
+        if isPlaceHolderVisible {
+            emptyCartPlaceholderView.isHidden = false
+            nftCartTableView.isHidden = true
+            nftPaymentView.isHidden = true
+            navigationController?.isNavigationBarHidden = true
+        } else {
+            emptyCartPlaceholderView.isHidden = true
+            nftCartTableView.isHidden = false
+            nftPaymentView.isHidden = false
+            navigationController?.isNavigationBarHidden = false
+        }
     }
 
     private func createAlertController() -> UIAlertController {
@@ -98,23 +120,27 @@ private extension CartViewController {
         sortButton.tintColor = .nftBlack
         navigationItem.rightBarButtonItem = sortButton
 
-        let tableView = createTableView()
-        view.addSubview(tableView)
-
-        let paymentView = createPaymentView()
-        view.addSubview(paymentView)
+        view.addSubview(nftCartTableView)
+        view.addSubview(nftPaymentView)
 
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: paymentView.topAnchor),
+            nftCartTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            nftCartTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            nftCartTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            nftCartTableView.bottomAnchor.constraint(equalTo: nftPaymentView.topAnchor),
 
-            paymentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            paymentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            paymentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            paymentView.heightAnchor.constraint(equalToConstant: 76)
+            nftPaymentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            nftPaymentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            nftPaymentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            nftPaymentView.heightAnchor.constraint(equalToConstant: 76)
         ])
+
+        view.addSubview(emptyCartPlaceholderView)
+        NSLayoutConstraint.activate([
+            emptyCartPlaceholderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyCartPlaceholderView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        displayEmptyCartPlaceholder(isEmptyCart)
     }
 
     func createTableView() -> UITableView {
@@ -176,5 +202,14 @@ private extension CartViewController {
         nftPriceTotalLabel.textColor = .nftGreenUniversal
         nftPriceTotalLabel.translatesAutoresizingMaskIntoConstraints = false
         return nftPriceTotalLabel
+    }
+
+    func createEmptyCartPlaceholder() -> UIView {
+        let view = UILabel()
+        view.text = NSLocalizedString("CartViewController.emptyCartPlaceholderText", comment: "")
+        view.font = .bodyBold
+        view.textColor = .nftBlack
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }
 }

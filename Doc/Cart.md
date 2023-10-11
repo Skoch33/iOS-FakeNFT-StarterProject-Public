@@ -14,9 +14,9 @@
 - Ячейка (est: 3h; fact: 4h)
 - Панель оплаты (est: 2h; fact: 3h)
 - Navigation Bar (est: 1h; fact: 1h)
-- Пустая корзина (est: 1h, fact: )
+- Пустая корзина (est: 1h, fact: 0.5h)
 
-`Total:` est:  8h; fact: 
+`Total:` est:  9h; fact: 10.5h 
 
 #### Логика
 - Сервис "Получение заказа `apiV1Orders1Get`" (est: 3h; fact: )
