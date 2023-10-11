@@ -4,4 +4,9 @@
 "TabBarController.Statistics" = "Statistics";
 
 "CartViewController.paymentButtonTitle" = "Pay";
+"CartViewController.SortAlert.title" = "Sort";
+"CartViewController.SortAlert.byPrice" = "By price";
+"CartViewController.SortAlert.byRating" = "By Rating";
+"CartViewController.SortAlert.byName" = "By Name";
+"CartViewController.SortAlert.cancel" = "Close";
 "CartViewCell.Price" = "Price";

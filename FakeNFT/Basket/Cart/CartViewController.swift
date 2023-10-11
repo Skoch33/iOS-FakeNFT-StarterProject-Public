@@ -18,6 +18,34 @@ final class CartViewController: UIViewController {
     @objc private func payButtonDidTap() {
 
     }
+
+    @objc private func sortButtonDidTap() {
+        let alertController = createAlertController()
+        present(alertController, animated: true)
+    }
+
+    private func createAlertController() -> UIAlertController {
+        let title = NSLocalizedString("CartViewController.SortAlert.title", comment: "")
+        let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+
+        let priceItemTitle = NSLocalizedString("CartViewController.SortAlert.byPrice", comment: "")
+        let priceItem = UIAlertAction(title: priceItemTitle, style: .default)
+        controller.addAction(priceItem)
+
+        let ratingItemTitle = NSLocalizedString("CartViewController.SortAlert.byRating", comment: "")
+        let ratingItem = UIAlertAction(title: ratingItemTitle, style: .default)
+        controller.addAction(ratingItem)
+
+        let nameItemTitle = NSLocalizedString("CartViewController.SortAlert.byName", comment: "")
+        let nameItem = UIAlertAction(title: nameItemTitle, style: .default)
+        controller.addAction(nameItem)
+
+        let cancelItemTitle = NSLocalizedString("CartViewController.SortAlert.cancel", comment: "")
+        let cancel = UIAlertAction(title: cancelItemTitle, style: .cancel)
+        controller.addAction(cancel)
+
+        return controller
+    }
 }
 
 // MARK: UITableViewDataSource
@@ -62,6 +90,13 @@ extension CartViewController: UITableViewDelegate {
 private extension CartViewController {
     func setupUI() {
         view.backgroundColor = .nftWhite
+
+        let sortButton = UIBarButtonItem(image: UIImage(named: "action_sort") ?? UIImage(),
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(sortButtonDidTap))
+        sortButton.tintColor = .nftBlack
+        navigationItem.rightBarButtonItem = sortButton
 
         let tableView = createTableView()
         view.addSubview(tableView)

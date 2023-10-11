@@ -10,10 +10,10 @@
 ## Экран "Cart" (est: 19h; fact: )
 
 #### Верстка
-- Таблица (est: 2h; fact: )
-- Ячейка (est: 3h; fact: )
-- Панель оплаты (est: 2h; fact: )
-- Navigation Bar (est: 1h; fact: )
+- Таблица (est: 2h; fact: 2h)
+- Ячейка (est: 3h; fact: 4h)
+- Панель оплаты (est: 2h; fact: 3h)
+- Navigation Bar (est: 1h; fact: 1h)
 - Пустая корзина (est: 1h, fact: )
 
 `Total:` est:  8h; fact: 
@@ -27,7 +27,7 @@
 
 `Total:` est: 11h; fact: 
 
-### Экран "Delete From Cart" (est 5h; fact: )
+## Экран "Delete From Cart" (est 5h; fact: )
 
 #### Верстка
 - Верстка всего экрана (est: 1h; fact: )
@@ -40,7 +40,7 @@
 
 `Total:` est: 4h; fact: 
 
-### Экран "Выбор способа оплаты" (est: 16h; fact: )
+## Экран "Выбор способа оплаты" (est: 16h; fact: )
 
 #### Верстка
 - Коллекция валют (est: 2h; fact: )
@@ -59,7 +59,7 @@
 
 `Total:` est: 11h; fact: 
 
-### Экран результатов оплаты "Успех/Упс" (est: 2h; fact: )
+## Экран результатов оплаты "Успех/Упс" (est: 2h; fact: )
 
 #### Верстка
 - Верстка всего экрана (est: 1h; fact: )
