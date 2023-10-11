@@ -55,7 +55,7 @@ final class CollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .nftWhite
-
+        self.tabBarController?.tabBar.isHidden = true
         let backItem = UIBarButtonItem()
         backItem.title = nil
         backItem.tintColor = .nftBlack
@@ -127,7 +127,8 @@ final class CollectionViewController: UIViewController {
 
     @objc
     func labelClicked(_ sender: Any) {
-        print("UILabel clicked")
+        let webViewController = WebViewController("https://practicum.yandex.ru/go-basics/")
+        navigationController?.pushViewController(webViewController, animated: true)
     }
 
 }
