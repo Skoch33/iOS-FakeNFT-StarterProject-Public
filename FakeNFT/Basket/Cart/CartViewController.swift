@@ -77,11 +77,7 @@ extension CartViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: CartViewCell.reuseId,
-            for: indexPath
-        ) as? CartViewCell
-        else { return UITableViewCell() }
+        let cell: CartViewCell = tableView.dequeueReusableCell()
 
         // mock для проверки верстки ячейки
         cell.rating = 2
@@ -147,7 +143,7 @@ private extension CartViewController {
         let table = UITableView()
         table.delegate = self
         table.dataSource = self
-        table.register(CartViewCell.self, forCellReuseIdentifier: CartViewCell.reuseId)
+        table.register(CartViewCell.self)
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }

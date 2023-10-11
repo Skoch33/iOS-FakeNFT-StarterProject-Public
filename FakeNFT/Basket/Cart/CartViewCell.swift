@@ -12,9 +12,7 @@ protocol CartCellDelegate: AnyObject {
     func deleteButtonDidTap(nftID: String)
 }
 
-final class CartViewCell: UITableViewCell {
-
-    static let reuseId = "CartViewCell"
+final class CartViewCell: UITableViewCell, ReuseIdentifying {
 
     var rating: Int? {
         didSet {
