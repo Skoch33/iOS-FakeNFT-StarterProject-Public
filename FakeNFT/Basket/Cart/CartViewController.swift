@@ -2,6 +2,7 @@ import UIKit
 
 final class CartViewController: UIViewController {
 
+    var dataProvider: CartDataProviderProtocol?
     private let layoutMargin = CGFloat(16)
     private lazy var nftCountLabel = createCountLabel()
     private lazy var nftPriceTotalLabel = createPriceTotalLabel()
@@ -9,7 +10,7 @@ final class CartViewController: UIViewController {
     private lazy var nftPaymentView = createPaymentView()
     private lazy var emptyCartPlaceholderView = createEmptyCartPlaceholder()
 
-    private var nftCount: Int { 1 }
+    private var nftCount: Int { dataProvider?.numberOfNft ?? 0 }
     private var nftPriceTotal: Decimal { 0.0 }
     private var isEmptyCart: Bool = false {
         didSet {
@@ -21,6 +22,18 @@ final class CartViewController: UIViewController {
         super.viewDidLoad()
 
         setupUI()
+
+        // проверка работы сервисов
+        // TODO: переписать остаток функции после реализации viewModel
+        NotificationCenter.default.addObserver(
+            forName: dataProvider?.cartDidChangeNotification,
+            object: nil,
+            queue: .main) {[weak self] _ in
+                self?.nftCartTableView.reloadData()
+                self?.nftCountLabel.text = "\(self?.nftCount ?? 0) NFT"
+            }
+
+        dataProvider?.getAllNftInCart()
     }
 
     @objc private func payButtonDidTap() {
@@ -73,7 +86,7 @@ final class CartViewController: UIViewController {
 // MARK: UITableViewDataSource
 extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        dataProvider?.numberOfNft ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

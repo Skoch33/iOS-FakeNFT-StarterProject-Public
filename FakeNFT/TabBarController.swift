@@ -22,6 +22,7 @@ final class TabBarController: UITabBarController {
         )
 
         let basketViewController = CartViewController()
+        basketViewController.dataProvider = CartDataProvider()
         let basketNavigationController = UINavigationController(rootViewController: basketViewController)
         basketNavigationController.tabBarItem = UITabBarItem(
             title: NSLocalizedString("TabBarController.Basket", comment: ""),
