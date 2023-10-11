@@ -36,8 +36,7 @@ final class CollectionViewController: UIViewController {
     private let authorNameLabel: UILabel = {
         let label = UILabel()
         label.font = .caption2
-        label.textColor = .nftBlack
-        label.text = "Иван Иванови"
+        label.textColor = .nftBlueUniversal
         return label
     }()
 
@@ -103,6 +102,9 @@ final class CollectionViewController: UIViewController {
     }
 
     private func setupAuthorNameLabel() {
+        authorNameLabel.isUserInteractionEnabled = true
+        let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(labelClicked(_:)))
+        authorNameLabel.addGestureRecognizer(guestureRecognizer)
         authorNameLabel.text = "Author Name"
         authorNameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(authorNameLabel)
@@ -121,6 +123,11 @@ final class CollectionViewController: UIViewController {
             descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
+    }
+
+    @objc
+    func labelClicked(_ sender: Any) {
+        print("UILabel clicked")
     }
 
 }
