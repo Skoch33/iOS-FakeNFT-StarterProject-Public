@@ -1,4 +1,3 @@
-import UIKit
 import WebKit
 
 class WebViewController: UIViewController, WKNavigationDelegate {
@@ -18,7 +17,6 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let url = URL(string: urlString) else { return }
-        self.tabBarController?.tabBar.isHidden = true
         view.backgroundColor = .nftWhite
         let backItem = UIBarButtonItem()
         backItem.title = nil

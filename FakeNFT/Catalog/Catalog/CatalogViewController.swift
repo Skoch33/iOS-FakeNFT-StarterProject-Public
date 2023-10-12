@@ -45,6 +45,11 @@ final class CatalogViewController: UIViewController {
         }
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
+    }
+
     private func setupNavigationBar() {
         if let navigationBar = navigationController?.navigationBar {
             let imageButton = UIImage(named: "Catalog.sortButton")?.withRenderingMode(.alwaysTemplate)
@@ -140,5 +145,6 @@ extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let collectionViewController = CollectionViewController(collection: catalogViewModel.collections[indexPath.row])
         navigationController?.pushViewController(collectionViewController, animated: true)
+        self.tabBarController?.tabBar.isHidden = true
     }
 }

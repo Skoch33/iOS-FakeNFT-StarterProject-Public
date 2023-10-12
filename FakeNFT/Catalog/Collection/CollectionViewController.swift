@@ -55,7 +55,6 @@ final class CollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .nftWhite
-        self.tabBarController?.tabBar.isHidden = true
         let backItem = UIBarButtonItem()
         backItem.title = nil
         backItem.tintColor = .nftBlack
