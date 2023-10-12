@@ -8,38 +8,13 @@
 import UIKit
 import Kingfisher
 
-protocol CartCellDelegate: AnyObject {
-    func deleteButtonDidTap(nftID: String)
-}
-
 final class CartViewCell: UITableViewCell, ReuseIdentifying {
 
-    var rating: Int? {
+    var viewModel: CartCellViewModelProtocol? {
         didSet {
-            nftRatingView.rating = rating ?? 0
+            bindViewModel()
         }
     }
-
-    var nftPrice: Decimal? {
-        didSet {
-            nftPriceLabel.text = PriceFormatter.formattedPrice(nftPrice)
-        }
-    }
-
-    var nftName: String? {
-        didSet {
-            nftNameLabel.text = nftName ?? " "
-        }
-    }
-
-    var nftImageURL: URL? {
-        didSet {
-            nftImageView.kf.setImage(with: nftImageURL)
-        }
-    }
-
-    var nftID: String?
-    weak var delegate: CartCellDelegate?
 
     private let layoutMargin = CGFloat(16)
     private lazy var nftImageView: UIImageView = createNFTImageView()
@@ -49,13 +24,11 @@ final class CartViewCell: UITableViewCell, ReuseIdentifying {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
         setupUI()
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
-
         nftImageView.kf.cancelDownloadTask()
     }
 
@@ -64,8 +37,25 @@ final class CartViewCell: UITableViewCell, ReuseIdentifying {
     }
 
     @objc private func deleteButtonDidTap() {
-        guard let nftID else { return }
-        delegate?.deleteButtonDidTap(nftID: nftID)
+        viewModel?.deleteButtonDidTap()
+    }
+
+    private func bindViewModel() {
+        let bindings = CartCellViewModelBindings(
+            rating: { [weak self] in
+                self?.nftRatingView.rating = $0
+            },
+            price: { [weak self] in
+                self?.nftPriceLabel.text = PriceFormatter.formattedPrice($0)
+            },
+            name: { [weak self] in
+                self?.nftNameLabel.text = $0
+            },
+            imageURL: { [weak self] in
+                self?.nftImageView.kf.setImage(with: $0)
+            }
+        )
+        viewModel?.bind(bindings)
     }
 }
 
@@ -161,7 +151,7 @@ private extension CartViewCell {
 
     func createNFTPriceLabel() -> UILabel {
         let label = UILabel()
-        label.text = PriceFormatter.formattedPrice(nftPrice)
+        label.text = PriceFormatter.formattedPrice(Decimal(0))
         label.font = .bodyBold
         label.textColor = .nftBlack
         label.textAlignment = .center

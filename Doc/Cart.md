@@ -21,7 +21,7 @@
 #### Логика
 - Сервис "Получение заказа `apiV1Orders1Get`" (est: 3h; fact: 3h)
 - Сервис "Получение NFT с заданным Id `apiV1NftNftIdGet`" (est: 1h; fact: 2h)
-- viewModel логики экрана, подключение viewModel (est: 5h; fact: )
+- viewModel логики экрана, подключение viewModel (est: 5h; fact: 4h)
 - Сортировка (est: 1h; fact: )
 - Сохранить способ сортировки (est: 1h; fact: )
 

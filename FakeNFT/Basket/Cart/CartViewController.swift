@@ -1,8 +1,13 @@
 import UIKit
+import ProgressHUD
 
 final class CartViewController: UIViewController {
 
-    var dataProvider: CartDataProviderProtocol?
+    var viewModel: CartViewModelProtocol? {
+        didSet {
+            bindViewModel()
+        }
+    }
     private let layoutMargin = CGFloat(16)
     private lazy var nftCountLabel = createCountLabel()
     private lazy var nftPriceTotalLabel = createPriceTotalLabel()
@@ -10,39 +15,48 @@ final class CartViewController: UIViewController {
     private lazy var nftPaymentView = createPaymentView()
     private lazy var emptyCartPlaceholderView = createEmptyCartPlaceholder()
 
-    private var nftCount: Int { dataProvider?.numberOfNft ?? 0 }
-    private var nftPriceTotal: Decimal { 0.0 }
-    private var isEmptyCart: Bool = false {
-        didSet {
-            displayEmptyCartPlaceholder(isEmptyCart)
-        }
-    }
+    private var nftCount: Int = 0
+    private var nftPriceTotal: Decimal = Decimal(0)
+    private var nftList: [CartNftInfo] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupUI()
-
-        // проверка работы сервисов
-        // TODO: переписать остаток функции после реализации viewModel
-        NotificationCenter.default.addObserver(
-            forName: dataProvider?.cartDidChangeNotification,
-            object: nil,
-            queue: .main) {[weak self] _ in
-                self?.nftCartTableView.reloadData()
-                self?.nftCountLabel.text = "\(self?.nftCount ?? 0) NFT"
-            }
-
-        dataProvider?.getAllNftInCart()
+        viewModel?.viewDidLoad()
     }
 
     @objc private func payButtonDidTap() {
-
+        // TODO: реализовать оплату
     }
 
     @objc private func sortButtonDidTap() {
         let alertController = createAlertController()
         present(alertController, animated: true)
+    }
+
+    private func bindViewModel() {
+        let bindings = CartViewModelBindings(
+            numberOfNft: { [weak self] in
+                guard let self else { return }
+                self.nftCount = $0
+                self.displayNftCount()
+            },
+            priceTotal: { [weak self] in
+                guard let self else { return }
+                self.nftPriceTotal = $0
+                self.displayPriceTotal()
+            },
+            nftList: { [weak self] in
+                guard let self else { return }
+                self.nftList = $0
+                self.nftCartTableView.reloadData()
+                ProgressHUD.dismiss()
+            },
+            isEmptyCartPlaceholderDisplaying: { [weak self] in
+                self?.displayEmptyCartPlaceholder($0)
+            }
+        )
+        viewModel?.bind(bindings)
     }
 
     private func displayEmptyCartPlaceholder(_ isPlaceHolderVisible: Bool) {
@@ -64,15 +78,21 @@ final class CartViewController: UIViewController {
         let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
 
         let priceItemTitle = NSLocalizedString("CartViewController.SortAlert.byPrice", comment: "")
-        let priceItem = UIAlertAction(title: priceItemTitle, style: .default)
+        let priceItem = UIAlertAction(title: priceItemTitle, style: .default) { [weak self] _ in
+            self?.viewModel?.sortOrderDidChange(to: .byPrice)
+        }
         controller.addAction(priceItem)
 
         let ratingItemTitle = NSLocalizedString("CartViewController.SortAlert.byRating", comment: "")
-        let ratingItem = UIAlertAction(title: ratingItemTitle, style: .default)
+        let ratingItem = UIAlertAction(title: ratingItemTitle, style: .default) { [weak self] _ in
+            self?.viewModel?.sortOrderDidChange(to: .byRating)
+        }
         controller.addAction(ratingItem)
 
         let nameItemTitle = NSLocalizedString("CartViewController.SortAlert.byName", comment: "")
-        let nameItem = UIAlertAction(title: nameItemTitle, style: .default)
+        let nameItem = UIAlertAction(title: nameItemTitle, style: .default) { [weak self] _ in
+            self?.viewModel?.sortOrderDidChange(to: .byName)
+        }
         controller.addAction(nameItem)
 
         let cancelItemTitle = NSLocalizedString("CartViewController.SortAlert.cancel", comment: "")
@@ -86,27 +106,24 @@ final class CartViewController: UIViewController {
 // MARK: UITableViewDataSource
 extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        dataProvider?.numberOfNft ?? 0
+        nftCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CartViewCell = tableView.dequeueReusableCell()
 
-        // mock для проверки верстки ячейки
-        cell.rating = 2
-        cell.nftPrice = 6.59
-        cell.nftName = "Rosie"
-        cell.delegate = self
-        cell.nftID = "93"
-        cell.nftImageURL = URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Brown/Rosie/1.png")
+        let nft = nftList[indexPath.item]
+        cell.viewModel = CartCellViewModel(delegate: self, nftId: nft.id)
+        cell.viewModel?.cellReused(for: nft)
         return cell
     }
 }
 
 // MARK: CartCellDelegate
 extension CartViewController: CartCellDelegate {
-    func deleteButtonDidTap(nftID: String) {
-        print("delete \(nftID)")
+    func deleteButtonDidTap(for nftId: String) {
+        // TODO: реализовать удаление NFT из корзины
+        print("delete \(nftId)")
     }
 }
 
@@ -121,6 +138,7 @@ extension CartViewController: UITableViewDelegate {
 private extension CartViewController {
     func setupUI() {
         view.backgroundColor = .nftWhite
+        setupProgress()
 
         let sortButton = UIBarButtonItem(image: UIImage(named: "action_sort") ?? UIImage(),
                                           style: .plain,
@@ -131,6 +149,8 @@ private extension CartViewController {
 
         view.addSubview(nftCartTableView)
         view.addSubview(nftPaymentView)
+        displayNftCount()
+        displayPriceTotal()
 
         NSLayoutConstraint.activate([
             nftCartTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -149,7 +169,14 @@ private extension CartViewController {
             emptyCartPlaceholderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             emptyCartPlaceholderView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-        displayEmptyCartPlaceholder(isEmptyCart)
+        displayEmptyCartPlaceholder(true)
+    }
+
+    func setupProgress() {
+        ProgressHUD.animationType = .systemActivityIndicator
+        ProgressHUD.colorHUD = .nftBlack
+        ProgressHUD.colorAnimation = .nftLightgrey
+        ProgressHUD.show()
     }
 
     func createTableView() -> UITableView {
@@ -159,6 +186,14 @@ private extension CartViewController {
         table.register(CartViewCell.self)
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
+    }
+
+    func displayPriceTotal() {
+        nftPriceTotalLabel.text = PriceFormatter.formattedPrice(nftPriceTotal)
+    }
+
+    func displayNftCount() {
+        nftCountLabel.text = "\(nftCount) NFT"
     }
 
     func createPaymentView() -> UIView {
@@ -196,21 +231,19 @@ private extension CartViewController {
     }
 
     func createCountLabel() -> UILabel {
-        let nftCountLabel = UILabel()
-        nftCountLabel.text = "\(nftCount) NFT"
-        nftCountLabel.font = .caption1
-        nftCountLabel.textColor = .nftBlack
-        nftCountLabel.translatesAutoresizingMaskIntoConstraints = false
-        return nftCountLabel
+        let label = UILabel()
+        label.font = .caption1
+        label.textColor = .nftBlack
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }
 
     func createPriceTotalLabel() -> UILabel {
-        let nftPriceTotalLabel = UILabel()
-        nftPriceTotalLabel.text = PriceFormatter.formattedPrice(nftPriceTotal)
-        nftPriceTotalLabel.font = .bodyBold
-        nftPriceTotalLabel.textColor = .nftGreenUniversal
-        nftPriceTotalLabel.translatesAutoresizingMaskIntoConstraints = false
-        return nftPriceTotalLabel
+        let label = UILabel()
+        label.font = .bodyBold
+        label.textColor = .nftGreenUniversal
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }
 
     func createEmptyCartPlaceholder() -> UIView {

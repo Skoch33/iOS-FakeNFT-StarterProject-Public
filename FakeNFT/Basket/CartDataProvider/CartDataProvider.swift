@@ -9,6 +9,7 @@ import Foundation
 
 protocol CartDataProviderProtocol {
     var numberOfNft: Int { get }
+    var nftList: [String: CartNftInfo] { get }
     var cartDidChangeNotification: Notification.Name { get }
     func getAllNftInCart()
 }
@@ -19,8 +20,8 @@ extension CartDataProviderProtocol {
 
 final class CartDataProvider: CartDataProviderProtocol {
 
-    var nftList: [String: CartNftInfo] = [:]
     var numberOfNft: Int { nftList.count }
+    private(set) var nftList: [String: CartNftInfo] = [:]
 
     func getAllNftInCart() {
         nftList.removeAll()
