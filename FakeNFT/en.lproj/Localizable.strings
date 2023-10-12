@@ -3,3 +3,20 @@
 "TabBarController.Basket" = "Basket";
 "TabBarController.Statistics" = "Statistics";
 
+// MARK: - Profile
+
+// MainScreen
+"ProfileViewController.myNFT" = "My NFT";
+"ProfileViewController.favouritesNFT" = "Favorites NFT";
+"ProfileViewController.aboutDeveloper" = "About developer";
+
+// EditScreen
+"EditingViewController.changePhoto" = "Change photo";
+"EditingViewController.name" = "Name";
+"EditingViewController.description" = "Description";
+"EditingViewController.site" = "Website";
+
+//ProgressHUD
+"ProgressHUD.loading" = "Loading ...";
+
+
