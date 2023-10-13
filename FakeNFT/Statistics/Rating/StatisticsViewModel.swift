@@ -13,6 +13,7 @@ enum SortType: String {
 
 protocol StatisticsViewModelProtocol: AnyObject {
     var dataChanged: (() -> Void)? { get set }
+    var isDataLoading: ((Bool) -> Void)? { get set }
     var users: [User] { get set }
     func usersCount() -> Int
     func loadData()
@@ -22,6 +23,8 @@ protocol StatisticsViewModelProtocol: AnyObject {
 
 final class StatisticsViewModel: StatisticsViewModelProtocol {
     private let sortTypeKey = "sortTypeKey"
+    
+    var isDataLoading: ((Bool) -> Void)?
     
     var dataChanged: (() -> Void)?
     
@@ -36,6 +39,7 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
     }
     
     func loadData() {
+        isDataLoading?(true)
         guard let url = URL(string: "https://651ff0d9906e276284c3c20a.mockapi.io/api/v1/users") else { return }
 
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
@@ -52,6 +56,7 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
                     DispatchQueue.main.async {
                         self?.users = users
                         self?.loadPreviousSortingState()
+                        self?.isDataLoading?(false)
                     }
                 } catch {
                     print("Error: \(error)")

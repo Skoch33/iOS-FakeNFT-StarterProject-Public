@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 final class StatisticsViewController: UIViewController {
     private lazy var tableView: UITableView = {
@@ -88,6 +89,13 @@ final class StatisticsViewController: UIViewController {
     }
     
     private func bind() {
+        viewModel.isDataLoading = { isLoading in
+            if isLoading {
+                ProgressHUD.show()
+            } else {
+                ProgressHUD.dismiss()
+            }
+        }
         viewModel.dataChanged = { [weak self] in
             self?.tableView.reloadData()
         }
