@@ -11,6 +11,7 @@ protocol CartViewModelProtocol {
     func viewDidLoad()
     func bind(_ bindings: CartViewModelBindings)
     func sortOrderDidChange(to sortBy: CartSortOrder)
+    func deleteNftDidApprove(for id: String)
 }
 
 final class CartViewModel: CartViewModelProtocol {
@@ -59,6 +60,10 @@ final class CartViewModel: CartViewModelProtocol {
     func sortOrderDidChange(to sortOder: CartSortOrder) {
         settingsStorage.cartSortOrder = sortOder
         nftList = sortingService.sorted(nftList, by: sortOder)
+    }
+
+    func deleteNftDidApprove(for id: String) {
+        print("Deletion of \(id) did approve")
     }
 
     private func calcCartPriceTotal() -> Decimal {

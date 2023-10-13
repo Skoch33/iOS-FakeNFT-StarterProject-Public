@@ -26,9 +26,9 @@
 - Сохранение способа сортировки (est: 1h; fact: 0.5h)
 
 #### Экран "Delete From Cart"
-- Верстка экрана (est: 1h; fact: )
+- Верстка экрана (est: 1h; fact: 2h)
 - Сервис "Изменение заказа `apiV1Orders1Put`" (est: 3h; fact: )
-- viewModel экрана (est: 1h; fact: )
+- viewModel экрана (est: 1h; fact: 1h)
 
 #### Экран "Выбор способа оплаты"
 - Сервис "Получение списка валют `apiV1CurrenciesGet`" (est: 3h; fact: )

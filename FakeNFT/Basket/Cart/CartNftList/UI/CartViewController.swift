@@ -1,6 +1,10 @@
 import UIKit
 import ProgressHUD
 
+protocol DeleteNftDelegate: AnyObject {
+    func deleteNftDidApprove(for id: String)
+}
+
 final class CartViewController: UIViewController {
 
     var viewModel: CartViewModelProtocol? {
@@ -118,10 +122,17 @@ extension CartViewController: CartCellDelegate {
         let controller = DeleteNftViewController()
         controller.nftImage = image as? UIImage
         controller.nftImageURL = imageURL
-        controller.nftId = nftId
+        let viewModel = DeleteNftViewModel(delegate: self, nftId: nftId)
+        controller.viewModel = viewModel
         controller.modalPresentationStyle = .overFullScreen
         controller.modalTransitionStyle = .crossDissolve
         present(controller, animated: true)
+    }
+}
+
+extension CartViewController: DeleteNftDelegate {
+    func deleteNftDidApprove(for id: String) {
+        viewModel?.deleteNftDidApprove(for: id)
     }
 }
 

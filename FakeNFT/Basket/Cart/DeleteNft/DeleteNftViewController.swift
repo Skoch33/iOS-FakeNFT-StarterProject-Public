@@ -10,6 +10,8 @@ import Kingfisher
 
 class DeleteNftViewController: UIViewController {
 
+    var viewModel: DeleteNftViewModelProtocol?
+
     var nftImage: UIImage?
     var nftImageURL: URL?
     var nftId: String?
@@ -24,7 +26,8 @@ class DeleteNftViewController: UIViewController {
     }
 
     @objc private func deleteButtonDidTap() {
-        print("delete nft \(nftId!)")
+        viewModel?.deleteButtonDidTap()
+        dismiss(animated: true)
     }
 
     @objc private func backButtonDidTap() {
