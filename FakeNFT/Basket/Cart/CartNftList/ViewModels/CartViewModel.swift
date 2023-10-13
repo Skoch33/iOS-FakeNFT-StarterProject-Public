@@ -20,9 +20,17 @@ final class CartViewModel: CartViewModelProtocol {
     @Observable private var isEmptyCartPlaceholderDisplaying: Bool
 
     private var dataProvider: CartDataProviderProtocol
+    private var settingsStorage: CartSettingsStorageProtocol
+    private var sortingService: NftSortingServiceProtocol
 
-    init(dataProvider: CartDataProviderProtocol) {
+    init(
+        dataProvider: CartDataProviderProtocol,
+        settingsStorage: CartSettingsStorageProtocol = DefaultCartSettingsStorage(),
+        sortingService: NftSortingServiceProtocol = DefaultNftSortingService()
+    ) {
         self.dataProvider = dataProvider
+        self.settingsStorage = settingsStorage
+        self.sortingService = sortingService
         self.numberOfNft = 0
         self.priceTotal = 0
         self.nftList = []
@@ -48,9 +56,9 @@ final class CartViewModel: CartViewModelProtocol {
         self.$isEmptyCartPlaceholderDisplaying.bind(action: bindings.isEmptyCartPlaceholderDisplaying)
     }
 
-    func sortOrderDidChange(to sortBy: CartSortOrder) {
-        // TODO: реализовать сортировку nftList
-        print("change sort order to: \(sortBy)")
+    func sortOrderDidChange(to sortOder: CartSortOrder) {
+        settingsStorage.cartSortOrder = sortOder
+        nftList = sortingService.sorted(nftList, by: sortOder)
     }
 
     private func calcCartPriceTotal() -> Decimal {
@@ -61,6 +69,6 @@ final class CartViewModel: CartViewModelProtocol {
         isEmptyCartPlaceholderDisplaying = dataProvider.nftList.isEmpty
         numberOfNft = dataProvider.numberOfNft
         priceTotal = calcCartPriceTotal()
-        nftList = dataProvider.nftList.map { $0.value }
+        nftList = sortingService.sorted(dataProvider.nftList.map({ $0.value }), by: settingsStorage.cartSortOrder)
     }
 }
