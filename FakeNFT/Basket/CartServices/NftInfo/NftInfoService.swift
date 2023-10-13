@@ -18,18 +18,14 @@ final class NftInfoService {
 
         let request = NFTInfoRequest(id: id)
         task = networkClient.send(request: request, type: NftInfoDto.self) { [weak self] result in
-            switch result {
-            case .success(let data):
-                let nftInfo = CartNftInfo(dto: data)
-                self?.task = nil
-                self?.currentId = nil
-                DispatchQueue.main.async {
+            self?.task = nil
+            self?.currentId = nil
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let data):
+                    let nftInfo = CartNftInfo(dto: data)
                     onResponse(.success(nftInfo))
-                }
-            case .failure(let error):
-                self?.task = nil
-                self?.currentId = nil
-                DispatchQueue.main.async {
+                case .failure(let error):
                     onResponse(.failure(error))
                 }
             }

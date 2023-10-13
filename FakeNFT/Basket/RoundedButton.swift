@@ -28,7 +28,7 @@ final class RoundedButton: UIButton {
         layer.cornerRadius = 16
         layer.masksToBounds = true
         titleLabel?.font = .bodyBold
-        titleLabel?.textColor = .nftWhite
+        setTitleColor(.nftWhite, for: .normal)
         translatesAutoresizingMaskIntoConstraints = false
     }
 }

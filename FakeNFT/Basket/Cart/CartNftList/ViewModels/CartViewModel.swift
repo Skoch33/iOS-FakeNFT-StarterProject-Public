@@ -13,13 +13,6 @@ protocol CartViewModelProtocol {
     func sortOrderDidChange(to sortBy: CartSortOrder)
 }
 
-struct CartViewModelBindings {
-    let numberOfNft: (Int) -> Void
-    let priceTotal: (Decimal) -> Void
-    let nftList: ([CartNftInfo]) -> Void
-    let isEmptyCartPlaceholderDisplaying: (Bool) -> Void
-}
-
 final class CartViewModel: CartViewModelProtocol {
     @Observable private var numberOfNft: Int
     @Observable private var priceTotal: Decimal
@@ -31,7 +24,7 @@ final class CartViewModel: CartViewModelProtocol {
     init(dataProvider: CartDataProviderProtocol) {
         self.dataProvider = dataProvider
         self.numberOfNft = 0
-        self.priceTotal = Decimal(0)
+        self.priceTotal = 0
         self.nftList = []
         self.isEmptyCartPlaceholderDisplaying = true
     }
@@ -40,10 +33,11 @@ final class CartViewModel: CartViewModelProtocol {
         NotificationCenter.default.addObserver(
             forName: dataProvider.cartDidChangeNotification,
             object: nil,
-            queue: .main) {[weak self] _ in
-                guard let self else { return }
-                self.updateNftList()
-            }
+            queue: .main
+        ) { [weak self] _ in
+            guard let self else { return }
+            self.updateNftList()
+        }
         dataProvider.getAllNftInCart()
     }
 

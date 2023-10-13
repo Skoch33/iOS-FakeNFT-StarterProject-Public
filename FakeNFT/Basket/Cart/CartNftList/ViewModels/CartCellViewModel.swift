@@ -17,16 +17,9 @@ protocol CartCellDelegate: AnyObject {
     func deleteButtonDidTap(for nftId: String)
 }
 
-struct CartCellViewModelBindings {
-    let rating: (Int) -> Void
-    let price: (Decimal) -> Void
-    let name: (String) -> Void
-    let imageURL: (URL?) -> Void
-}
-
 final class CartCellViewModel: CartCellViewModelProtocol {
     @Observable private var rating: Int = 0
-    @Observable private var price: Decimal = Decimal(0)
+    @Observable private var price: Decimal = 0
     @Observable private var name: String = ""
     @Observable private var imageURL: URL?
 

@@ -16,12 +16,8 @@ struct PriceFormatter {
     }()
 
     static func formattedPrice(_ value: Decimal?, currency: String = "ETH") -> String {
-        return String(
-            format: "%@ %@",
-            PriceFormatter.numberFormatter.string(
-                from: NSDecimalNumber(decimal: value ?? 0.0)
-            ) ?? "0",
-            currency
-        )
+        let format = "%@ %@"
+        let number = NSDecimalNumber(decimal: value ?? 0.0)
+        return String(format: format, PriceFormatter.numberFormatter.string(from: number) ?? "0", currency)
     }
 }

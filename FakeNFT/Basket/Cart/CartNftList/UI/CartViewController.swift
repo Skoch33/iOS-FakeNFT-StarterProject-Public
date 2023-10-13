@@ -8,15 +8,15 @@ final class CartViewController: UIViewController {
             bindViewModel()
         }
     }
-    private let layoutMargin = CGFloat(16)
+    private let layoutMargin: CGFloat = 16
     private lazy var nftCountLabel = createCountLabel()
     private lazy var nftPriceTotalLabel = createPriceTotalLabel()
     private lazy var nftCartTableView = createTableView()
     private lazy var nftPaymentView = createPaymentView()
     private lazy var emptyCartPlaceholderView = createEmptyCartPlaceholder()
 
-    private var nftCount: Int = 0
-    private var nftPriceTotal: Decimal = Decimal(0)
+    private var nftCount: Int = .zero
+    private var nftPriceTotal: Decimal = .zero
     private var nftList: [CartNftInfo] = []
 
     override func viewDidLoad() {
@@ -60,17 +60,10 @@ final class CartViewController: UIViewController {
     }
 
     private func displayEmptyCartPlaceholder(_ isPlaceHolderVisible: Bool) {
-        if isPlaceHolderVisible {
-            emptyCartPlaceholderView.isHidden = false
-            nftCartTableView.isHidden = true
-            nftPaymentView.isHidden = true
-            navigationController?.isNavigationBarHidden = true
-        } else {
-            emptyCartPlaceholderView.isHidden = true
-            nftCartTableView.isHidden = false
-            nftPaymentView.isHidden = false
-            navigationController?.isNavigationBarHidden = false
-        }
+        emptyCartPlaceholderView.isHidden = !isPlaceHolderVisible
+        nftCartTableView.isHidden = isPlaceHolderVisible
+        nftPaymentView.isHidden = isPlaceHolderVisible
+        navigationController?.isNavigationBarHidden = isPlaceHolderVisible
     }
 
     private func createAlertController() -> UIAlertController {
@@ -140,10 +133,12 @@ private extension CartViewController {
         view.backgroundColor = .nftWhite
         setupProgress()
 
-        let sortButton = UIBarButtonItem(image: UIImage(named: "action_sort") ?? UIImage(),
-                                          style: .plain,
-                                          target: self,
-                                          action: #selector(sortButtonDidTap))
+        let sortButton = UIBarButtonItem(
+            image: UIImage(named: "action_sort") ?? UIImage(),
+            style: .plain,
+            target: self,
+            action: #selector(sortButtonDidTap)
+        )
         sortButton.tintColor = .nftBlack
         navigationItem.rightBarButtonItem = sortButton
 
@@ -181,6 +176,9 @@ private extension CartViewController {
 
     func createTableView() -> UITableView {
         let table = UITableView()
+        table.separatorStyle = .none
+        table.allowsSelection = false
+        table.backgroundColor = .nftWhite
         table.delegate = self
         table.dataSource = self
         table.register(CartViewCell.self)

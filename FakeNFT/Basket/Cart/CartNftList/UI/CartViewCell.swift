@@ -16,10 +16,10 @@ final class CartViewCell: UITableViewCell, ReuseIdentifying {
         }
     }
 
-    private let layoutMargin = CGFloat(16)
+    private let layoutMargin: CGFloat = 16
     private lazy var nftImageView: UIImageView = createNFTImageView()
     private lazy var nftNameLabel: UILabel = createNFTNameLabel()
-    private lazy var nftRatingView = RatingView(rating: 0)
+    private lazy var nftRatingView = RatingView(rating: .zero)
     private lazy var nftPriceLabel: UILabel = createNFTPriceLabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -63,6 +63,7 @@ final class CartViewCell: UITableViewCell, ReuseIdentifying {
 private extension CartViewCell {
     func setupUI() {
 
+        backgroundColor = .nftWhite
         contentView.addSubview(nftImageView)
         NSLayoutConstraint.activate([
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: layoutMargin),
@@ -103,32 +104,31 @@ private extension CartViewCell {
         nameStackView.alignment = .leading
         nameStackView.spacing = 4
         nameStackView.distribution = .fill
-        nameStackView.translatesAutoresizingMaskIntoConstraints = false
 
         let priceView = UILabel()
         priceView.text = NSLocalizedString("CartViewCell.Price", comment: "")
         priceView.font = .caption2
         priceView.textColor = .nftBlack
         priceView.textAlignment = .left
-        priceView.translatesAutoresizingMaskIntoConstraints = false
 
         let priceStackView = UIStackView(arrangedSubviews: [priceView, nftPriceLabel])
         priceStackView.axis = .vertical
         priceStackView.alignment = .leading
         priceStackView.spacing = 2
         priceStackView.distribution = .fill
-        priceStackView.translatesAutoresizingMaskIntoConstraints = false
 
         let infoStackView = UIStackView(arrangedSubviews: [nameStackView, priceStackView])
         infoStackView.axis = .vertical
         infoStackView.alignment = .leading
         infoStackView.spacing = 12
         infoStackView.distribution = .fill
-        infoStackView.translatesAutoresizingMaskIntoConstraints = false
 
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(infoStackView)
+
+        [nameStackView, priceView, priceStackView, infoStackView, view].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
         NSLayoutConstraint.activate([
             nftRatingView.heightAnchor.constraint(equalToConstant: 12),
             infoStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),

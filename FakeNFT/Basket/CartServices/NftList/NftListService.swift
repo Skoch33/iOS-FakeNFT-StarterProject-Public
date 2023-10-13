@@ -18,16 +18,13 @@ final class NftListService {
         task?.cancel()
         let request = NftListRequest()
         task = networkClient.send(request: request, type: OrderDto.self) { [weak self] result in
-            switch result {
-            case .success(let dto):
-                let nftIds = CartNftList(dto: dto)
-                self?.task = nil
-                DispatchQueue.main.async {
+            self?.task = nil
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let dto):
+                    let nftIds = CartNftList(dto: dto)
                     onResponse(.success(nftIds))
-                }
-            case .failure(let error):
-                self?.task = nil
-                DispatchQueue.main.async {
+                case .failure(let error):
                     onResponse(.failure(error))
                 }
             }
