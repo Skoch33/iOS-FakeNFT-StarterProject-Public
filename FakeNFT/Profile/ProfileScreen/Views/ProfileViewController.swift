@@ -2,6 +2,9 @@ import UIKit
 import Kingfisher
 
 final class ProfileViewController: UIViewController {
+    
+    // MARK: - UI properties
+    
     private let userNameLabel: UILabel = {
         let label = UILabel()
         label.font = .headline2
@@ -32,9 +35,6 @@ final class ProfileViewController: UIViewController {
         return textView
     }()
     
-    private let viewModel: ProfileViewModelProtocol
-    private lazy var router = ProfileRouter(viewController: self)
-    
     private lazy var editButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "edit"), for: .normal)
@@ -59,6 +59,13 @@ final class ProfileViewController: UIViewController {
         return tableView
     }()
     
+    //MARK: - Properties
+    
+    private let viewModel: ProfileViewModelProtocol
+    private lazy var router = ProfileRouter(viewController: self)
+    
+    // MARK: - Lifecycle
+    
     init(viewModel: ProfileViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -81,10 +88,14 @@ final class ProfileViewController: UIViewController {
         setupViews()
     }
     
+    // MARK: - Actions
+    
     @objc
     private func editButtonTapped() {
         router.routeToEditingViewController(viewModel: viewModel)
     }
+    
+    // MARK: - Methods
     
     private func bind() {
         viewModel.observeUserProfileChanges { [weak self] profileModel in
@@ -116,6 +127,8 @@ final class ProfileViewController: UIViewController {
             }
         }
     }
+    
+    //MARK: - Layout methods
     
     private func setupViews() {
         view.backgroundColor = .white

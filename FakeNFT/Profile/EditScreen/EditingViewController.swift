@@ -2,8 +2,8 @@ import UIKit
 import Kingfisher
 
 final class EditingViewController: UIViewController {
-    private let viewModel: ProfileViewModelProtocol
-    private let viewFactory = ViewFactory()
+    
+    // MARK: - UI properties
     
     private let userPhotoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -19,17 +19,6 @@ final class EditingViewController: UIViewController {
         view.layer.cornerRadius = 35
         return view
     }()
-    
-    private lazy var alertService: AlertServiceProtocol = {
-        return AlertService(viewController: self)
-    }()
-    
-    private lazy var nameLabel = viewFactory.createTextLabel()
-    private lazy var nameTextView = viewFactory.createTextView()
-    private lazy var descriptionLabel = viewFactory.createTextLabel()
-    private lazy var descriptionTextView = viewFactory.createTextView()
-    private lazy var webSiteLabel = viewFactory.createTextLabel()
-    private lazy var webSiteTextView = viewFactory.createTextView()
     
     private lazy var exitButton: UIButton = {
         let button = UIButton()
@@ -50,6 +39,24 @@ final class EditingViewController: UIViewController {
         button.addTarget(self, action: #selector(changePhotoTapped), for: .touchUpInside)
         return button
     }()
+    
+    //MARK: - Properties
+    
+    private lazy var alertService: AlertServiceProtocol = {
+        return AlertService(viewController: self)
+    }()
+    
+    private let viewModel: ProfileViewModelProtocol
+    private let viewFactory = ViewFactory()
+    
+    private lazy var nameLabel = viewFactory.createTextLabel()
+    private lazy var nameTextView = viewFactory.createTextView()
+    private lazy var descriptionLabel = viewFactory.createTextLabel()
+    private lazy var descriptionTextView = viewFactory.createTextView()
+    private lazy var webSiteLabel = viewFactory.createTextLabel()
+    private lazy var webSiteTextView = viewFactory.createTextView()
+    
+    // MARK: - Lifecycle
     
     init(viewModel: ProfileViewModelProtocol) {
         self.viewModel = viewModel
@@ -73,6 +80,8 @@ final class EditingViewController: UIViewController {
         viewModel.saveUserProfile()
     }
     
+    // MARK: - Actions
+    
     @objc
     private func exitButtonTapped() {
         dismiss(animated: true)
@@ -92,6 +101,8 @@ final class EditingViewController: UIViewController {
         }
     }
     
+    // MARK: - Methods
+    
     private func bind() {
         viewModel.observeUserProfileChanges { [weak self] (profile: UserProfileModel?) in
             guard
@@ -101,6 +112,24 @@ final class EditingViewController: UIViewController {
             self.configureUIElements(with: profile)
         }
     }
+    
+    private func setupDelegates() {
+        [nameTextView, descriptionTextView, webSiteTextView].forEach { $0.delegate = self }
+    }
+    
+    private func configureUIElements(with profile: UserProfileModel) {
+        DispatchQueue.main.async { [weak self] in
+            self?.userPhotoImageView.kf.setImage(with: URL(string: profile.avatar))
+            self?.nameLabel.text = NSLocalizedString("EditingViewController.name", comment: "")
+            self?.nameTextView.text = profile.name
+            self?.descriptionLabel.text = NSLocalizedString("EditingViewController.description", comment: "")
+            self?.descriptionTextView.text = profile.description
+            self?.webSiteLabel.text = NSLocalizedString("EditingViewController.site", comment: "")
+            self?.webSiteTextView.text = profile.website
+        }
+    }
+    
+    //MARK: - Layout methods
     
     private func setupViews() {
         view.backgroundColor = .white
@@ -157,22 +186,6 @@ final class EditingViewController: UIViewController {
             webSiteTextView.topAnchor.constraint(equalTo: webSiteLabel.bottomAnchor, constant: 8),
             
         ])
-    }
-    
-    private func setupDelegates() {
-        [nameTextView, descriptionTextView, webSiteTextView].forEach { $0.delegate = self }
-    }
-    
-    private func configureUIElements(with profile: UserProfileModel) {
-        DispatchQueue.main.async { [weak self] in
-            self?.userPhotoImageView.kf.setImage(with: URL(string: profile.avatar))
-            self?.nameLabel.text = NSLocalizedString("EditingViewController.name", comment: "")
-            self?.nameTextView.text = profile.name
-            self?.descriptionLabel.text = NSLocalizedString("EditingViewController.description", comment: "")
-            self?.descriptionTextView.text = profile.description
-            self?.webSiteLabel.text = NSLocalizedString("EditingViewController.site", comment: "")
-            self?.webSiteTextView.text = profile.website
-        }
     }
 }
 
