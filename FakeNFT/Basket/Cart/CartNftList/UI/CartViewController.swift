@@ -114,9 +114,14 @@ extension CartViewController: UITableViewDataSource {
 
 // MARK: CartCellDelegate
 extension CartViewController: CartCellDelegate {
-    func deleteButtonDidTap(for nftId: String) {
-        // TODO: реализовать удаление NFT из корзины
-        print("delete \(nftId)")
+    func deleteButtonDidTap(for nftId: String, with image: Any?, imageURL: URL?) {
+        let controller = DeleteNftViewController()
+        controller.nftImage = image as? UIImage
+        controller.nftImageURL = imageURL
+        controller.nftId = nftId
+        controller.modalPresentationStyle = .overFullScreen
+        controller.modalTransitionStyle = .crossDissolve
+        present(controller, animated: true)
     }
 }
 

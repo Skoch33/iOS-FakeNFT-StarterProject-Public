@@ -11,3 +11,6 @@
 "CartViewController.SortAlert.byName" = "По названию";
 "CartViewController.SortAlert.cancel" = "Закрыть";
 "CartViewCell.Price" = "Цена";
+"Cart.DeleteNftViewController.deleteButton" = "Удалить";
+"Cart.DeleteNftViewController.backButton" = "Вернуться";
+"Cart.DeleteNftViewController.deleteMessage" = "Вы уверены, что хотите удалить объект из корзины?";

@@ -10,11 +10,11 @@ import Foundation
 protocol CartCellViewModelProtocol {
     func cellReused(for nft: CartNftInfo)
     func bind(_ bindings: CartCellViewModelBindings)
-    func deleteButtonDidTap()
+    func deleteButtonDidTap(image: Any?)
 }
 
 protocol CartCellDelegate: AnyObject {
-    func deleteButtonDidTap(for nftId: String)
+    func deleteButtonDidTap(for nftId: String, with image: Any?, imageURL: URL?)
 }
 
 final class CartCellViewModel: CartCellViewModelProtocol {
@@ -45,7 +45,7 @@ final class CartCellViewModel: CartCellViewModelProtocol {
         self.$imageURL.bind(action: bindings.imageURL)
     }
 
-    func deleteButtonDidTap() {
-        delegate?.deleteButtonDidTap(for: nftId)
+    func deleteButtonDidTap(image: Any?) {
+        delegate?.deleteButtonDidTap(for: nftId, with: image, imageURL: imageURL)
     }
 }

@@ -37,7 +37,7 @@ final class CartViewCell: UITableViewCell, ReuseIdentifying {
     }
 
     @objc private func deleteButtonDidTap() {
-        viewModel?.deleteButtonDidTap()
+        viewModel?.deleteButtonDidTap(image: nftImageView.image)
     }
 
     private func bindViewModel() {
