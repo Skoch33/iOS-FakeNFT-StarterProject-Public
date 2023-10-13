@@ -1,0 +1,13 @@
+"TabBarController.Profile" = "Профиль";
+"TabBarController.Catalog" = "Каталог";
+"TabBarController.Basket" = "Корзина";
+"TabBarController.Statistics" = "Статистика";
+
+"CartViewController.paymentButtonTitle" = "К оплате";
+"CartViewController.emptyCartPlaceholderText" = "Корзина пуста";
+"CartViewController.SortAlert.title" = "Сортировка";
+"CartViewController.SortAlert.byPrice" = "По цене";
+"CartViewController.SortAlert.byRating" = "По рейтингу";
+"CartViewController.SortAlert.byName" = "По названию";
+"CartViewController.SortAlert.cancel" = "Закрыть";
+"CartViewCell.Price" = "Цена";
