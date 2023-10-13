@@ -46,15 +46,17 @@ final class StatisticsViewController: UIViewController {
             message: nil,
             preferredStyle: .actionSheet
         )
-        let sortByNameButton = UIAlertAction(title: "По имени", style: .default) { [weak self] _ in
+        let sortByNameButton = UIAlertAction(title: "По имени",
+                                             style: .default) { [weak self] _ in
             self?.viewModel.sortUsersByName()
         }
         
-        let sortByRatingButton = UIAlertAction(title: "По рейтингу", style: .default) { [weak self] _ in
+        let sortByRatingButton = UIAlertAction(title: "По рейтингу",
+                                               style: .default) { [weak self] _ in
             self?.viewModel.sortUsersByRating()
         }
         
-        let closeButton = UIAlertAction(title: "Закрыть", style: .default)
+        let closeButton = UIAlertAction(title: "Закрыть", style: .cancel)
         alert.addAction(sortByNameButton)
         alert.addAction(sortByRatingButton)
         alert.addAction(closeButton)
