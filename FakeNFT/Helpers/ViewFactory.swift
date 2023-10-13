@@ -6,7 +6,7 @@ final class ViewFactory {
         label.font = .headline2
         return label
     }
-    
+
     func createTextView() -> UITextView {
         let textView = UITextView()
         textView.isScrollEnabled = false

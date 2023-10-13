@@ -12,11 +12,11 @@ struct UserProfileModel: Codable {
 
 final class ProfileModel {
     private let networkClient: NetworkClient
-    
+
     init() {
         self.networkClient = DefaultNetworkClient()
     }
-    
+
     func fetchProfile(request: NetworkRequest = FetchProfileNetworkRequest(),
                       completion: @escaping (Result<UserProfileModel, Error>) -> Void) {
         networkClient.send(request: request, type: UserProfileModel.self) { result in
@@ -28,7 +28,7 @@ final class ProfileModel {
             }
         }
     }
-    
+
     func updateProfile(with userProfileModel: UserProfileModel,
                        completion: @escaping (Result<UserProfileModel, Error>) -> Void) {
         let request = UpdateProfileNetworkRequest(userProfile: userProfileModel)

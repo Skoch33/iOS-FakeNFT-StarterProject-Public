@@ -6,15 +6,15 @@ final class ViewControllerFactory {
         // TODO: - индикатор загрузки
         return controller
     }
-    
+
     func makeUserNFTViewController() -> UserNFTViewController {
         return UserNFTViewController()
     }
-    
+
     func makeFavoritesNFTViewController() -> FavoritesNFTViewController {
         return FavoritesNFTViewController()
     }
-    
+
     func makeEditingViewController(viewModel: ProfileViewModelProtocol) -> EditingViewController {
         return EditingViewController(viewModel: viewModel)
     }

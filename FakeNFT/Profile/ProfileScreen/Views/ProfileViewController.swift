@@ -2,29 +2,29 @@ import UIKit
 import Kingfisher
 
 final class ProfileViewController: UIViewController {
-    
+
     // MARK: - UI properties
-    
+
     private let userNameLabel: UILabel = {
         let label = UILabel()
         label.font = .headline2
         return label
     }()
-    
+
     private let userDescriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .caption2
         label.numberOfLines = .zero
         return label
     }()
-    
+
     private let userWebSiteTextView: UITextView = {
         let textView = UITextView()
         let text = ""
         let attributedString = NSMutableAttributedString(string: text)
         let linkRange = NSRange(location: 0, length: text.count)
         attributedString.addAttribute(.link, value: text, range: linkRange)
-        
+
         textView.attributedText = attributedString
         textView.isEditable = false
         textView.isSelectable = true
@@ -34,14 +34,14 @@ final class ProfileViewController: UIViewController {
         textView.textContainer.lineFragmentPadding = 16
         return textView
     }()
-    
+
     private lazy var editButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "edit"), for: .normal)
         button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         return button
     }()
-    
+
     private lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -49,7 +49,7 @@ final class ProfileViewController: UIViewController {
         imageView.layer.cornerRadius = 35
         return imageView
     }()
-    
+
     private lazy var profileTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(ProfileCell.self)
@@ -58,45 +58,45 @@ final class ProfileViewController: UIViewController {
         tableView.separatorStyle = .none
         return tableView
     }()
-    
-    //MARK: - Properties
-    
+
+    // MARK: - Properties
+
     private let viewModel: ProfileViewModelProtocol
     private lazy var router = ProfileRouter(viewController: self)
-    
+
     // MARK: - Lifecycle
-    
+
     init(viewModel: ProfileViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.bind()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.navigationController?.delegate = self
-        
+
         self.tabBarController?.tabBar.isHidden = true
-        
+
         viewModel.fetchUserProfile()
-        
+
         setupViews()
     }
-    
+
     // MARK: - Actions
-    
+
     @objc
     private func editButtonTapped() {
         router.routeToEditingViewController(viewModel: viewModel)
     }
-    
+
     // MARK: - Methods
-    
+
     private func bind() {
         viewModel.observeUserProfileChanges { [weak self] profileModel in
             guard
@@ -106,12 +106,12 @@ final class ProfileViewController: UIViewController {
             self.updateUI(with: model)
         }
     }
-    
+
     private func updateUI(with model: UserProfileModel) {
         DispatchQueue.main.async { [weak self] in
             self?.profileImageView.kf.setImage(with: URL(string: model.avatar)) { result in
                 switch result {
-                case .success(_):
+                case .success:
                     DispatchQueue.main.async { [weak self] in
                         self?.userNameLabel.text = model.name
                         self?.userDescriptionLabel.text = model.description
@@ -127,12 +127,12 @@ final class ProfileViewController: UIViewController {
             }
         }
     }
-    
-    //MARK: - Layout methods
-    
+
+    // MARK: - Layout methods
+
     private func setupViews() {
         view.backgroundColor = .white
-        
+
         [editButton, profileImageView, userNameLabel, userDescriptionLabel, userWebSiteTextView, profileTableView].forEach {
             view.addViewWithNoTAMIC($0)
             $0.isHidden = true
@@ -143,24 +143,24 @@ final class ProfileViewController: UIViewController {
             editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
             editButton.heightAnchor.constraint(equalToConstant: 42),
             editButton.widthAnchor.constraint(equalTo: editButton.heightAnchor, multiplier: 1.0),
-            
+
             profileImageView.widthAnchor.constraint(equalToConstant: 70),
             profileImageView.heightAnchor.constraint(equalToConstant: 70),
             profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             profileImageView.topAnchor.constraint(equalTo: editButton.bottomAnchor, constant: 20),
-            
+
             userNameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
             userNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             userNameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor),
-            
+
             userDescriptionLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 20),
             userDescriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             userDescriptionLabel.trailingAnchor.constraint(equalTo: editButton.leadingAnchor),
-            
+
             userWebSiteTextView.topAnchor.constraint(equalTo: userDescriptionLabel.bottomAnchor, constant: 8),
             userWebSiteTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             userWebSiteTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
+
             profileTableView.topAnchor.constraint(equalTo: userWebSiteTextView.bottomAnchor, constant: 40),
             profileTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             profileTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -169,13 +169,13 @@ final class ProfileViewController: UIViewController {
     }
 }
 
-//MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource
 
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ProfileCell = tableView.dequeueReusableCell()
         var cellTitle = ""
@@ -190,18 +190,18 @@ extension ProfileViewController: UITableViewDataSource {
         default:
             break
         }
-        
+
         cell.configure(title: cellTitle)
         cell.selectionStyle = .none
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         54
     }
 }
 
-//MARK: - UITableViewDelegate
+// MARK: - UITableViewDelegate
 
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -228,7 +228,7 @@ extension ProfileViewController: UINavigationControllerDelegate {
             navigationController.setNavigationBarHidden(true, animated: animated)
         } else if viewController is UserNFTViewController || viewController is FavoritesNFTViewController || viewController is WebViewViewController {
             navigationController.setNavigationBarHidden(false, animated: animated)
-            
+
             let backItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
             self.navigationItem.backBarButtonItem = backItem
         }

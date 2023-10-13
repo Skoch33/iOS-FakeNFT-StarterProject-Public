@@ -12,7 +12,7 @@ extension UIView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         addGestureRecognizer(tapGesture)
     }
-    
+
     private var topSuperview: UIView? {
         var view = superview
         while view?.superview != nil {
@@ -20,7 +20,7 @@ extension UIView {
         }
         return view
     }
-    
+
     @objc
     private func dismissKeyboard() {
         topSuperview?.endEditing(true)
