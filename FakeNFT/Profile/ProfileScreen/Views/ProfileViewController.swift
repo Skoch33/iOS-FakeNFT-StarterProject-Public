@@ -11,7 +11,7 @@ final class ProfileViewController: UIViewController {
     private let userDescriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .caption2
-        label.numberOfLines = 0
+        label.numberOfLines = .zero
         return label
     }()
     
@@ -97,17 +97,17 @@ final class ProfileViewController: UIViewController {
     }
     
     private func updateUI(with model: UserProfileModel) {
-        DispatchQueue.main.async {
-            self.profileImageView.kf.setImage(with: URL(string: model.avatar)) { result in
+        DispatchQueue.main.async { [weak self] in
+            self?.profileImageView.kf.setImage(with: URL(string: model.avatar)) { result in
                 switch result {
                 case .success(_):
-                    DispatchQueue.main.async {
-                        self.userNameLabel.text = model.name
-                        self.userDescriptionLabel.text = model.description
-                        self.userWebSiteTextView.text = model.website
-                        [self.editButton, self.profileImageView, self.userNameLabel, self.userDescriptionLabel, self.userWebSiteTextView, self.profileTableView].forEach { $0.isHidden = false }
-                        self.tabBarController?.tabBar.isHidden = false
-                        self.profileTableView.reloadData()
+                    DispatchQueue.main.async { [weak self] in
+                        self?.userNameLabel.text = model.name
+                        self?.userDescriptionLabel.text = model.description
+                        self?.userWebSiteTextView.text = model.website
+                        [self!.editButton, self!.profileImageView, self!.userNameLabel, self!.userDescriptionLabel, self!.userWebSiteTextView, self!.profileTableView].forEach { $0.isHidden = false }
+                        self?.tabBarController?.tabBar.isHidden = false
+                        self?.profileTableView.reloadData()
                     }
                 case .failure(let error):
                     print(error)

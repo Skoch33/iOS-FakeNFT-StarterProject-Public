@@ -106,7 +106,10 @@ final class EditingViewController: UIViewController {
         view.backgroundColor = .white
         view.addTapGestureToHideKeyboard()
         
-        [exitButton, userPhotoImageView, overlayView, changePhotoButton, nameLabel, nameTextView, descriptionLabel, descriptionTextView, webSiteLabel, webSiteTextView].forEach { view.addViewWithNoTAMIC($0) }
+        [exitButton, userPhotoImageView, overlayView,
+         changePhotoButton, nameLabel, nameTextView,
+         descriptionLabel, descriptionTextView, webSiteLabel,
+         webSiteTextView].forEach { view.addViewWithNoTAMIC($0) }
         
         NSLayoutConstraint.activate([
             exitButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
@@ -161,14 +164,14 @@ final class EditingViewController: UIViewController {
     }
     
     private func configureUIElements(with profile: UserProfileModel) {
-        DispatchQueue.main.async {
-            self.userPhotoImageView.kf.setImage(with: URL(string: profile.avatar))
-            self.nameLabel.text = NSLocalizedString("EditingViewController.name", comment: "")
-            self.nameTextView.text = profile.name
-            self.descriptionLabel.text = NSLocalizedString("EditingViewController.description", comment: "")
-            self.descriptionTextView.text = profile.description
-            self.webSiteLabel.text = NSLocalizedString("EditingViewController.site", comment: "")
-            self.webSiteTextView.text = profile.website
+        DispatchQueue.main.async { [weak self] in
+            self?.userPhotoImageView.kf.setImage(with: URL(string: profile.avatar))
+            self?.nameLabel.text = NSLocalizedString("EditingViewController.name", comment: "")
+            self?.nameTextView.text = profile.name
+            self?.descriptionLabel.text = NSLocalizedString("EditingViewController.description", comment: "")
+            self?.descriptionTextView.text = profile.description
+            self?.webSiteLabel.text = NSLocalizedString("EditingViewController.site", comment: "")
+            self?.webSiteTextView.text = profile.website
         }
     }
 }

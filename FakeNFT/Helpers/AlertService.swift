@@ -1,7 +1,11 @@
 import UIKit
 
 protocol AlertServiceProtocol {
-    func showChangePhotoURLAlert(with title: String?, message: String?, textFieldPlaceholder: String?, confirmAction: @escaping (String?) -> Void)
+    func showChangePhotoURLAlert(with title: String?,
+                                 message: String?,
+                                 textFieldPlaceholder: String?,
+                                 confirmAction: @escaping (String?) -> Void)
+    
     func showAvatarChangeError()
 }
 
@@ -12,7 +16,10 @@ class AlertService: AlertServiceProtocol {
         self.viewController = viewController
     }
     
-    func showChangePhotoURLAlert(with title: String?, message: String?, textFieldPlaceholder: String?, confirmAction: @escaping (String?) -> Void) {
+    func showChangePhotoURLAlert(with title: String?,
+                                 message: String?,
+                                 textFieldPlaceholder: String?,
+                                 confirmAction: @escaping (String?) -> Void) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
@@ -37,6 +44,7 @@ class AlertService: AlertServiceProtocol {
         let alertController = UIAlertController(title: "Введен не корретный URL адрес",
                                                 message: "Адрес должен быть формата https://example.com/photo.img",
                                                 preferredStyle: .alert)
+        
         let confirm = UIAlertAction(title: "Ок", style: .cancel, handler: nil)
         
         alertController.addAction(confirm)
