@@ -124,8 +124,9 @@ extension StatisticsViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension StatisticsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let userCard = UserCardViewController()
-        userCard.users = viewModel.users[indexPath.row]
+        let userCardViewModel = UserCardViewModel()
+        userCardViewModel.user = viewModel.users[indexPath.row]
+        let userCard = UserCardViewController(viewModel: userCardViewModel)
         navigationController?.pushViewController(userCard, animated: true)
     }
 }
