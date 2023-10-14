@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		065779A92ADAF14F00C2FDEB /* UsersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779A82ADAF14F00C2FDEB /* UsersService.swift */; };
+		065779AB2ADB04E500C2FDEB /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779AA2ADB04E500C2FDEB /* WebViewViewController.swift */; };
 		06F519A92AD5BAD400E3B217 /* UserCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A12AD5BAD400E3B217 /* UserCardViewController.swift */; };
 		06F519AA2AD5BAD400E3B217 /* StatisticsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A32AD5BAD400E3B217 /* StatisticsCell.swift */; };
 		06F519AB2AD5BAD400E3B217 /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A42AD5BAD400E3B217 /* StatisticsViewModel.swift */; };
@@ -65,6 +66,7 @@
 
 /* Begin PBXFileReference section */
 		065779A82ADAF14F00C2FDEB /* UsersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersService.swift; sourceTree = "<group>"; };
+		065779AA2ADB04E500C2FDEB /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		06F519A12AD5BAD400E3B217 /* UserCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCardViewController.swift; sourceTree = "<group>"; };
 		06F519A32AD5BAD400E3B217 /* StatisticsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsCell.swift; sourceTree = "<group>"; };
 		06F519A42AD5BAD400E3B217 /* StatisticsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				06F519A12AD5BAD400E3B217 /* UserCardViewController.swift */,
+				065779AA2ADB04E500C2FDEB /* WebViewViewController.swift */,
 			);
 			path = UserCard;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				06F519AD2AD5BAD400E3B217 /* User.swift in Sources */,
+				065779AB2ADB04E500C2FDEB /* WebViewViewController.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				715D0F272AD1570000300497 /* ProfileViewController.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
