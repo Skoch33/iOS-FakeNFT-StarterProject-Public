@@ -34,36 +34,36 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
         }
     }
     
+    private let usersService: UsersServiceProtocol
+    
+    init(usersService: UsersServiceProtocol = UsersService()) {
+        self.usersService = usersService
+    }
+    
     func usersCount() -> Int {
         return users.count
     }
     
     func loadData() {
         isDataLoading?(true)
-        guard let url = URL(string: "https://651ff0d9906e276284c3c20a.mockapi.io/api/v1/users") else { return }
 
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+        usersService.getUsers { [weak self] users, error in
+            self?.isDataLoading?(false)
+            
             if let error = error {
-                print("Error: \(error)")
+                print(error.localizedDescription)
+                self?.isDataLoading?(false)
                 return
             }
-
-            if let data = data {
-                do {
-                    let decoder = JSONDecoder()
-                    let users = try decoder.decode([User].self, from: data)
-
-                    DispatchQueue.main.async {
-                        self?.users = users
-                        self?.loadPreviousSortingState()
-                        self?.isDataLoading?(false)
-                    }
-                } catch {
-                    print("Error: \(error)")
+            
+            if let users = users {
+                DispatchQueue.main.async { [weak self] in
+                    self?.users = users
+                    self?.loadPreviousSortingState()
+                    self?.isDataLoading?(false)
                 }
             }
         }
-        task.resume()
     }
     
     func sortUsersByName() {
