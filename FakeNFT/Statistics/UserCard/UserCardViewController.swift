@@ -41,6 +41,7 @@ final class UserCardViewController: UIViewController {
         button.setTitle("Перейти на сайт пользователя", for: .normal)
         button.setTitleColor(.nftBlack, for: .normal)
         button.titleLabel?.font = .caption1
+        button.addTarget(self, action: #selector(goToWebView), for: .touchUpInside)
         return button
     }()
     
@@ -68,6 +69,15 @@ final class UserCardViewController: UIViewController {
         setupNavigationBar()
         setupUI()
         showUser()
+    }
+    // MARK: - Actions
+    @objc
+    private func goToWebView() {
+        guard let website = users?.website,
+              let userURL = URL(string: website)
+        else { return}
+        let webView = WebViewViewController(webSite: userURL)
+        navigationController?.pushViewController(webView, animated: true)
     }
     // MARK: - setupUI
     private func setupNavigationBar() {
