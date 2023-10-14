@@ -48,6 +48,14 @@ final class CollectionViewController: UIViewController {
         return label
     }()
 
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.dataSource = self
+        collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "collectionCell")
+        collectionView.delegate = self
+        return collectionView
+    }()
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -65,6 +73,7 @@ final class CollectionViewController: UIViewController {
         setupAuthorTitleLabel()
         setupAuthorNameLabel()
         setupDescriptionLabel()
+        setupCollectionView()
     }
 
     private func setupCoverImage() {
@@ -130,4 +139,57 @@ final class CollectionViewController: UIViewController {
         navigationController?.pushViewController(webViewController, animated: true)
     }
 
+    private func setupCollectionView() {
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(collectionView)
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
+            collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            collectionView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32),
+            collectionView.heightAnchor.constraint(equalToConstant: 500)
+        ])
+    }
+}
+
+extension CollectionViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        return 18
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var collectionViewCell = UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as? CollectionViewCell else {
+            assertionFailure("Error get cell")
+            return .init()
+        }
+        cell.configure()
+        collectionViewCell = cell
+        return collectionViewCell
+    }
+}
+
+extension CollectionViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath) -> CGSize {
+            let cellMargins = 9.0
+            let cellCols = 3.0
+            let width = (collectionView.frame.width - cellMargins * (cellCols - 1)) / cellCols
+            return CGSize(width: width, height: 108)
+        }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+            return 9
+        }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        8
+    }
 }
