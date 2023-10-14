@@ -148,9 +148,13 @@ final class UserCardViewController: UIViewController {
         cache.clearDiskCache()
         
         userImageView.kf.indicatorType = .activity
-        if let url = viewModel.avatarUrl {
-            userImageView.kf.setImage(with: url,
-                                  placeholder: placeholder)
+        DispatchQueue.main.async {
+            if let url = self.viewModel.avatarUrl {
+                self.userImageView.kf.setImage(
+                    with: url,
+                    placeholder: self.placeholder
+                )
+            }
         }
         nameLabel.text = viewModel.userName
         descriptionLabel.text = viewModel.userDescription
