@@ -51,6 +51,7 @@ final class UserCardViewController: UIViewController {
                         for: .normal)
         button.setTitleColor(.nftBlack, for: .normal)
         button.titleLabel?.font = .bodyBold
+        button.addTarget(self, action: #selector(goToCollection), for: .touchUpInside)
         return button
     }()
     
@@ -78,6 +79,13 @@ final class UserCardViewController: UIViewController {
         else { return}
         let webView = WebViewViewController(webSite: userURL)
         navigationController?.pushViewController(webView, animated: true)
+    }
+    
+    @objc
+    private func goToCollection() {
+        let usersCollection = UserCollectionViewController()
+        usersCollection.title = "Коллекция NFT"
+        navigationController?.pushViewController(usersCollection, animated: true)
     }
     // MARK: - setupUI
     private func setupNavigationBar() {
