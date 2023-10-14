@@ -47,7 +47,7 @@ final class UserCardViewController: UIViewController {
     
     private lazy var userCollectionButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Коллекция NFT " + "(\(String(describing: users?.nfts.count ?? 0)))",
+        button.setTitle("Коллекция NFT " + "(\(String(describing: viewModel.nftCount)))",
                         for: .normal)
         button.setTitleColor(.nftBlack, for: .normal)
         button.titleLabel?.font = .bodyBold
@@ -62,8 +62,17 @@ final class UserCardViewController: UIViewController {
         return image
     }()
     
-    var users: User?
+    private let viewModel: UserCardViewModelProtocol
     private let placeholder = UIImage(named: "person.crop.circle.fill")
+    
+    init(viewModel: UserCardViewModelProtocol = UserCardViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     // MARK: - lifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,9 +83,7 @@ final class UserCardViewController: UIViewController {
     // MARK: - Actions
     @objc
     private func goToWebView() {
-        guard let website = users?.website,
-              let userURL = URL(string: website)
-        else { return}
+        guard let userURL = viewModel.userWebsiteUrl else { return}
         let webView = WebViewViewController(webSite: userURL)
         navigationController?.pushViewController(webView, animated: true)
     }
@@ -141,12 +148,11 @@ final class UserCardViewController: UIViewController {
         cache.clearDiskCache()
         
         userImageView.kf.indicatorType = .activity
-        guard let user = users else { return }
-        if let url = URL(string: user.avatar) {
+        if let url = viewModel.avatarUrl {
             userImageView.kf.setImage(with: url,
                                   placeholder: placeholder)
         }
-        nameLabel.text = user.name
-        descriptionLabel.text = user.description
+        nameLabel.text = viewModel.userName
+        descriptionLabel.text = viewModel.userDescription
     }
 }
