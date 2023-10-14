@@ -26,6 +26,7 @@ final class CatalogCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = .clear
         setupCollectionImage()
         setupNameLabel()
     }
@@ -39,8 +40,8 @@ final class CatalogCell: UITableViewCell {
         contentView.addSubview(collectionImage)
         NSLayoutConstraint.activate([
             collectionImage.topAnchor.constraint(equalTo: contentView.topAnchor),
-            collectionImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            collectionImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            collectionImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            collectionImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             collectionImage.heightAnchor.constraint(equalToConstant: 140)
         ])
     }
@@ -50,7 +51,7 @@ final class CatalogCell: UITableViewCell {
         contentView.addSubview(nameLabel)
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: collectionImage.bottomAnchor, constant: 4),
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
         ])
     }
 
@@ -60,8 +61,11 @@ final class CatalogCell: UITableViewCell {
         nameLabel.text = "\(collection.name) (\(collection.nfts.count))"
 
         guard
-            let url = URL(string: collection.cover)
-        else { return }
+            let urlString = collection.cover.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+            let url = URL(string: urlString)
+        else {
+            return
+        }
         collectionImage.kf.indicatorType = .activity
         collectionImage.kf.setImage(with: url, placeholder: nulPhotoImage)
     }
