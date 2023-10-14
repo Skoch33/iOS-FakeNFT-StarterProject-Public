@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class UserCardViewController: UIViewController {
     // MARK: - UI
@@ -60,11 +61,13 @@ final class UserCardViewController: UIViewController {
     }()
     
     var users: User?
+    private let placeholder = UIImage(named: "person.crop.circle.fill")
     // MARK: - lifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
         setupUI()
+        showUser()
     }
     // MARK: - setupUI
     private func setupNavigationBar() {
@@ -112,5 +115,20 @@ final class UserCardViewController: UIViewController {
             chevronImage.centerYAnchor.constraint(equalTo: userCollectionButton.centerYAnchor),
             chevronImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
+    }
+// MARK: - SetupUserInformation
+    private func showUser() {
+        let cache = ImageCache.default
+        cache.clearMemoryCache()
+        cache.clearDiskCache()
+        
+        userImageView.kf.indicatorType = .activity
+        guard let user = users else { return }
+        if let url = URL(string: user.avatar) {
+            userImageView.kf.setImage(with: url,
+                                  placeholder: placeholder)
+        }
+        nameLabel.text = user.name
+        descriptionLabel.text = user.description
     }
 }
