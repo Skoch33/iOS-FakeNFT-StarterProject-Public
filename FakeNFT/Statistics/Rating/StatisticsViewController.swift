@@ -21,7 +21,7 @@ final class StatisticsViewController: UIViewController {
         return tableView
     }()
     
-    private var viewModel: StatisticsViewModelProtocol
+    private let viewModel: StatisticsViewModelProtocol
     
     init(viewModel: StatisticsViewModelProtocol = StatisticsViewModel()) {
         self.viewModel = viewModel
