@@ -1,8 +1,10 @@
 import UIKit
+import ProgressHUD
 
 final class CatalogViewController: UIViewController {
 
-    private var catalogViewModel: CatalogViewModel
+    var catalogViewModel: CatalogViewModelProtocol
+    private var collections: [CollectionModel] = []
 
     private lazy var tableView: UITableView = {
         let view = UITableView()
@@ -32,17 +34,31 @@ final class CatalogViewController: UIViewController {
         setupNavigationBar()
         setupTableView()
 
+        bindViewModel()
         catalogViewModel.loadCollection()
+    }
 
-        catalogViewModel.$collections.bind { [weak self] _ in
-            guard let self else { return }
-            self.tableView.reloadData()
-        }
-
-        catalogViewModel.$errorString.bind { [weak self] _ in
-            guard let self else { return }
-            showErrorAlert(catalogViewModel.errorString)
-        }
+    private func bindViewModel() {
+        let bindings = CatalogViewModelBindings(
+            isLoading: { [weak self] in
+                guard let self else { return }
+                if $0 {
+                    ProgressHUD.show()
+                } else {
+                    ProgressHUD.dismiss()
+                }
+            },
+            collections: { [weak self] in
+                guard let self else { return }
+                self.collections = $0
+                self.tableView.reloadData()
+            },
+            errorString: { [weak self] in
+                guard let self else { return }
+                showErrorAlert($0)
+            }
+        )
+        catalogViewModel.bind(bindings)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -97,8 +113,8 @@ final class CatalogViewController: UIViewController {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
 
@@ -121,7 +137,7 @@ final class CatalogViewController: UIViewController {
 
 extension CatalogViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        catalogViewModel.collections.count
+        self.collections.count
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -132,7 +148,7 @@ extension CatalogViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CatalogCell.identifier,
                                                        for: indexPath) as? CatalogCell
         else { return UITableViewCell() }
-        cell.config(catalogViewModel.collections[indexPath.row])
+        cell.config(self.collections[indexPath.row])
         return cell
     }
 
@@ -143,7 +159,7 @@ extension CatalogViewController: UITableViewDataSource {
 
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let collectionViewController = CollectionViewController(collection: catalogViewModel.collections[indexPath.row])
+        let collectionViewController = CollectionViewController(collectionId: self.collections[indexPath.row].id)
         navigationController?.pushViewController(collectionViewController, animated: true)
         self.tabBarController?.tabBar.isHidden = true
     }

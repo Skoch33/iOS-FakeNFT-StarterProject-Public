@@ -13,7 +13,7 @@ final class TabBarController: UITabBarController {
             tag: 0
         )
 
-        let catalogViewModel = CatalogViewModel()
+        let catalogViewModel = CatalogViewModel(networkClient: DefaultNetworkClient())
         let catalogViewController = CatalogViewController(catalogViewModel: catalogViewModel)
         let catalogNavigationController = UINavigationController(rootViewController: catalogViewController)
         catalogNavigationController.tabBarItem = UITabBarItem(

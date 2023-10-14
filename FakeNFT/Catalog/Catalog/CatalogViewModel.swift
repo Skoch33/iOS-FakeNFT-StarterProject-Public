@@ -1,20 +1,41 @@
 import Foundation
-import ProgressHUD
 
-final class CatalogViewModel {
+protocol CatalogViewModelProtocol {
+    func bind(_ bindings: CatalogViewModelBindings)
+    func loadCollection()
+    func sort(_ mode: CatalogSortingModes)
+}
+
+struct CatalogViewModelBindings {
+    let isLoading: (Bool) -> Void
+    let collections: ([CollectionModel]) -> Void
+    let errorString: (String) -> Void
+}
+
+final class CatalogViewModel: CatalogViewModelProtocol {
 
     private var sortMode = CatalogSortingModes.byCount
     private let catalogSortingModeKey = "CatalogSortingMode"
-    private let networkClient: NetworkClient = DefaultNetworkClient()
+    private let networkClient: NetworkClient
 
     @Observable
     var collections: [CollectionModel] = []
 
     @Observable
+    var isLoading = false
+
+    @Observable
     var errorString: String = ""
 
-    init() {
+    init(networkClient: NetworkClient) {
+        self.networkClient = networkClient
         self.loadSortMode()
+    }
+
+    func bind(_ bindings: CatalogViewModelBindings) {
+        self.$isLoading.bind(action: bindings.isLoading)
+        self.$collections.bind(action: bindings.collections)
+        self.$errorString.bind(action: bindings.errorString)
     }
 
     private func loadSortMode() {
@@ -44,7 +65,7 @@ final class CatalogViewModel {
     }
 
     func loadCollection() {
-        ProgressHUD.show()
+        isLoading = true
         DispatchQueue.global().async {
             self.networkClient.send(request: CollectionRequest(),
                                     type: [CollectionModel].self,
@@ -53,10 +74,10 @@ final class CatalogViewModel {
                     switch result {
                     case .success(let model):
                         self.collections = model.collectionSort(self.sortMode)
-                        ProgressHUD.dismiss()
+                        self.isLoading = false
                     case .failure(let error):
                         self.errorString = error.localizedDescription
-                        ProgressHUD.dismiss()
+                        self.isLoading = false
                     }
                 }
             })
