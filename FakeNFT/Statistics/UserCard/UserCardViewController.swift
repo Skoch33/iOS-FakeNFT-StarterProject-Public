@@ -7,10 +7,9 @@ import UIKit
 import Kingfisher
 
 final class UserCardViewController: UIViewController {
-    // MARK: - UI
+    // MARK: - Subviews
     private lazy var userImageView: UIImageView = {
-        let placeholder = UIImage(systemName: "person.crop.circle.fill")
-        let image = UIImageView(image: placeholder)
+        let image = UIImageView(image: self.placeholder)
         image.layer.cornerRadius = 35
         image.clipsToBounds = true
         image.tintColor = .nftGrayUniversal
@@ -83,7 +82,7 @@ final class UserCardViewController: UIViewController {
     // MARK: - Actions
     @objc
     private func goToWebView() {
-        guard let userURL = viewModel.userWebsiteUrl else { return}
+        guard let userURL = viewModel.userWebsiteUrl else { return }
         let webView = WebViewViewController(webSite: userURL)
         navigationController?.pushViewController(webView, animated: true)
     }
@@ -94,7 +93,7 @@ final class UserCardViewController: UIViewController {
         usersCollection.title = "Коллекция NFT"
         navigationController?.pushViewController(usersCollection, animated: true)
     }
-    // MARK: - setupUI
+    // MARK: - setupView
     private func setupNavigationBar() {
         if let topItem = navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "",
@@ -107,7 +106,8 @@ final class UserCardViewController: UIViewController {
     }
     
     private func setupUI() {
-        [userImageView, nameLabel, descriptionLabel, userInfoButton, userCollectionButton, chevronImage].forEach {
+        [userImageView, nameLabel, descriptionLabel,
+         userInfoButton, userCollectionButton, chevronImage].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -148,13 +148,11 @@ final class UserCardViewController: UIViewController {
         cache.clearDiskCache()
         
         userImageView.kf.indicatorType = .activity
-        DispatchQueue.main.async {
-            if let url = self.viewModel.avatarUrl {
-                self.userImageView.kf.setImage(
-                    with: url,
-                    placeholder: self.placeholder
-                )
-            }
+        if let url = viewModel.avatarUrl {
+            userImageView.kf.setImage(
+                with: url,
+                placeholder: self.placeholder
+            )
         }
         nameLabel.text = viewModel.userName
         descriptionLabel.text = viewModel.userDescription
