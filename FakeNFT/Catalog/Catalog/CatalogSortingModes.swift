@@ -2,7 +2,7 @@ import Foundation
 
 enum CatalogSortingModes: Int, CaseIterable {
     case byName, byCount
-
+    
     var title: String {
         switch self {
         case .byName:

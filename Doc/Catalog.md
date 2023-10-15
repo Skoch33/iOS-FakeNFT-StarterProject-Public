@@ -5,7 +5,7 @@
 
 # Catalog Flow Decomposition
 
-## Экран Catalogue (est: 390 min; fact: 370 min).
+## I. Экран Catalogue (est: 390 min; fact: 370 min).
 
 ### Верстка
 - навигационный бар и кнопка сортировки (est: 20 min; fact: 20 min).
@@ -24,20 +24,21 @@
 
 `Total:` est: 250 min; fact: 230 min).
 
-## Экран Collection (est: 590 min; fact: x min).
+## II. Экран Collection (est: 250 min; fact: 375 min) - верстка.
+- обложка (est: 20 min; fact: 15 min).
+- кнопка возврата на предыдущий экран (est: 20 min; fact: 40 min).
+- название (est: 20 min; fact: 15 min).
+- автор (est: 20 min; fact: 40 min).
+- описание (est: 20 min; fact: 15 min).
+- колекция (est: 30 min; fact: 30 min).
+- ячейки коллкции: картинка, лайк, рейтинг, название, цена, корзина (est: 120 min; fact: 180 min).
 
-### Верстка
-- обложка (est: 20 min; fact: x min).
-- кнопка возврата на предыдущий экран (est: 20 min; fact: x min).
-- название (est: 20 min; fact: x min).
-- автор (est: 20 min; fact: x min).
-- описание (est: 20 min; fact: x min).
-- колекция (est: 30 min; fact: x min).
-- ячейки коллкции: картинка, лайк, рейтинг, название, цена, корзина (est: 120 min; fact: x min).
+`Total:` est: 250 min; fact: 335 min).
 
-`Total:` est: 250 min; fact: x min).
+- WebView для страницы автора (not planned, fact: 40 min).
 
-### Логика
+
+## III. Экран Collection (est: 590 min; fact: x min) - логика
 - загрузка коллекции, индикатор загрузки (est: 180 min; fact: x min).
 - возврат к экрану каталога (est: 20 min; fact: x min).
 - переход на страницу автора (est: 20 min; fact: x min).

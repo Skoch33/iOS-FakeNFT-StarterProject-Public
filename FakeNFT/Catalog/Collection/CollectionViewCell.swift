@@ -34,7 +34,7 @@ final class CollectionViewCell: UICollectionViewCell {
         label.textColor = UIColor.nftBlack
         return label
     }()
-
+    
     private var priceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.caption3
@@ -47,7 +47,7 @@ final class CollectionViewCell: UICollectionViewCell {
         button.addTarget(nil, action: #selector(cardButtonTap), for: .touchUpInside)
         return button
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .clear
@@ -59,7 +59,7 @@ final class CollectionViewCell: UICollectionViewCell {
         setupPriceLabel()
         setupCardButton()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -129,8 +129,8 @@ final class CollectionViewCell: UICollectionViewCell {
             cardButton.widthAnchor.constraint(equalToConstant: 40),
         ])
     }
-
-
+    
+    
     func configure() {
         
         let urlString = "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Aurora/1.png"

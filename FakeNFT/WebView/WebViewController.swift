@@ -1,19 +1,19 @@
 import WebKit
 
 class WebViewController: UIViewController, WKNavigationDelegate {
-
+    
     let webView = WKWebView()
     var urlString: String
-
+    
     init(_ urlString: String) {
         self.urlString = urlString
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         guard
@@ -30,7 +30,7 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         setupWebView()
         webView.load(URLRequest(url: url))
     }
-
+    
     private func setupWebView() {
         view.addSubview(webView)
         webView.translatesAutoresizingMaskIntoConstraints = false
@@ -41,5 +41,5 @@ class WebViewController: UIViewController, WKNavigationDelegate {
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-
+    
 }

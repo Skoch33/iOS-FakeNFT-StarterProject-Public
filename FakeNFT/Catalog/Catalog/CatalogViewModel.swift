@@ -13,31 +13,31 @@ struct CatalogViewModelBindings {
 }
 
 final class CatalogViewModel: CatalogViewModelProtocol {
-
+    
     private var sortMode = CatalogSortingModes.byCount
     private let catalogSortingModeKey = "CatalogSortingMode"
     private let networkClient: NetworkClient
-
+    
     @Observable
     var collections: [CollectionModel] = []
-
+    
     @Observable
     var isLoading = false
-
+    
     @Observable
     var errorString: String = ""
-
+    
     init(networkClient: NetworkClient) {
         self.networkClient = networkClient
         self.loadSortMode()
     }
-
+    
     func bind(_ bindings: CatalogViewModelBindings) {
         self.$isLoading.bind(action: bindings.isLoading)
         self.$collections.bind(action: bindings.collections)
         self.$errorString.bind(action: bindings.errorString)
     }
-
+    
     private func loadSortMode() {
         if UserDefaults.standard.object(forKey: catalogSortingModeKey) == nil {
             sortMode = .byCount
@@ -45,17 +45,17 @@ final class CatalogViewModel: CatalogViewModelProtocol {
         }
         sortMode = CatalogSortingModes(rawValue: UserDefaults.standard.integer(forKey: catalogSortingModeKey)) ?? .byCount
     }
-
+    
     private func saveSortMode() {
         UserDefaults.standard.set(sortMode.rawValue, forKey: catalogSortingModeKey)
     }
-
+    
     func sort(_ mode: CatalogSortingModes) {
         sortMode = mode
         saveSortMode()
         collections = collections.collectionSort(sortMode)
     }
-
+    
     struct CollectionRequest: NetworkRequest {
         var endpoint: URL? {
             URL(string: "https://651ff0d9906e276284c3c20a.mockapi.io/api/v1/collections")
@@ -63,7 +63,7 @@ final class CatalogViewModel: CatalogViewModelProtocol {
         var httpMethod: HttpMethod = .get
         var dto: Encodable?
     }
-
+    
     func loadCollection() {
         isLoading = true
         DispatchQueue.global().async {
@@ -83,11 +83,11 @@ final class CatalogViewModel: CatalogViewModelProtocol {
             })
         }
     }
-
+    
 }
 
 extension Array where Element == CollectionModel {
-
+    
     func collectionSort(_ mode: CatalogSortingModes) -> [Element] {
         switch mode {
         case .byName:
@@ -96,5 +96,5 @@ extension Array where Element == CollectionModel {
             return self.sorted(by: {$0.nfts.count > $1.nfts.count})
         }
     }
-
+    
 }

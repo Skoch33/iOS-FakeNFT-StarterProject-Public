@@ -2,13 +2,13 @@ import UIKit
 import ProgressHUD
 
 final class CatalogViewController: UIViewController {
-
+    
     var catalogViewModel: CatalogViewModelProtocol
     private var collections: [CollectionModel] = []
-
+    
     private lazy var tableView: UITableView = {
         let view = UITableView()
-
+        
         view.register(CatalogCell.self,
                       forCellReuseIdentifier: CatalogCell.identifier)
         view.backgroundColor = .clear
@@ -17,27 +17,27 @@ final class CatalogViewController: UIViewController {
         view.delegate = self
         return view
     }()
-
+    
     init(catalogViewModel: CatalogViewModel) {
         self.catalogViewModel = catalogViewModel
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .nftWhite
-
+        
         setupNavigationBar()
         setupTableView()
-
+        
         bindViewModel()
         catalogViewModel.loadCollection()
     }
-
+    
     private func bindViewModel() {
         let bindings = CatalogViewModelBindings(
             isLoading: { [weak self] in
@@ -60,16 +60,16 @@ final class CatalogViewController: UIViewController {
         )
         catalogViewModel.bind(bindings)
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
     }
-
+    
     private func setupNavigationBar() {
         if let navigationBar = navigationController?.navigationBar {
             let imageButton = UIImage(named: "Catalog.sortButton")?.withRenderingMode(.alwaysTemplate)
-
+            
             let rightItem = UIBarButtonItem(image: imageButton,
                                             style: .plain,
                                             target: self,
@@ -78,7 +78,7 @@ final class CatalogViewController: UIViewController {
             navigationBar.topItem?.setRightBarButton(rightItem, animated: false)
         }
     }
-
+    
     @objc
     private func selectingSortMode() {
         let alertController = UIAlertController(
@@ -86,7 +86,7 @@ final class CatalogViewController: UIViewController {
             message: nil,
             preferredStyle: .actionSheet
         )
-
+        
         CatalogSortingModes.allCases.forEach {sortingMode in
             let sortingAction = UIAlertAction(
                 title: sortingMode.title,
@@ -97,16 +97,16 @@ final class CatalogViewController: UIViewController {
             }
             alertController.addAction(sortingAction)
         }
-
+        
         let cancelAction = UIAlertAction(
             title: NSLocalizedString("Catalog.Sorting.Close", comment: ""),
             style: .cancel
         )
         alertController.addAction(cancelAction)
-
+        
         present(alertController, animated: true, completion: nil)
     }
-
+    
     private func setupTableView() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
@@ -117,7 +117,7 @@ final class CatalogViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
-
+    
     private func showErrorAlert(_ alertString: String) {
         let alert = UIAlertController(
             title: nil,
@@ -139,11 +139,11 @@ extension CatalogViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.collections.count
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         187
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CatalogCell.identifier,
                                                        for: indexPath) as? CatalogCell
@@ -151,7 +151,7 @@ extension CatalogViewController: UITableViewDataSource {
         cell.config(self.collections[indexPath.row])
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.layoutIfNeeded()
     }
