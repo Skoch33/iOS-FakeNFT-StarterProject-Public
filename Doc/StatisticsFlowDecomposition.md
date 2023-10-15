@@ -25,43 +25,43 @@
 # Statistics Flow Decomposition
 
 
-## Экран Rating (est 360; fact x).
+## Экран Rating (est 360; fact 210).
 ### Module 1:
 
 #### Верстка
-- NavigationBar с кнопкой сортировки (est: 30 min; fact x min).
-- Таблицы (est: 120 min; fact: x min).
-- Ячейки (est: 120 min; fact: x min).
+- NavigationBar с кнопкой сортировки (est: 30 min; fact 20 min).
+- Таблицы (est: 120 min; fact: 30 min).
+- Ячейки (est: 120 min; fact: 20 min).
 
-`Total:` est: 270 min; fact: x min).
+`Total:` est: 270 min; fact: 70 min).
 
 #### Логика
-- Сортировка по рейтингу(est: 60 min; fact: x min).
-- Сортировка по имени (est: 60 min; fact: x min).
-- Переход по нажатию на ячейку в профиль пользователя (est: 60 min; fact: x min).
-- Наполнение ячеек данными из MockAPI (est: 120 min; fact: x min).
+- Сортировка по рейтингу(est: 60 min; fact: 10 min).
+- Сортировка по имени (est: 60 min; fact: 10 min).
+- Переход по нажатию на ячейку в профиль пользователя (est: 60 min; fact: 20 min).
+- Наполнение ячеек данными из MockAPI (est: 120 min; fact: 100 min).
 
-`Total:` est: 300 min; fact: x min.
+`Total:` est: 300 min; fact: 140 min.
 
 #
-## Экран UserCard (est 490; fact x).
+## Экран UserCard (est 490; fact 140).
 ### Module 2:
 
 #### Верстка
-- NavigationBar (est: 20 min; fact: x min).
-- ImageView фото профиля (est: 30 min; fact: x min).
-- NameLabel имени пользователя (est: 30 min; fact: x min).
-- DescriptionLabel резюме пользователя (est: 30 min; fact x min).
-- UserInfoButton кнопки сайта пользователя (est: 40 min; fact x min).
-- UserCollectionButton кнопка просмотра коллекции NFT пользователя (est: 60 min; fact x min).
+- NavigationBar (est: 20 min; fact: 10 min).
+- ImageView фото профиля (est: 30 min; fact: 10 min).
+- NameLabel имени пользователя (est: 30 min; fact: 10 min).
+- DescriptionLabel резюме пользователя (est: 30 min; fact 10 min).
+- UserInfoButton кнопки сайта пользователя (est: 40 min; fact 10 min).
+- UserCollectionButton кнопка просмотра коллекции NFT пользователя (est: 60 min; fact 10 min).
 
-`Total:` est: 210 min; fact: x min).
+`Total:` est: 210 min; fact: 60 min).
 
 #### Логика
-- переход на сайт пользователя с помощью WebView(est: 120 min; fact: x min).
-- переход на страницу коллекции NFT пользователя (est: 60 min; fact: x min).
+- переход на сайт пользователя с помощью WebView(est: 120 min; fact: 60 min).
+- переход на страницу коллекции NFT пользователя (est: 60 min; fact: 20 min).
 
-`Total:` est: 180 min; fact: x min.
+`Total:` est: 180 min; fact: 80 min.
 
 #
 ## Экран UserCollection (est 495; fact x).
