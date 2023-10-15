@@ -14,6 +14,7 @@ enum SortType: String {
 protocol StatisticsViewModelProtocol: AnyObject {
     var dataChanged: (() -> Void)? { get set }
     var isDataLoading: ((Bool) -> Void)? { get set }
+    var showError: ((Error) -> Void)? { get set }
     var users: [User] { get set }
     func usersCount() -> Int
     func loadData()
@@ -25,6 +26,8 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
     private let sortTypeKey = "sortTypeKey"
     
     var isDataLoading: ((Bool) -> Void)?
+
+    var showError: ((Error) -> Void)?
     
     var dataChanged: (() -> Void)?
     
@@ -51,8 +54,11 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
             self?.isDataLoading?(false)
             
             if let error = error {
+                DispatchQueue.main.async {
+                    self?.showError?(error)
+                    self?.isDataLoading?(false)
+                }
                 print(error.localizedDescription)
-                self?.isDataLoading?(false)
                 return
             }
             

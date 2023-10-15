@@ -42,26 +42,32 @@ final class StatisticsViewController: UIViewController {
 // MARK: - Action
     @objc
     private func sortingUsers() {
-        let alert = UIAlertController(
-            title: "Сортировка",
-            message: nil,
-            preferredStyle: .actionSheet
-        )
-        let sortByNameButton = UIAlertAction(title: "По имени",
-                                             style: .default) { [weak self] _ in
+        let sortByNameButton = AlertActionModel(
+            title: "По имени",
+            style: .default
+        ) { [weak self] _ in
             self?.viewModel.sortUsersByName()
         }
         
-        let sortByRatingButton = UIAlertAction(title: "По рейтингу",
-                                               style: .default) { [weak self] _ in
+        let sortByRatingButton = AlertActionModel(
+            title: "По рейтингу",
+            style: .default
+        ) { [weak self] _ in
             self?.viewModel.sortUsersByRating()
         }
         
-        let closeButton = UIAlertAction(title: "Закрыть", style: .cancel)
-        alert.addAction(sortByNameButton)
-        alert.addAction(sortByRatingButton)
-        alert.addAction(closeButton)
-        present(alert, animated: true)
+        let closeButton = AlertActionModel(
+            title: "Закрыть",
+            style: .cancel
+        )
+
+        let alertModel = AlertPresenter(
+            title: "Сортировка",
+            actions: [sortByNameButton, sortByRatingButton, closeButton],
+            style: .actionSheet
+        )
+
+        alertModel.showAlert(from: self)
     }
 // MARK: - Setup
     private func setupUI() {
@@ -89,6 +95,10 @@ final class StatisticsViewController: UIViewController {
     }
     
     private func bind() {
+        viewModel.showError = { [weak self] _ in
+            self?.showNetworkError(message: "Не удалось получить данные")
+        }
+
         viewModel.isDataLoading = { isLoading in
             if isLoading {
                 ProgressHUD.show()
@@ -96,9 +106,32 @@ final class StatisticsViewController: UIViewController {
                 ProgressHUD.dismiss()
             }
         }
+
         viewModel.dataChanged = { [weak self] in
             self?.tableView.reloadData()
         }
+    }
+
+    private func showNetworkError(message: String) {
+        let retryButton = AlertActionModel(
+            title: "Повторить",
+            style: .cancel,
+            handler: {  [weak self] _ in
+            self?.viewModel.loadData()
+        })
+
+        let closeButton = AlertActionModel(
+            title: "Отмена",
+            style: .default
+        )
+
+        let alertModel = AlertPresenter(
+            message: message,
+            actions: [retryButton, closeButton],
+            style: .alert
+        )
+
+        alertModel.showAlert(from: self)
     }
 }
 // MARK: - UITableViewDataSource
