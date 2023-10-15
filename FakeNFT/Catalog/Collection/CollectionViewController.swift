@@ -3,9 +3,13 @@ import Kingfisher
 
 final class CollectionViewController: UIViewController {
     
+    let collectionCount = 19
+    
     private enum Const {
         static let cellMargins: CGFloat = 9
+        static let lineMargins: CGFloat = 8
         static let cellCols: CGFloat = 3
+        static let cellHeight: CGFloat = 192
         static let sideMargins: CGFloat = 16
     }
     
@@ -65,7 +69,7 @@ final class CollectionViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.dataSource = self
-        collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "collectionCell")
+        collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.identifier)
         collectionView.delegate = self
         collectionView.isScrollEnabled = false
         return collectionView
@@ -90,6 +94,9 @@ final class CollectionViewController: UIViewController {
         setupAuthorNameLabel()
         setupDescriptionLabel()
         setupCollectionView()
+        
+        let collectionHeight = (Const.cellHeight + Const.lineMargins) * ceil(CGFloat(collectionCount) / Const.cellCols)
+        collectionView.heightAnchor.constraint(equalToConstant: collectionHeight).isActive = true
     }
     
     private func setupScrollView() {
@@ -128,7 +135,7 @@ final class CollectionViewController: UIViewController {
         scrollView.addSubview(nameLabel)
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: coverImage.bottomAnchor, constant: 16),
-            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
+            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Const.sideMargins)
         ])
     }
     
@@ -137,7 +144,7 @@ final class CollectionViewController: UIViewController {
         scrollView.addSubview(authorTitleLabel)
         NSLayoutConstraint.activate([
             authorTitleLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 13),
-            authorTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
+            authorTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Const.sideMargins)
         ])
     }
     
@@ -160,8 +167,8 @@ final class CollectionViewController: UIViewController {
         scrollView.addSubview(descriptionLabel)
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: authorTitleLabel.bottomAnchor, constant: 5),
-            descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Const.sideMargins),
+            descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Const.sideMargins)
         ])
     }
     
@@ -176,9 +183,8 @@ final class CollectionViewController: UIViewController {
         scrollView.addSubview(collectionView)
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
-            collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            collectionView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32),
-            collectionView.heightAnchor.constraint(equalToConstant: 800),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Const.sideMargins),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Const.sideMargins),
             collectionView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -16)
         ])
     }
@@ -187,14 +193,13 @@ final class CollectionViewController: UIViewController {
 extension CollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return collectionCount
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var collectionViewCell = UICollectionViewCell()
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell",
-                                                            for: indexPath) as? CollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.identifier, for: indexPath) as? CollectionViewCell else {
             assertionFailure("Error get cell")
             return .init()
         }
@@ -209,20 +214,20 @@ extension CollectionViewController: UICollectionViewDelegateFlowLayout {
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let width = (collectionView.frame.width - Const.cellMargins * (Const.cellCols - 1)) / Const.cellCols - 0.01
-            return CGSize(width: width, height: 108)
+            let width = floor((collectionView.frame.width - Const.cellMargins * (Const.cellCols - 1)) / Const.cellCols)
+            return CGSize(width: width, height: Const.cellHeight)
         }
     
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-            return 9
+            return Const.cellMargins
         }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        8
+        return Const.lineMargins
     }
 }

@@ -8,7 +8,6 @@ final class CatalogCell: UITableViewCell {
         let view = UIImageView()
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 12
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         return view
@@ -18,7 +17,6 @@ final class CatalogCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .nftBlack
         label.font = .bodyBold
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
