@@ -61,7 +61,7 @@ final class UserCardViewController: UIViewController {
         return image
     }()
     
-    private let viewModel: UserCardViewModelProtocol
+    private var viewModel: UserCardViewModelProtocol
     private let placeholder = UIImage(named: "person.crop.circle.fill")
     
     init(viewModel: UserCardViewModelProtocol = UserCardViewModel()) {
@@ -78,20 +78,17 @@ final class UserCardViewController: UIViewController {
         setupNavigationBar()
         setupUI()
         showUser()
+        bind()
     }
     // MARK: - Actions
     @objc
     private func goToWebView() {
-        guard let userURL = viewModel.userWebsiteUrl else { return }
-        let webView = WebViewViewController(webSite: userURL)
-        navigationController?.pushViewController(webView, animated: true)
+        viewModel.onWebsiteButtonClick?()
     }
     
     @objc
     private func goToCollection() {
-        let usersCollection = UserCollectionViewController()
-        usersCollection.title = "Коллекция NFT"
-        navigationController?.pushViewController(usersCollection, animated: true)
+        viewModel.onCollectionButtonClick?()
     }
     // MARK: - setupView
     private func setupNavigationBar() {
@@ -156,5 +153,19 @@ final class UserCardViewController: UIViewController {
         }
         nameLabel.text = viewModel.userName
         descriptionLabel.text = viewModel.userDescription
+    }
+// MARK: - bind
+    private func bind() {
+        viewModel.onWebsiteButtonClick = { [weak self] in
+            guard let userURL = self?.viewModel.userWebsiteUrl else { return }
+            let webView = WebViewViewController(webSite: userURL)
+            self?.navigationController?.pushViewController(webView, animated: true)
+        }
+
+        viewModel.onCollectionButtonClick = { [weak self] in
+            let usersCollection = UserCollectionViewController()
+            usersCollection.title = "Коллекция NFT"
+            self?.navigationController?.pushViewController(usersCollection, animated: true)
+        }
     }
 }

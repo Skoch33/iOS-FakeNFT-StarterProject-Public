@@ -13,9 +13,12 @@ protocol UserCardViewModelProtocol {
     var userWebsiteUrl: URL? { get }
     var nftCount: Int { get }
     var nftsID: [String] { get }
+    var onWebsiteButtonClick: (() -> ())? { get set }
+    var onCollectionButtonClick: (() -> ())? { get set }
 }
 
 final class UserCardViewModel: UserCardViewModelProtocol {
+
     var user: User?
 
     var avatarUrl: URL? {
@@ -47,4 +50,8 @@ final class UserCardViewModel: UserCardViewModelProtocol {
     var nftsID: [String] {
         return user?.nfts ?? []
     }
+
+    var onWebsiteButtonClick: (() -> ())?
+
+    var onCollectionButtonClick: (() -> ())?
 }
