@@ -8,6 +8,7 @@ final class ProfileViewController: UIViewController {
     private let userNameLabel: UILabel = {
         let label = UILabel()
         label.font = .headline2
+        label.numberOfLines = 2
         return label
     }()
 
@@ -137,7 +138,7 @@ final class ProfileViewController: UIViewController {
             view.addViewWithNoTAMIC($0)
             $0.isHidden = true
         }
-        [editButton, profileImageView, userNameLabel, userDescriptionLabel, userWebSiteTextView, profileTableView].forEach { $0.isHidden = true }
+        
         NSLayoutConstraint.activate([
             editButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
             editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
