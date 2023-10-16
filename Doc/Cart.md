@@ -20,7 +20,7 @@
 
 `Total:` est:  18h; fact: 19.5h 
 
-## Итерация 2 (est: 14h; fact: )
+## Итерация 2 (est: 14h; fact: 11.5h)
 #### Экран "Cart"
 - Реализовать сортировку (est: 1h; fact: 1h)
 - Сохранение способа сортировки (est: 1h; fact: 0.5h)
@@ -32,10 +32,10 @@
 
 #### Экран "Выбор способа оплаты"
 - Сервис "Получение списка валют `apiV1CurrenciesGet`" (est: 3h; fact: 2h)
-- Сервис "Получение валюты с заданным id `apiV1CurrenciesCurrencyIdGet`" (est: 2h; fact: 1h)
-- Сервис "Оплата заказа валютой с заданным id `apiV1Orders1PaymentCurrencyIdGet`" (est: 2h; fact: )"
+- Сервис "Получение валюты с заданным id `apiV1CurrenciesCurrencyIdGet`" (est: 2h; fact: 2h)
+- Сервис "Оплата заказа валютой с заданным id `apiV1Orders1PaymentCurrencyIdGet`" (est: 2h; fact: 1h)"
 
-`Total:` est: 14h; fact: 
+`Total:` est: 14h; fact: 11.5h
 
 ## Итерация 3 (est: 14h; fact: )
 #### Экран "Выбор способа оплаты"
