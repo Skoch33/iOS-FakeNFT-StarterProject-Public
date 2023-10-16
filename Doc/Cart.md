@@ -31,8 +31,8 @@
 - viewModel экрана (est: 1h; fact: 1h)
 
 #### Экран "Выбор способа оплаты"
-- Сервис "Получение списка валют `apiV1CurrenciesGet`" (est: 3h; fact: )
-- Сервис "Получение валюты с заданным id `apiV1CurrenciesCurrencyIdGet`" (est: 2h; fact: )
+- Сервис "Получение списка валют `apiV1CurrenciesGet`" (est: 3h; fact: 2h)
+- Сервис "Получение валюты с заданным id `apiV1CurrenciesCurrencyIdGet`" (est: 2h; fact: 1h)
 - Сервис "Оплата заказа валютой с заданным id `apiV1Orders1PaymentCurrencyIdGet`" (est: 2h; fact: )"
 
 `Total:` est: 14h; fact: 
