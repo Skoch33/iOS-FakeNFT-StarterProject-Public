@@ -47,14 +47,13 @@ final class EditingViewController: UIViewController {
     }()
 
     private let viewModel: ProfileViewModelProtocol
-    private let viewFactory = ViewFactory()
 
-    private lazy var nameLabel = viewFactory.createTextLabel()
-    private lazy var nameTextView = viewFactory.createTextView()
-    private lazy var descriptionLabel = viewFactory.createTextLabel()
-    private lazy var descriptionTextView = viewFactory.createTextView()
-    private lazy var webSiteLabel = viewFactory.createTextLabel()
-    private lazy var webSiteTextView = viewFactory.createTextView()
+    private lazy var nameLabel = ViewFactory.shared.createTextLabel()
+    private lazy var nameTextView = ViewFactory.shared.createTextView()
+    private lazy var descriptionLabel = ViewFactory.shared.createTextLabel()
+    private lazy var descriptionTextView = ViewFactory.shared.createTextView()
+    private lazy var webSiteLabel = ViewFactory.shared.createTextLabel()
+    private lazy var webSiteTextView = ViewFactory.shared.createTextView()
 
     // MARK: - Lifecycle
 

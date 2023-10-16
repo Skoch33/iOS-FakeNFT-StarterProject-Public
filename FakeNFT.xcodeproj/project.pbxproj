@@ -18,6 +18,8 @@
 		37BFE3502AD859DE00C553BA /* ImageValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BFE34F2AD859DE00C553BA /* ImageValidator.swift */; };
 		37BFE3522AD85A4E00C553BA /* ProfileUpdateDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BFE3512AD85A4E00C553BA /* ProfileUpdateDTO.swift */; };
 		37BFE3542AD94FE000C553BA /* Profile.md in Resources */ = {isa = PBXBuildFile; fileRef = 37BFE3532AD94FE000C553BA /* Profile.md */; };
+		37C5B9BD2ADD47A8006FC37E /* Cosmos in Frameworks */ = {isa = PBXBuildFile; productRef = 37C5B9BC2ADD47A8006FC37E /* Cosmos */; };
+		37C5B9BF2ADD4946006FC37E /* NFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C5B9BE2ADD4946006FC37E /* NFTCell.swift */; };
 		37E7D6F02AD8144600107140 /* UIView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E7D6EF2AD8144600107140 /* UIView + Extensions.swift */; };
 		37E7D6F22AD8163900107140 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E7D6F12AD8163900107140 /* ProfileCell.swift */; };
 		37E7D6F52AD8175300107140 /* UserNFTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E7D6F42AD8175300107140 /* UserNFTViewController.swift */; };
@@ -84,6 +86,7 @@
 		37BFE34F2AD859DE00C553BA /* ImageValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageValidator.swift; sourceTree = "<group>"; };
 		37BFE3512AD85A4E00C553BA /* ProfileUpdateDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateDTO.swift; sourceTree = "<group>"; };
 		37BFE3532AD94FE000C553BA /* Profile.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = Profile.md; path = ../../Desktop/FakeNFT/Profile.md; sourceTree = "<group>"; };
+		37C5B9BE2ADD4946006FC37E /* NFTCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCell.swift; sourceTree = "<group>"; };
 		37E7D6EF2AD8144600107140 /* UIView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extensions.swift"; sourceTree = "<group>"; };
 		37E7D6F12AD8163900107140 /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		37E7D6F42AD8175300107140 /* UserNFTViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNFTViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37C5B9BD2ADD47A8006FC37E /* Cosmos in Frameworks */,
 				3F603CD029DB4A74000C43D7 /* Kingfisher in Frameworks */,
 				3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */,
 			);
@@ -195,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				37E7D6F42AD8175300107140 /* UserNFTViewController.swift */,
+				37C5B9BE2ADD4946006FC37E /* NFTCell.swift */,
 			);
 			path = UserNFTScreen;
 			sourceTree = "<group>";
@@ -425,6 +430,7 @@
 			packageProductDependencies = (
 				3F603CCC29DB4A53000C43D7 /* ProgressHUD */,
 				3F603CCF29DB4A74000C43D7 /* Kingfisher */,
+				37C5B9BC2ADD47A8006FC37E /* Cosmos */,
 			);
 			productName = FakeNFT;
 			productReference = 3F68069329CBBAF100B4F915 /* FakeNFT.app */;
@@ -502,6 +508,7 @@
 			packageReferences = (
 				3F603CCB29DB4A53000C43D7 /* XCRemoteSwiftPackageReference "ProgressHUD" */,
 				3F603CCE29DB4A74000C43D7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				37C5B9BB2ADD47A8006FC37E /* XCRemoteSwiftPackageReference "Cosmos" */,
 			);
 			productRefGroup = 3F68069429CBBAF100B4F915 /* Products */;
 			projectDirPath = "";
@@ -578,6 +585,7 @@
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				37E7D7022AD81D8000107140 /* ProfileViewModel.swift in Sources */,
 				37E7D6F22AD8163900107140 /* ProfileCell.swift in Sources */,
+				37C5B9BF2ADD4946006FC37E /* NFTCell.swift in Sources */,
 				37BFE34C2AD8437700C553BA /* AlertService.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
@@ -946,6 +954,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		37C5B9BB2ADD47A8006FC37E /* XCRemoteSwiftPackageReference "Cosmos" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/Cosmos.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 23.0.0;
+			};
+		};
 		3F603CCB29DB4A53000C43D7 /* XCRemoteSwiftPackageReference "ProgressHUD" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/relatedcode/ProgressHUD";
@@ -965,6 +981,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		37C5B9BC2ADD47A8006FC37E /* Cosmos */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37C5B9BB2ADD47A8006FC37E /* XCRemoteSwiftPackageReference "Cosmos" */;
+			productName = Cosmos;
+		};
 		3F603CCC29DB4A53000C43D7 /* ProgressHUD */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3F603CCB29DB4A53000C43D7 /* XCRemoteSwiftPackageReference "ProgressHUD" */;
