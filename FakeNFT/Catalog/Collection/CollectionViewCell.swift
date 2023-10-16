@@ -5,7 +5,7 @@ final class CollectionViewCell: UICollectionViewCell {
     var likeState = false
     var cardState = false
     
-    private var cardImage: UIImageView = {
+    private lazy var cardImage: UIImageView = {
         let view = UIImageView()
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 12
@@ -14,13 +14,13 @@ final class CollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    private var likeButton: UIButton = {
+    private lazy var likeButton: UIButton = {
         let button = UIButton()
         button.addTarget(nil, action: #selector(likeButtonTap), for: .touchUpInside)
         return button
     }()
     
-    private var starsImage: [UIImageView] = {
+    private lazy var starsImage: [UIImageView] = {
         (1...5).map { _ in
             let view = UIImageView()
             view.image = UIImage()
@@ -28,21 +28,21 @@ final class CollectionViewCell: UICollectionViewCell {
         }
     }()
     
-    private var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.bodyBold
         label.textColor = UIColor.nftBlack
         return label
     }()
     
-    private var priceLabel: UILabel = {
+    private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.caption3
         label.textColor = UIColor.nftBlack
         return label
     }()
     
-    private var cardButton: UIButton = {
+    private lazy var cardButton: UIButton = {
         let button = UIButton()
         button.addTarget(nil, action: #selector(cardButtonTap), for: .touchUpInside)
         return button
@@ -50,23 +50,30 @@ final class CollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .clear
-        
-        setupCardImage()
-        setupLikeButton()
-        setupStartsView()
-        setupNameLabel()
-        setupPriceLabel()
-        setupCardButton()
+        setupCell()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setupCell() {
+        self.backgroundColor = .clear
+        [cardImage, likeButton, nameLabel,
+         priceLabel, cardButton].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            contentView.addSubview($0)
+        }
+
+        setupCardImage()
+        setupLikeButton()
+        setupStarsView()
+        setupNameLabel()
+        setupPriceLabel()
+        setupCardButton()
+    }
+    
     private func setupCardImage() {
-        cardImage.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(cardImage)
         NSLayoutConstraint.activate([
             cardImage.topAnchor.constraint(equalTo: contentView.topAnchor),
             cardImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -76,8 +83,6 @@ final class CollectionViewCell: UICollectionViewCell {
     }
     
     private func setupLikeButton() {
-        likeButton.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(likeButton)
         NSLayoutConstraint.activate([
             likeButton.topAnchor.constraint(equalTo: cardImage.topAnchor),
             likeButton.trailingAnchor.constraint(equalTo: cardImage.trailingAnchor),
@@ -86,7 +91,7 @@ final class CollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    private func setupStartsView() {
+    private func setupStarsView() {
         let starsView = UIStackView(arrangedSubviews: starsImage)
         starsView.axis = .horizontal
         starsView.alignment = .center
@@ -102,8 +107,6 @@ final class CollectionViewCell: UICollectionViewCell {
     }
     
     private func setupNameLabel() {
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(nameLabel)
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: cardImage.bottomAnchor, constant: 24),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
@@ -111,8 +114,6 @@ final class CollectionViewCell: UICollectionViewCell {
     }
     
     private func setupPriceLabel() {
-        priceLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(priceLabel)
         NSLayoutConstraint.activate([
             priceLabel.topAnchor.constraint(equalTo: cardImage.bottomAnchor, constant: 51),
             priceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
@@ -120,8 +121,6 @@ final class CollectionViewCell: UICollectionViewCell {
     }
     
     private func setupCardButton() {
-        cardButton.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(cardButton)
         NSLayoutConstraint.activate([
             cardButton.topAnchor.constraint(equalTo: cardImage.bottomAnchor, constant: 24),
             cardButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),

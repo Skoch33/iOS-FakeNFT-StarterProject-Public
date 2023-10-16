@@ -13,7 +13,7 @@ final class CollectionViewController: UIViewController {
         static let sideMargins: CGFloat = 16
     }
     
-    private var scrollView: UIScrollView = {
+    private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .clear
         scrollView.contentInsetAdjustmentBehavior = .never
@@ -21,7 +21,7 @@ final class CollectionViewController: UIViewController {
         return scrollView
     }()
     
-    private var coverImage: UIImageView = {
+    private lazy var coverImage: UIImageView = {
         let view = UIImageView()
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 12
@@ -29,7 +29,7 @@ final class CollectionViewController: UIViewController {
         return view
     }()
     
-    private var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = .headline2
         label.textColor = .nftBlack
@@ -43,7 +43,7 @@ final class CollectionViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    private let authorTitleLabel: UILabel = {
+    private lazy var authorTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .caption2
         label.textColor = .nftBlack
@@ -51,14 +51,14 @@ final class CollectionViewController: UIViewController {
         return label
     }()
     
-    private let authorNameLabel: UILabel = {
+    private lazy var authorNameLabel: UILabel = {
         let label = UILabel()
         label.font = .caption2
         label.textColor = .nftBlueUniversal
         return label
     }()
     
-    private let descriptionLabel: UILabel = {
+    private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .caption2
         label.textColor = .nftBlack
@@ -82,12 +82,25 @@ final class CollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .nftWhite
+        setupNavigationBar()
+        setupViews()
+    }
+    
+    private func setupNavigationBar() {
         let backItem = UIBarButtonItem()
         backItem.title = nil
         backItem.tintColor = .nftBlack
         navigationController?.navigationBar.topItem?.backBarButtonItem = backItem
-        
+    }
+    
+    private func setupViews() {
+        view.backgroundColor = .nftWhite
         setupScrollView()
+        [coverImage, nameLabel, authorTitleLabel,
+         authorNameLabel, descriptionLabel, collectionView].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            scrollView.addSubview($0)
+        }
         setupCoverImage()
         setupNameLabel()
         setupAuthorTitleLabel()
@@ -111,8 +124,6 @@ final class CollectionViewController: UIViewController {
     }
     
     private func setupCoverImage() {
-        coverImage.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(coverImage)
         NSLayoutConstraint.activate([
             coverImage.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
             coverImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -130,8 +141,6 @@ final class CollectionViewController: UIViewController {
     }
     
     private func setupNameLabel() {
-        nameLabel.text = collection.name
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(nameLabel)
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: coverImage.bottomAnchor, constant: 16),
@@ -140,8 +149,6 @@ final class CollectionViewController: UIViewController {
     }
     
     private func setupAuthorTitleLabel() {
-        authorTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(authorTitleLabel)
         NSLayoutConstraint.activate([
             authorTitleLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 13),
             authorTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Const.sideMargins)
@@ -153,8 +160,6 @@ final class CollectionViewController: UIViewController {
         let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(labelClicked(_:)))
         authorNameLabel.addGestureRecognizer(guestureRecognizer)
         authorNameLabel.text = "Author Name"
-        authorNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(authorNameLabel)
         NSLayoutConstraint.activate([
             authorNameLabel.topAnchor.constraint(equalTo: authorTitleLabel.topAnchor),
             authorNameLabel.leadingAnchor.constraint(equalTo: authorTitleLabel.trailingAnchor, constant: 4)
@@ -163,8 +168,6 @@ final class CollectionViewController: UIViewController {
     
     private func setupDescriptionLabel() {
         descriptionLabel.text = collection.description
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(descriptionLabel)
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: authorTitleLabel.bottomAnchor, constant: 5),
             descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Const.sideMargins),
@@ -179,8 +182,6 @@ final class CollectionViewController: UIViewController {
     }
     
     private func setupCollectionView() {
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(collectionView)
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Const.sideMargins),
@@ -199,7 +200,10 @@ extension CollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var collectionViewCell = UICollectionViewCell()
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.identifier, for: indexPath) as? CollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: CollectionViewCell.identifier,
+            for: indexPath
+        ) as? CollectionViewCell else {
             assertionFailure("Error get cell")
             return .init()
         }

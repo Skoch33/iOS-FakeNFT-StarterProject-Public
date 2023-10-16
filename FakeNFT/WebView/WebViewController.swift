@@ -16,22 +16,20 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard
-            let urlString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-            let url = URL(string: urlString)
-        else {
-            return
-        }
-        view.backgroundColor = .nftWhite
+        setupNavigationController()
+        setupWebView()
+        showWebsiteAuthor()
+    }
+    
+    private func setupNavigationController(){
         let backItem = UIBarButtonItem()
         backItem.title = nil
         backItem.tintColor = .nftBlack
         navigationController?.navigationBar.topItem?.backBarButtonItem = backItem
-        setupWebView()
-        webView.load(URLRequest(url: url))
     }
     
     private func setupWebView() {
+        view.backgroundColor = .nftWhite
         view.addSubview(webView)
         webView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -40,6 +38,16 @@ class WebViewController: UIViewController, WKNavigationDelegate {
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+    
+    private func showWebsiteAuthor() {
+        guard
+            let urlString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+            let url = URL(string: urlString)
+        else {
+            return
+        }
+        webView.load(URLRequest(url: url))
     }
     
 }
