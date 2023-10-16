@@ -19,4 +19,9 @@
 //ProgressHUD
 "ProgressHUD.loading" = "Loading ...";
 
+//NFTCell
+
+"NFTCell.from" = "from";
+"NFTCell.price" = "Price";
+
 

@@ -86,7 +86,8 @@ final class EditingViewController: UIViewController {
         dismiss(animated: true)
     }
 
-    @objc func changePhotoTapped() {
+    @objc
+    private func changePhotoTapped() {
         alertService.showChangePhotoURLAlert(with: "Введите URL",
                                              message: nil,
                                              textFieldPlaceholder: "URL изображения") { [weak self] urlText in
@@ -103,7 +104,7 @@ final class EditingViewController: UIViewController {
     // MARK: - Methods
 
     private func bind() {
-        viewModel.observeUserProfileChanges { [weak self] (profile: UserProfileModel?) in
+        viewModel.observeUserProfileChanges { [weak self] (profile: UserProfile?) in
             guard
                 let self = self,
                 let profile = profile
@@ -116,7 +117,7 @@ final class EditingViewController: UIViewController {
         [nameTextView, descriptionTextView, webSiteTextView].forEach { $0.delegate = self }
     }
 
-    private func configureUIElements(with profile: UserProfileModel) {
+    private func configureUIElements(with profile: UserProfile) {
         DispatchQueue.main.async { [weak self] in
             self?.userPhotoImageView.kf.setImage(with: URL(string: profile.avatar))
             self?.nameLabel.text = NSLocalizedString("EditingViewController.name", comment: "")

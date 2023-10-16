@@ -108,7 +108,7 @@ final class ProfileViewController: UIViewController {
         }
     }
 
-    private func updateUI(with model: UserProfileModel) {
+    private func updateUI(with model: UserProfile) {
         DispatchQueue.main.async { [weak self] in
             self?.profileImageView.kf.setImage(with: URL(string: model.avatar)) { result in
                 switch result {
@@ -180,7 +180,6 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ProfileCell = tableView.dequeueReusableCell()
         var cellTitle = ""
-        // ToDo: -  Доработать интерполяцию строк в 0 и 1 кейсах, после внедрения логики работы с сетью
         switch indexPath.row {
         case 0:
             cellTitle = NSLocalizedString("ProfileViewController.myNFT", comment: "") + " (112)"
@@ -208,7 +207,7 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            router.routeToUserNFT()
+            router.routeToUserNFT(nftList: viewModel.userProfile?.nfts ?? [])
         case 1:
             router.routeToFavoritesNFT()
         case 2:

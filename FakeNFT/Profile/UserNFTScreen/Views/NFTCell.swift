@@ -1,46 +1,48 @@
 import UIKit
 import Cosmos
+import Kingfisher
 
 final class NFTCell: UITableViewCell, ReuseIdentifying {
     private let nftImageView = ViewFactory.shared.createNFTImageView()
     private let likeImageView = ViewFactory.shared.createLikeImageView()
     
-    private let name: UILabel = {
+    private var name: UILabel = {
         let label = UILabel()
-        label.text = "Lilo"
         label.font = .bodyBold
         return label
     }()
     
     private let ratingView: CosmosView = {
         let view = CosmosView()
-        view.rating = 3
         view.settings.starSize = 12
+        view.settings.totalStars = 5
         view.settings.starMargin = 2
         view.settings.filledColor = .nftYellowUniversal
         view.settings.emptyBorderColor = .nftLightgrey
         view.settings.filledBorderColor = .nftYellowUniversal
         view.settings.updateOnTouch = false
+        view.settings.filledImage = UIImage(named: "stars")
+        view.settings.emptyImage = UIImage(named: "emptyStars")
         return view
     }()
     
     private let authorPrefix: UILabel = {
         let label = UILabel()
         label.font = .caption1
-        label.text = "от"
+        label.text = NSLocalizedString("NFTCell.from", comment: "")
         return label
     }()
     
     private let author: UILabel = {
         let label = UILabel()
         label.font = .caption2
-        label.text = "John Doe"
         return label
     }()
     
     private let authorStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
+        stackView.alignment = .firstBaseline
         stackView.spacing = 4
         return stackView
     }()
@@ -54,7 +56,7 @@ final class NFTCell: UITableViewCell, ReuseIdentifying {
     
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.text = "Цена"
+        label.text = NSLocalizedString("NFTCell.price", comment: "")
         label.font = .caption2
         return label
     }()
@@ -62,7 +64,6 @@ final class NFTCell: UITableViewCell, ReuseIdentifying {
     private let currentPriceLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
-        label.text = "1,78 ETH"
         return label
     }()
     
@@ -76,12 +77,21 @@ final class NFTCell: UITableViewCell, ReuseIdentifying {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
-        
-        nftImageView.image = UIImage(named: "NFTCard")
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(nft: NFT, authorName: String) {
+        self.nftImageView.kf.setImage(with: URL(string: nft.images[0]))
+        self.name.text = nft.name
+        self.ratingView.rating = Double(nft.rating)
+        self.author.text = authorName
+        
+        if let formattedPrice = NumberFormatter.defaultPriceFormatter.string(from: NSNumber(value: nft.price)) {
+            self.currentPriceLabel.text = "\(formattedPrice) ETH"
+        }
     }
     
     private func setupViews() {

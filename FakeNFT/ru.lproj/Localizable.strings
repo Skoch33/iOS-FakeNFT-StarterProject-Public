@@ -18,3 +18,7 @@
 
 //ProgressHUD
 "ProgressHUD.loading" = "Загрузка ...";
+
+//NFTCell
+"NFTCell.from" = "от";
+"NFTCell.price" = "Цена";
