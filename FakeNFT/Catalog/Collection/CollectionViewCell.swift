@@ -28,6 +28,15 @@ final class CollectionViewCell: UICollectionViewCell {
         }
     }()
     
+    private lazy var starsView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: starsImage)
+        view.axis = .horizontal
+        view.alignment = .center
+        view.spacing = 0.75
+        return view
+    }()
+    
+    
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.bodyBold
@@ -59,8 +68,8 @@ final class CollectionViewCell: UICollectionViewCell {
     
     private func setupCell() {
         self.backgroundColor = .clear
-        [cardImage, likeButton, nameLabel,
-         priceLabel, cardButton].forEach {
+        [cardImage, likeButton, starsView,
+         nameLabel, priceLabel, cardButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
@@ -92,13 +101,6 @@ final class CollectionViewCell: UICollectionViewCell {
     }
     
     private func setupStarsView() {
-        let starsView = UIStackView(arrangedSubviews: starsImage)
-        starsView.axis = .horizontal
-        starsView.alignment = .center
-        starsView.spacing = 0.75
-        
-        starsView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(starsView)
         NSLayoutConstraint.activate([
             starsView.topAnchor.constraint(equalTo: cardImage.bottomAnchor, constant: 8),
             starsView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0.75),
