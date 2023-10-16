@@ -8,6 +8,7 @@ import Kingfisher
 
 final class StatisticsCell: UITableViewCell {
     static let identifier = "StatisticsCell"
+    private let placeholder = UIImage(named: "person.crop.circle.fill")
  // MARK: - UI
     private lazy var ratingLabel: UILabel = {
         let label = UILabel()
@@ -94,11 +95,15 @@ final class StatisticsCell: UITableViewCell {
     }
 // MARK: - Configure
     func configure(model: User) {
+        let cache = ImageCache.default
+        cache.clearMemoryCache()
+        cache.clearDiskCache()
+        
         ratingLabel.text = model.rating
         userImage.kf.indicatorType = .activity
         if let url = URL(string: model.avatar) {
             userImage.kf.setImage(with: url,
-                                  placeholder: UIImage(named: "person.crop.circle.fill"))
+                                  placeholder: placeholder)
         }
         nameLabel.text = model.name
         collectionLabel.text = String(model.nfts.count)
