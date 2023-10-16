@@ -16,10 +16,10 @@ protocol AlertPresenterProtocol {
 }
 
 final class AlertPresenter: AlertPresenterProtocol {
-    private var title: String?
-    private var message: String?
-    private var actions: [AlertActionModel]
-    private var style: UIAlertController.Style
+    private let title: String?
+    private let message: String?
+    private let actions: [AlertActionModel]
+    private let style: UIAlertController.Style
 
     init(
         title: String? = nil,
