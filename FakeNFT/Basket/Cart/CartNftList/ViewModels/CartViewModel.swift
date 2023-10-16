@@ -63,7 +63,7 @@ final class CartViewModel: CartViewModelProtocol {
     }
 
     func deleteNftDidApprove(for id: String) {
-        print("Deletion of \(id) did approve")
+        dataProvider.removeNftFromCart(nftId: id)
     }
 
     private func calcCartPriceTotal() -> Decimal {

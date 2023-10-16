@@ -27,7 +27,7 @@
 
 #### Экран "Delete From Cart"
 - Верстка экрана (est: 1h; fact: 2h)
-- Сервис "Изменение заказа `apiV1Orders1Put`" (est: 3h; fact: )
+- Сервис "Изменение заказа `apiV1Orders1Put`" (est: 3h; fact: 2h)
 - viewModel экрана (est: 1h; fact: 1h)
 
 #### Экран "Выбор способа оплаты"

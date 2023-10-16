@@ -12,6 +12,7 @@ protocol CartDataProviderProtocol {
     var nftList: [String: CartNftInfo] { get }
     var cartDidChangeNotification: Notification.Name { get }
     func getAllNftInCart()
+    func removeNftFromCart(nftId: String)
 }
 
 extension CartDataProviderProtocol {
@@ -19,7 +20,6 @@ extension CartDataProviderProtocol {
 }
 
 final class CartDataProvider: CartDataProviderProtocol {
-
     var numberOfNft: Int { nftList.count }
     private(set) var nftList: [String: CartNftInfo] = [:]
 
@@ -32,9 +32,18 @@ final class CartDataProvider: CartDataProviderProtocol {
         NftListService.shared.get(onResponse: nftInCartDidReceive)
     }
 
+    func removeNftFromCart(nftId: String) {
+        let updatedNftList: [String] = nftList.filter { $0.key != nftId }.map { $0.key }
+        NftListUpdateService.shared.put(
+            newNftList: CartNftListUpdate(nfts: updatedNftList),
+            onResponse: nftInCartDidReceive
+        )
+    }
+
     private func nftInCartDidReceive(_ result: Result<CartNftList, Error>) {
         switch result {
         case .success(let nfts):
+            nftList.removeAll()
             nfts.ids.forEach { id in
                 let nftInfoService = NftInfoService()
                 nftInfoService.get(for: id, onResponse: nftInfoDidReceive)
