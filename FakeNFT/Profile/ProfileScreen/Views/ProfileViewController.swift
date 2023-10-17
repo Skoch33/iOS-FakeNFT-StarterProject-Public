@@ -1,5 +1,6 @@
 import UIKit
 import Kingfisher
+import ProgressHUD
 
 final class ProfileViewController: UIViewController {
 
@@ -83,6 +84,8 @@ final class ProfileViewController: UIViewController {
         self.navigationController?.delegate = self
 
         self.tabBarController?.tabBar.isHidden = true
+        
+        ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
 
         viewModel.fetchUserProfile()
 
@@ -182,9 +185,9 @@ extension ProfileViewController: UITableViewDataSource {
         var cellTitle = ""
         switch indexPath.row {
         case 0:
-            cellTitle = NSLocalizedString("ProfileViewController.myNFT", comment: "") + " (112)"
+            cellTitle = NSLocalizedString("ProfileViewController.myNFT", comment: "") + "(\(viewModel.userProfile?.nfts.count ?? 0))"
         case 1:
-            cellTitle = NSLocalizedString("ProfileViewController.favouritesNFT", comment: "") + " (11)"
+            cellTitle = NSLocalizedString("ProfileViewController.favouritesNFT", comment: "") + "(\(viewModel.userProfile?.likes.count ?? 0))"
         case 2:
             cellTitle = NSLocalizedString("ProfileViewController.aboutDeveloper", comment: "")
         default:
@@ -228,9 +231,6 @@ extension ProfileViewController: UINavigationControllerDelegate {
             navigationController.setNavigationBarHidden(true, animated: animated)
         } else if viewController is UserNFTViewController || viewController is FavoritesNFTViewController || viewController is WebViewViewController {
             navigationController.setNavigationBarHidden(false, animated: animated)
-
-            let backItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-            self.navigationItem.backBarButtonItem = backItem
         }
     }
 }

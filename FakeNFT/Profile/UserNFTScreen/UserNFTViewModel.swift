@@ -1,5 +1,4 @@
 import Foundation
-import ProgressHUD
 
 protocol UserNFTViewModelProtocol {
     var userNFT: [NFT]? { get }
@@ -26,7 +25,7 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
     }
     
     func fetchNFT(nftList: [String]) {
-        ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
+        
         var fetchedNFTs: [NFT] = []
         let group = DispatchGroup()
         
@@ -34,7 +33,6 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
             group.enter()
             
             model.fetchNFT(nftID: element) { (result) in
-                ProgressHUD.dismiss()
                 switch result {
                 case .success(let nft):
                     fetchedNFTs.append(nft)

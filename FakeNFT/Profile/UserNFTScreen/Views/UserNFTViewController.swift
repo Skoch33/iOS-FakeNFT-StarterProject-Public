@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 final class UserNFTViewController: UIViewController {
     private let nftList: [String]
@@ -11,6 +12,13 @@ final class UserNFTViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         return tableView
+    }()
+    
+    private lazy var sortButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "sort"), for: .normal)
+        button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+        return button
     }()
     
     init(nftList: [String], viewModel: UserNFTViewModelProtocol) {
@@ -29,13 +37,37 @@ final class UserNFTViewController: UIViewController {
         
         viewModel.fetchNFT(nftList: nftList)
         setupViews()
+        configNavigationBar()
+    }
+    
+    @objc private func sortButtonTapped() {
+        print("sortButtonTapped")
+    }
+    
+    private func startLoading() {
+        ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
+    }
+
+    private func stopLoading() {
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
+        ProgressHUD.dismiss()
     }
     
     private func bind() {
         viewModel.observeUserNFT { [weak self] _ in
             guard let self = self else { return }
+            stopLoading()
             self.nftTableView.reloadData()
         }
+    }
+    
+    private func configNavigationBar() {
+        let barButtonItem = UIBarButtonItem(customView: sortButton)
+        navigationItem.rightBarButtonItem = barButtonItem
+        navigationItem.title = NSLocalizedString("ProfileViewController.myNFT", comment: "")
+        setupCustomBackButton()
+        startLoading()
     }
     
     private func setupViews() {
