@@ -59,6 +59,8 @@ final class CartViewModel: CartViewModelProtocol {
 
     func sortOrderDidChange(to sortOder: CartSortOrder) {
         settingsStorage.cartSortOrder = sortOder
+        // Для корзины предложил локальную сортировку без обращения к серверу (для оптимизации)
+        // т.к. корзина содержит ограниченный набор заранее отобранных NFT
         nftList = sortingService.sorted(nftList, by: sortOder)
     }
 
