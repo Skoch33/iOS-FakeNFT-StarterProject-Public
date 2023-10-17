@@ -29,11 +29,11 @@
 - Реализация NavigationBar (est: 30 min; fact: 20 min) 
 - Создание UITableView (est: 60 min; fact: 30 min) 
 - Верстка кастомной ячейки (est: 50 min; fact: 40 min) 
-- Реализация функции сортировки (est: 90 min; fact: x min) 
+- Реализация функции сортировки (est: 90 min; fact: 40 min) 
 - Создание модели (est: 20 min; fact: 20 min) 
-- Отображение UILabel (est: 60 min; fact: 40 min) 
+- Создание сетевого слоя (est: 60 min; fact: 40 min) 
 
-`Total:` est: 310 min; fact: x min
+`Total:` est: 310 min; fact: 190 min
 
 ### Module 3: Экран избранные NFT
 
