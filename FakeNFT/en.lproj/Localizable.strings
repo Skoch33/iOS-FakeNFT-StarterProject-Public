@@ -20,8 +20,12 @@
 "ProgressHUD.loading" = "Loading ...";
 
 //NFTCell
-
 "NFTCell.from" = "from";
 "NFTCell.price" = "Price";
+
+//UserNFTViewController
+"UserNFTViewController" = "You don't have an NFT yet";
+
+
 
 

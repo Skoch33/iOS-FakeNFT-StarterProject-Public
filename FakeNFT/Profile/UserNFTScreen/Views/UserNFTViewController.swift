@@ -25,6 +25,14 @@ final class UserNFTViewController: UIViewController {
         return button
     }()
     
+    private lazy var noNFTLabel: UILabel = {
+        let label = UILabel()
+        label.text = "У вас еще нет NFT"
+        label.font = .bodyBold
+        label.isHidden = true
+        return label
+    }()
+    
     init(nftList: [String], viewModel: UserNFTViewModelProtocol) {
         self.nftList = nftList
         self.viewModel = viewModel
@@ -42,6 +50,7 @@ final class UserNFTViewController: UIViewController {
         viewModel.fetchNFT(nftList: nftList)
         setupViews()
         configNavigationBar()
+        startLoading()
     }
     
     @objc private func sortButtonTapped() {
@@ -58,40 +67,64 @@ final class UserNFTViewController: UIViewController {
     
     private func startLoading() {
         ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
-        self.navigationItem.rightBarButtonItem?.isEnabled = false
     }
 
     private func stopLoading() {
         ProgressHUD.dismiss()
-        self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
     
     private func bind() {
         viewModel.observeUserNFT { [weak self] _ in
             guard let self = self else { return }
-            stopLoading()
             self.nftTableView.reloadData()
+        }
+        
+        viewModel.observeState { [weak self] state in
+            guard let self = self else { return }
+            
+            switch state {
+            case .loading:
+                self.startLoading()
+            case .loaded:
+                self.stopLoading()
+                if self.viewModel.userNFT == nil {
+                    self.noNFTLabel.isHidden = false
+                } else {
+                    self.updateUIBasedOnNFTData()
+                }
+            case .error(_):
+                self.stopLoading()
+                // ToDo: - Error Alert
+            default:
+                break
+            }
         }
     }
     
-    private func configNavigationBar() {
+    private func updateUIBasedOnNFTData() {
         let barButtonItem = UIBarButtonItem(customView: sortButton)
         navigationItem.rightBarButtonItem = barButtonItem
         navigationItem.title = NSLocalizedString("ProfileViewController.myNFT", comment: "")
+    }
+    
+    private func configNavigationBar() {
         setupCustomBackButton()
-        startLoading()
+    
     }
     
     private func setupViews() {
         view.backgroundColor = .white
 
-        [nftTableView].forEach { view.addViewWithNoTAMIC($0) }
+        [nftTableView, noNFTLabel].forEach { view.addViewWithNoTAMIC($0) }
         
         NSLayoutConstraint.activate([
             nftTableView .topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             nftTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             nftTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            nftTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            nftTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            noNFTLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            noNFTLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 }

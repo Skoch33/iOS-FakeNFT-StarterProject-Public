@@ -22,3 +22,6 @@
 //NFTCell
 "NFTCell.from" = "от";
 "NFTCell.price" = "Цена";
+
+//UserNFTViewController
+"UserNFTViewController" = "У вас еще нет NFT";
