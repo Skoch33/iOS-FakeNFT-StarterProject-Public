@@ -2,20 +2,28 @@ import UIKit
 
 extension UIFont {
 
-    static let nftFontRegularName = "SFProText-Regular"
-    static let nftFontMediumName = "SFProText-Medium"
-    static let nftFontBoldName = "SFProText-Bold"
+    private enum NftFontNames {
+        static let regular = "SFProText-Regular"
+        static let medium = "SFProText-Medium"
+        static let bold = "SFProText-Bold"
+    }
 
     // Headline Fonts
-    static var headline1 = UIFont(name: nftFontBoldName, size: 34)
-    static var headline2 = UIFont(name: nftFontBoldName, size: 22)
+    enum NftHeadlineFonts {
+        static var large = UIFont(name: NftFontNames.bold, size: 34)
+        static var medium = UIFont(name: NftFontNames.bold, size: 22)
+    }
 
     // Body Fonts
-    static var bodyRegular = UIFont(name: nftFontRegularName, size: 17)
-    static var bodyBold = UIFont(name: nftFontBoldName, size: 17)
+    enum NftBodyFonts {
+        static var regular = UIFont(name: NftFontNames.regular, size: 17)
+        static var bold = UIFont(name: NftFontNames.bold, size: 17)
+    }
 
     // Caption Fonts
-    static var caption1 = UIFont(name: nftFontRegularName, size: 15)
-    static var caption2 = UIFont(name: nftFontRegularName, size: 13)
-    static var caption3 = UIFont(name: nftFontMediumName, size: 10)
+    enum NftCaptionFonts {
+        static var large = UIFont(name: NftFontNames.regular, size: 15)
+        static var medium = UIFont(name: NftFontNames.regular, size: 13)
+        static var small = UIFont(name: NftFontNames.medium, size: 10)
+    }
 }

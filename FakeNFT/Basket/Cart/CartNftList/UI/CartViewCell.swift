@@ -107,7 +107,7 @@ private extension CartViewCell {
 
         let priceView = UILabel()
         priceView.text = NSLocalizedString("CartViewCell.Price", comment: "")
-        priceView.font = .caption2
+        priceView.font = .NftCaptionFonts.medium
         priceView.textColor = .nftBlack
         priceView.textAlignment = .left
 
@@ -142,7 +142,7 @@ private extension CartViewCell {
     func createNFTNameLabel() -> UILabel {
         let label = UILabel()
         label.text = " "
-        label.font = .bodyBold
+        label.font = .NftBodyFonts.bold
         label.textColor = .nftBlack
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -152,7 +152,7 @@ private extension CartViewCell {
     func createNFTPriceLabel() -> UILabel {
         let label = UILabel()
         label.text = PriceFormatter.formattedPrice(Decimal(0))
-        label.font = .bodyBold
+        label.font = .NftBodyFonts.bold
         label.textColor = .nftBlack
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false

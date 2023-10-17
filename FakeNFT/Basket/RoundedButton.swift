@@ -27,7 +27,7 @@ final class RoundedButton: UIButton {
         backgroundColor = .nftBlack
         layer.cornerRadius = 16
         layer.masksToBounds = true
-        titleLabel?.font = .bodyBold
+        titleLabel?.font = .NftBodyFonts.bold
         setTitleColor(.nftWhite, for: .normal)
         translatesAutoresizingMaskIntoConstraints = false
     }

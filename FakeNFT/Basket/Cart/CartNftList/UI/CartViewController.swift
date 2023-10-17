@@ -246,7 +246,7 @@ private extension CartViewController {
 
     func createCountLabel() -> UILabel {
         let label = UILabel()
-        label.font = .caption1
+        label.font = .NftCaptionFonts.large
         label.textColor = .nftBlack
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -254,7 +254,7 @@ private extension CartViewController {
 
     func createPriceTotalLabel() -> UILabel {
         let label = UILabel()
-        label.font = .bodyBold
+        label.font = .NftBodyFonts.bold
         label.textColor = .nftGreenUniversal
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -263,7 +263,7 @@ private extension CartViewController {
     func createEmptyCartPlaceholder() -> UIView {
         let view = UILabel()
         view.text = NSLocalizedString("CartViewController.emptyCartPlaceholderText", comment: "")
-        view.font = .bodyBold
+        view.font = .NftBodyFonts.bold
         view.textColor = .nftBlack
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

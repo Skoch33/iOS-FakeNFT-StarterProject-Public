@@ -42,7 +42,7 @@ private extension DeleteNftViewController {
 
         let label = UILabel()
         label.text = NSLocalizedString("Cart.DeleteNftViewController.deleteMessage", comment: "")
-        label.font = .caption2
+        label.font = .NftCaptionFonts.medium
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .nftBlack
@@ -65,7 +65,7 @@ private extension DeleteNftViewController {
         [deleteButton, backButton].forEach {
             $0.layer.cornerRadius = 12
             $0.contentEdgeInsets = UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 16)
-            $0.titleLabel?.font = .bodyRegular
+            $0.titleLabel?.font = .NftBodyFonts.regular
         }
 
         let buttonsStack = UIStackView(arrangedSubviews: [deleteButton, backButton])
