@@ -163,9 +163,11 @@ final class UserCardViewController: UIViewController {
         }
 
         viewModel.onCollectionButtonClick = { [weak self] in
-            let usersCollection = UserCollectionViewController()
-            usersCollection.title = "Коллекция NFT"
-            self?.navigationController?.pushViewController(usersCollection, animated: true)
+            let usersCollectionVM: UsersCollectionViewModelProtocol = UsersCollectionViewModel()
+            usersCollectionVM.nftsID = self?.viewModel.nftsID ?? []
+            let usersCollectionVC = UserCollectionViewController(viewModel: usersCollectionVM)
+            usersCollectionVC.title = "Коллекция NFT"
+            self?.navigationController?.pushViewController(usersCollectionVC, animated: true)
         }
     }
 }
