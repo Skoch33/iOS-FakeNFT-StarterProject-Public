@@ -107,6 +107,7 @@ final class ProfileViewController: UIViewController {
                 let self = self,
                 let model = profileModel
             else { return }
+            ProgressHUD.dismiss()
             self.updateUI(with: model)
         }
     }

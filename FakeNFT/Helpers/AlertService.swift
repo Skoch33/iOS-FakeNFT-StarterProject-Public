@@ -7,6 +7,7 @@ protocol AlertServiceProtocol {
                                  confirmAction: @escaping (String?) -> Void)
 
     func showAvatarChangeError()
+    func showSortAlert(priceSortAction: @escaping () -> Void, ratingSortAction: @escaping () -> Void, titleSortAction: @escaping () -> Void)
 }
 
 class AlertService: AlertServiceProtocol {
@@ -50,4 +51,32 @@ class AlertService: AlertServiceProtocol {
         alertController.addAction(confirm)
         viewController?.present(alertController, animated: true, completion: nil)
     }
+    
+    func showSortAlert(priceSortAction: @escaping () -> Void,
+                       ratingSortAction: @escaping () -> Void,
+                       titleSortAction: @escaping () -> Void) {
+        
+        let alertController = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
+        
+        let priceAction = UIAlertAction(title: SortOption.price.description, style: .default) { _ in
+            priceSortAction()
+        }
+        
+        let ratingAction = UIAlertAction(title: SortOption.rating.description, style: .default) { _ in
+            ratingSortAction()
+        }
+        
+        let titleAction = UIAlertAction(title: SortOption.title.description, style: .default) { _ in
+            titleSortAction()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Закрыть", style: .cancel, handler: nil)
+        
+        alertController.addAction(priceAction)
+        alertController.addAction(ratingAction)
+        alertController.addAction(titleAction)
+        alertController.addAction(cancelAction)
+        viewController?.present(alertController, animated: true, completion: nil)
+    }
 }
+
