@@ -1,9 +1,8 @@
 import UIKit
-import ProgressHUD
 
 final class UserNFTViewController: UIViewController {
-    private let nftList: [String]
-    private let viewModel: UserNFTViewModelProtocol
+    
+    // MARK: - UI properties
     
     private lazy var alertService: AlertServiceProtocol = {
         return AlertService(viewController: self)
@@ -27,11 +26,18 @@ final class UserNFTViewController: UIViewController {
     
     private lazy var noNFTLabel: UILabel = {
         let label = UILabel()
-        label.text = "У вас еще нет NFT"
+        label.text = NSLocalizedString("UserNFTViewController.nonft", comment: "")
         label.font = .bodyBold
         label.isHidden = true
         return label
     }()
+    
+    // MARK: - Properties
+    
+    private let nftList: [String]
+    private let viewModel: UserNFTViewModelProtocol
+    
+    // MARK: - Lifecycle
     
     init(nftList: [String], viewModel: UserNFTViewModelProtocol) {
         self.nftList = nftList
@@ -50,27 +56,44 @@ final class UserNFTViewController: UIViewController {
         viewModel.fetchNFT(nftList: nftList)
         setupViews()
         configNavigationBar()
-        startLoading()
     }
     
-    @objc private func sortButtonTapped() {
-        alertService.showSortAlert(
-            priceSortAction: { [weak self] in self?.sortData(by: .price) },
-            ratingSortAction: { [weak self] in self?.sortData(by: .rating) },
-            titleSortAction: { [weak self] in self?.sortData(by: .title) }
-        )
+    // MARK: - Actions
+    
+    @objc
+    private func sortButtonTapped() {
+        let priceAction = AlertActionModel(title: SortOption.price.description, style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            self.viewModel.userSelectedSorting(by: .price)
+        }
+        
+        let ratingAction = AlertActionModel(title: SortOption.rating.description, style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            self.viewModel.userSelectedSorting(by: .rating)
+        }
+        
+        let titleAction = AlertActionModel(title: SortOption.title.description, style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            self.viewModel.userSelectedSorting(by: .title)
+        }
+        
+        let cancelAction = AlertActionModel(title: NSLocalizedString("AlertAction.close", comment: ""),
+                                            style: .cancel,
+                                            handler: nil)
+        
+        let alertModel = AlertModel(title: NSLocalizedString("AlertAction.sort", comment: ""),
+                                    message: nil,
+                                    style: .actionSheet,
+                                    actions: [priceAction, ratingAction, titleAction, cancelAction],
+                                    textFieldPlaceholder: nil)
+        
+        alertService.showAlert(model: alertModel)
     }
-
+    
+    // MARK: - Methods
+    
     private func sortData(by option: SortOption) {
-        viewModel.sortData(by: option)
-    }
-    
-    private func startLoading() {
-        ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
-    }
-
-    private func stopLoading() {
-        ProgressHUD.dismiss()
+        viewModel.userSelectedSorting(by: option)
     }
     
     private func bind() {
@@ -84,16 +107,15 @@ final class UserNFTViewController: UIViewController {
             
             switch state {
             case .loading:
-                self.startLoading()
+                print("Загрузка")
             case .loaded:
-                self.stopLoading()
                 if self.viewModel.userNFT == nil {
                     self.noNFTLabel.isHidden = false
                 } else {
                     self.updateUIBasedOnNFTData()
                 }
             case .error(_):
-                self.stopLoading()
+                print("Ошибка")
                 // ToDo: - Error Alert
             default:
                 break
@@ -109,8 +131,9 @@ final class UserNFTViewController: UIViewController {
     
     private func configNavigationBar() {
         setupCustomBackButton()
-    
     }
+    
+    // MARK: - Layout methods
     
     private func setupViews() {
         view.backgroundColor = .white

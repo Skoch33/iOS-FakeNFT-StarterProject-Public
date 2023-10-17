@@ -1,12 +1,13 @@
 import Foundation
 
-final class ProfileModel {
+final class ProfileService {
+    static let shared = ProfileService(networkClient: DefaultNetworkClient())
     private let networkClient: NetworkClient
-
-    init() {
-        self.networkClient = DefaultNetworkClient()
+    
+    init(networkClient: NetworkClient) {
+        self.networkClient = networkClient
     }
-
+    
     func fetchProfile(request: NetworkRequest = FetchProfileNetworkRequest(),
                       completion: @escaping (Result<UserProfile, Error>) -> Void) {
         networkClient.send(request: request, type: UserProfile.self) { result in
@@ -26,6 +27,7 @@ final class ProfileModel {
             switch result {
             case .success(let updatedProfile):
                 completion(.success(updatedProfile))
+                NotificationCenter.default.post(name: NSNotification.Name("profileUpdated"), object: nil)
             case .failure(let error):
                 completion(.failure(error))
             }

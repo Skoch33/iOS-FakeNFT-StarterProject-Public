@@ -1,4 +1,5 @@
 import Foundation
+import ProgressHUD
 
 enum LoadingState {
     case idle
@@ -18,7 +19,7 @@ protocol UserNFTViewModelProtocol {
     func fetchNFT(nftList: [String])
     func fetchAuthor(authorID: String, completion: @escaping (Result<Author, Error>) -> Void)
     
-    func sortData(by option: SortOption)
+    func userSelectedSorting(by option: SortOption)
 }
 
 final class UserNFTViewModel: UserNFTViewModelProtocol {
@@ -44,6 +45,7 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
     }
     
     func fetchNFT(nftList: [String]) {
+        ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
         state = .loading
 
         var fetchedNFTs: [NFT] = []
@@ -64,24 +66,7 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
         }
         
         group.notify(queue: .main) {
-            let authorGroup = DispatchGroup()
-            
-            for nft in fetchedNFTs {
-                authorGroup.enter()
-                self.fetchAuthor(authorID: nft.author) { result in
-                    switch result {
-                    case .success(let author):
-                        self.authors[nft.author] = author
-                    case .failure(let error):
-                        print("Failed to fetch author with ID \(nft.author): \(error)")
-                    }
-                    authorGroup.leave()
-                }
-            }
-            authorGroup.notify(queue: .main) {
-                self.userNFT = fetchedNFTs
-                self.state = .loaded
-            }
+            self.fetchAuthor(nfts: fetchedNFTs)
         }
     }
     
@@ -96,7 +81,7 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
         }
     }
     
-    func sortData(by option: SortOption) {
+    func userSelectedSorting(by option: SortOption) {
         guard var nfts = userNFT else {
             print("No NFTs available to sort")
             return
@@ -111,5 +96,27 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
             nfts.sort(by: { $0.name.lowercased() < $1.name.lowercased() })
         }
         self.userNFT = nfts
+    }
+    
+    private func fetchAuthor(nfts: [NFT]) {
+        let authorGroup = DispatchGroup()
+        
+        for nft in nfts {
+            authorGroup.enter()
+            self.fetchAuthor(authorID: nft.author) { result in
+                switch result {
+                case .success(let author):
+                    self.authors[nft.author] = author
+                case .failure(let error):
+                    print("Failed to fetch author with ID \(nft.author): \(error)")
+                }
+                authorGroup.leave()
+            }
+        }
+        authorGroup.notify(queue: .main) {
+            self.userNFT = nfts
+            self.state = .loaded
+        }
+        ProgressHUD.dismiss()
     }
 }
