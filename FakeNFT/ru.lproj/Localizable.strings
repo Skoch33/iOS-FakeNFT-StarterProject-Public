@@ -18,3 +18,26 @@
 
 //ProgressHUD
 "ProgressHUD.loading" = "Загрузка ...";
+
+//NFTCell
+"NFTCell.from" = "от";
+"NFTCell.price" = "Цена";
+
+//UserNFTViewController
+"UserNFTViewController.nonft" = "У вас еще нет NFT";
+
+//AlertAction
+"AlertAction.close" = "Закрыть";
+"AlertAction.sort" = "Сортировка";
+"AlertAction.ok" = "Подтвердить";
+"AlertAction.error" = "Ошибка";
+"AlertAction.incorrURL" = "Введен не корректный URL адрес";
+"AlertAction.cancel" = "Отмена";
+"AlertAction.enterURL" = "Введите URL";
+"AlertAction.imageURL" = "URL изображения";
+
+//SortOptions
+"SortOptions.price" = "По цене";
+"SortOptions.rate" = "По рейтингу";
+"SortOptions.name" = "По названию";
+
