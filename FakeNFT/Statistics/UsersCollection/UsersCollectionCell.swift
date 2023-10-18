@@ -143,7 +143,7 @@ final class UsersCollectionCell: UICollectionViewCell {
         ])
     }
     //MARK: - Setup
-    func configure(nft: NFT, rating: Int) {
+    func configure(nft: NFTModel, rating: Int) {
         let cache = ImageCache.default
         cache.clearMemoryCache()
         cache.clearDiskCache()
