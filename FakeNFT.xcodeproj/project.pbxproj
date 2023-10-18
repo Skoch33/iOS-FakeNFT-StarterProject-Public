@@ -17,6 +17,7 @@
 		065779BD2ADF019200C2FDEB /* NFTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779BC2ADF019200C2FDEB /* NFTService.swift */; };
 		065779BF2AE0489400C2FDEB /* GetNFTRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779BE2AE0489400C2FDEB /* GetNFTRequest.swift */; };
 		065779C12AE055ED00C2FDEB /* GetUserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779C02AE055ED00C2FDEB /* GetUserRequest.swift */; };
+		065779C62AE0747900C2FDEB /* UIImage + Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779C52AE0747900C2FDEB /* UIImage + Extentions.swift */; };
 		06F519A92AD5BAD400E3B217 /* UserCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A12AD5BAD400E3B217 /* UserCardViewController.swift */; };
 		06F519AA2AD5BAD400E3B217 /* StatisticsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A32AD5BAD400E3B217 /* StatisticsCell.swift */; };
 		06F519AB2AD5BAD400E3B217 /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A42AD5BAD400E3B217 /* StatisticsViewModel.swift */; };
@@ -83,6 +84,7 @@
 		065779BC2ADF019200C2FDEB /* NFTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTService.swift; sourceTree = "<group>"; };
 		065779BE2AE0489400C2FDEB /* GetNFTRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNFTRequest.swift; sourceTree = "<group>"; };
 		065779C02AE055ED00C2FDEB /* GetUserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserRequest.swift; sourceTree = "<group>"; };
+		065779C52AE0747900C2FDEB /* UIImage + Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Extentions.swift"; sourceTree = "<group>"; };
 		06F519A12AD5BAD400E3B217 /* UserCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCardViewController.swift; sourceTree = "<group>"; };
 		06F519A32AD5BAD400E3B217 /* StatisticsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsCell.swift; sourceTree = "<group>"; };
 		06F519A42AD5BAD400E3B217 /* StatisticsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
@@ -151,9 +153,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		065779C42AE0744400C2FDEB /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				065779C52AE0747900C2FDEB /* UIImage + Extentions.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		06F5199F2AD5BAD400E3B217 /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
+				065779C42AE0744400C2FDEB /* Helpers */,
 				06F519A02AD5BAD400E3B217 /* UserCard */,
 				06F519A22AD5BAD400E3B217 /* Rating */,
 				06F519A72AD5BAD400E3B217 /* UsersCollection */,
@@ -551,6 +562,7 @@
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				065779A92ADAF14F00C2FDEB /* UsersService.swift in Sources */,
+				065779C62AE0747900C2FDEB /* UIImage + Extentions.swift in Sources */,
 				065779BD2ADF019200C2FDEB /* NFTService.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,

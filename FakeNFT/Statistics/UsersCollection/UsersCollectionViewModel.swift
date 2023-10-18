@@ -27,14 +27,14 @@ final class UsersCollectionViewModel: UsersCollectionViewModelProtocol {
         }
     }
 
-    func nftCount() -> Int {
-        return nfts.count
-    }
-
     private let nftService: NFTServiceProtocol
 
     init(nftService: NFTServiceProtocol = NFTService()) {
         self.nftService = nftService
+    }
+
+    func nftCount() -> Int {
+        return nfts.count
     }
 
     func loadData() {

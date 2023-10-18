@@ -11,7 +11,7 @@ final class UsersCollectionCell: UICollectionViewCell {
     // MARK: - Private Properties
     private var isLiked: Bool = false
     private var isOrder: Bool = false
-    private let placeholder = UIImage(named: "person.crop.circle.fill")
+    private let placeholder: UIImage? = .placeholder
     // MARK: - SubViews
     private lazy var imageNFT: UIImageView = {
         let image = UIImageView()
@@ -21,9 +21,8 @@ final class UsersCollectionCell: UICollectionViewCell {
     }()
 
     private lazy var favoriteButton: UIButton = {
-        let favorite = UIImage(named: "noActiveLike")
         let button = UIButton()
-        button.setImage(favorite, for: .normal)
+        button.setImage(.noActiveLike, for: .normal)
         button.addTarget(self, action: #selector(isLikeTapped), for: .touchUpInside)
         return button
     }()
@@ -31,8 +30,7 @@ final class UsersCollectionCell: UICollectionViewCell {
     private lazy var ratingImages: [UIImageView] = {
         var images = [UIImageView]()
         for _ in 0..<5 {
-            let star = UIImage(named: "starDefault")
-            let image = UIImageView(image: star)
+            let image = UIImageView(image: .defaultStarIcon)
             images.append(image)
         }
         return images
@@ -82,19 +80,19 @@ final class UsersCollectionCell: UICollectionViewCell {
     @objc
     private func isLikeTapped() {
         isLiked.toggle()
-        let like = isLiked ? "activeLike" : "noActiveLike"
-        favoriteButton.setImage(UIImage(named: like), for: .normal)
+        let like: UIImage? = isLiked ? .activeLike : .noActiveLike
+        favoriteButton.setImage(like, for: .normal)
     }
 
     @objc
     private func isOrderTapped() {
         isOrder.toggle()
-        let lightOrder = isOrder ? "basketLightOrder" : "basketDark"
-        let darkOrder = isOrder ? "basketDarkOrder" : "basketLight"
+        let lightOrder: UIImage? = isOrder ? .basketLightIsOrder : .basketDark
+        let darkOrder: UIImage? = isOrder ? .basketLightIsOrder : .basketLight
         if traitCollection.userInterfaceStyle == .light {
-            basketButton.setImage(UIImage(named: lightOrder), for: .normal)
+            basketButton.setImage(lightOrder, for: .normal)
         } else {
-            basketButton.setImage(UIImage(named: darkOrder), for: .normal)
+            basketButton.setImage(darkOrder, for: .normal)
         }
     }
     // MARK: - AutoLayouts
@@ -155,6 +153,7 @@ final class UsersCollectionCell: UICollectionViewCell {
                 placeholder: placeholder
             )
         }
+
         nameNFT.text = nft.name
         priceLabel.text = "\(nft.price) ETH"
         setupStarRating(with: rating)
@@ -162,22 +161,20 @@ final class UsersCollectionCell: UICollectionViewCell {
 
     private func setupStarRating(with rating: Int) {
         for index in 0..<ratingImages.count {
-            let star = index < rating ? "starDone" : "starDefault"
-            ratingImages[index].image = UIImage(named: star)
+            let star: UIImage? = index < rating ? .starDoneIcon : .defaultStarIcon
+            ratingImages[index].image = star
         }
     }
 
     private func updateBasketColor() {
-        let darkBasket = UIImage(named: "basketDark")
-        let lightBasket = UIImage(named: "basketLight")
         if #available(iOS 13.0, *) {
             if traitCollection.userInterfaceStyle == .light {
-                basketButton.setImage(darkBasket, for: .normal)
+                basketButton.setImage(.basketDark, for: .normal)
             } else {
-                basketButton.setImage(lightBasket, for: .normal)
+                basketButton.setImage(.basketLight, for: .normal)
             }
         } else {
-            basketButton.setImage(darkBasket, for: .normal)
+            basketButton.setImage(.basketDark, for: .normal)
         }
     }
 }

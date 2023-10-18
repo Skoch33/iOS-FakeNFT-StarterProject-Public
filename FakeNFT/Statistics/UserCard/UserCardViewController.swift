@@ -55,14 +55,13 @@ final class UserCardViewController: UIViewController {
     }()
     
     private lazy var chevronImage: UIImageView = {
-        let pic = UIImage(named: "chevron.forward")
-        let image = UIImageView(image: pic)
+        let image = UIImageView(image: .chevron)
         image.tintColor = .nftBlack
         return image
     }()
     
     private var viewModel: UserCardViewModelProtocol
-    private let placeholder = UIImage(named: "person.crop.circle.fill")
+    private let placeholder: UIImage? = .placeholder
     
     init(viewModel: UserCardViewModelProtocol = UserCardViewModel()) {
         self.viewModel = viewModel

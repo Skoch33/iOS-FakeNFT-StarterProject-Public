@@ -84,7 +84,7 @@ final class StatisticsViewController: UIViewController {
     
     private func setupNavigationBar() {
         let filterButton = UIBarButtonItem(
-            image: UIImage(named: "SortIcon"),
+            image: .sortIcon,
             style: .plain,
             target: self,
             action: #selector(sortingUsers)
@@ -139,6 +139,7 @@ extension StatisticsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.usersCount()
     }
