@@ -9,7 +9,7 @@ protocol UsersCollectionViewModelProtocol: AnyObject {
     var dataChanged: (() -> Void)? { get set }
     var isDataLoading: ((Bool) -> Void)? { get set }
     var nftsID: [String] { get set }
-    var nfts: [NFT] { get set }
+    var nfts: [NFTModel] { get set }
     func nftCount() -> Int
     func loadData()
 }
@@ -21,7 +21,7 @@ final class UsersCollectionViewModel: UsersCollectionViewModelProtocol {
 
     var nftsID: [String] = []
 
-    var nfts: [NFT] = [] {
+    var nfts: [NFTModel] = [] {
         didSet {
             dataChanged?()
         }
@@ -39,25 +39,23 @@ final class UsersCollectionViewModel: UsersCollectionViewModelProtocol {
 
     func loadData() {
         let dispatchGroup = DispatchGroup()
-        var loadedNFTs: [NFT] = []
-        let dispatchQueue = DispatchQueue(label: "com.FakeNFT.NFTQueue")
+        var loadedNFTs: [NFTModel] = []
 
         isDataLoading?(true)
 
         for id in nftsID {
             dispatchGroup.enter()
-            dispatchQueue.async {
-                self.nftService.getNFTs(id: id) { nft in
-                    if let nft = nft {
-                        dispatchQueue.sync {
-                            loadedNFTs.append(nft)
-                        }
-                    }
-                    dispatchGroup.leave()
+            nftService.getNFTs(id: id) { result in
+                switch result {
+                case .success(let nft):
+                    loadedNFTs.append(nft)
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
+                dispatchGroup.leave()
             }
         }
-
+        
         dispatchGroup.notify(queue: .main) {
             loadedNFTs.sort { $0.name < $1.name }
             self.nfts = loadedNFTs

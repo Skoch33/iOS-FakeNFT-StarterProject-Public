@@ -15,11 +15,13 @@
 		065779B92ADEFC4600C2FDEB /* NFTModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779B82ADEFC4600C2FDEB /* NFTModel.swift */; };
 		065779BB2ADF014800C2FDEB /* UsersCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779BA2ADF014800C2FDEB /* UsersCollectionViewModel.swift */; };
 		065779BD2ADF019200C2FDEB /* NFTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779BC2ADF019200C2FDEB /* NFTService.swift */; };
+		065779BF2AE0489400C2FDEB /* GetNFTRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779BE2AE0489400C2FDEB /* GetNFTRequest.swift */; };
+		065779C12AE055ED00C2FDEB /* GetUserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779C02AE055ED00C2FDEB /* GetUserRequest.swift */; };
 		06F519A92AD5BAD400E3B217 /* UserCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A12AD5BAD400E3B217 /* UserCardViewController.swift */; };
 		06F519AA2AD5BAD400E3B217 /* StatisticsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A32AD5BAD400E3B217 /* StatisticsCell.swift */; };
 		06F519AB2AD5BAD400E3B217 /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A42AD5BAD400E3B217 /* StatisticsViewModel.swift */; };
 		06F519AC2AD5BAD400E3B217 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A52AD5BAD400E3B217 /* StatisticsViewController.swift */; };
-		06F519AD2AD5BAD400E3B217 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A62AD5BAD400E3B217 /* User.swift */; };
+		06F519AD2AD5BAD400E3B217 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A62AD5BAD400E3B217 /* UserModel.swift */; };
 		06F519AE2AD5BAD400E3B217 /* UsersCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A82AD5BAD400E3B217 /* UsersCollectionViewController.swift */; };
 		06F519BA2AD84E1400E3B217 /* StatisticsFlowDecomposition.md in Resources */ = {isa = PBXBuildFile; fileRef = 06F519B92AD84E1400E3B217 /* StatisticsFlowDecomposition.md */; };
 		224B63392AD3340800084AC9 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 224B63382AD3340800084AC9 /* SF-Pro-Text-Regular.otf */; };
@@ -79,11 +81,13 @@
 		065779B82ADEFC4600C2FDEB /* NFTModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTModel.swift; sourceTree = "<group>"; };
 		065779BA2ADF014800C2FDEB /* UsersCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCollectionViewModel.swift; sourceTree = "<group>"; };
 		065779BC2ADF019200C2FDEB /* NFTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTService.swift; sourceTree = "<group>"; };
+		065779BE2AE0489400C2FDEB /* GetNFTRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNFTRequest.swift; sourceTree = "<group>"; };
+		065779C02AE055ED00C2FDEB /* GetUserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserRequest.swift; sourceTree = "<group>"; };
 		06F519A12AD5BAD400E3B217 /* UserCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCardViewController.swift; sourceTree = "<group>"; };
 		06F519A32AD5BAD400E3B217 /* StatisticsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsCell.swift; sourceTree = "<group>"; };
 		06F519A42AD5BAD400E3B217 /* StatisticsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
 		06F519A52AD5BAD400E3B217 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
-		06F519A62AD5BAD400E3B217 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		06F519A62AD5BAD400E3B217 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		06F519A82AD5BAD400E3B217 /* UsersCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersCollectionViewController.swift; sourceTree = "<group>"; };
 		06F519B92AD84E1400E3B217 /* StatisticsFlowDecomposition.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = StatisticsFlowDecomposition.md; sourceTree = "<group>"; };
 		224B63382AD3340800084AC9 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
@@ -173,7 +177,7 @@
 				06F519A32AD5BAD400E3B217 /* StatisticsCell.swift */,
 				06F519A42AD5BAD400E3B217 /* StatisticsViewModel.swift */,
 				06F519A52AD5BAD400E3B217 /* StatisticsViewController.swift */,
-				06F519A62AD5BAD400E3B217 /* User.swift */,
+				06F519A62AD5BAD400E3B217 /* UserModel.swift */,
 				065779B02ADC70CA00C2FDEB /* AlertPresenter.swift */,
 			);
 			path = Rating;
@@ -338,6 +342,8 @@
 			isa = PBXGroup;
 			children = (
 				3FC8C39029D2453B0081F015 /* ExampleRequest.swift */,
+				065779BE2AE0489400C2FDEB /* GetNFTRequest.swift */,
+				065779C02AE055ED00C2FDEB /* GetUserRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -549,12 +555,13 @@
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
-				06F519AD2AD5BAD400E3B217 /* User.swift in Sources */,
+				06F519AD2AD5BAD400E3B217 /* UserModel.swift in Sources */,
 				065779B72ADEFBBE00C2FDEB /* UsersCollectionCell.swift in Sources */,
 				065779AB2ADB04E500C2FDEB /* WebViewViewController.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				715D0F272AD1570000300497 /* ProfileViewController.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
+				065779C12AE055ED00C2FDEB /* GetUserRequest.swift in Sources */,
 				715D0F2B2AD1577A00300497 /* UIColor+Extensions.swift in Sources */,
 				06F519AA2AD5BAD400E3B217 /* StatisticsCell.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
@@ -572,6 +579,7 @@
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				715D0F262AD1570000300497 /* CatalogViewController.swift in Sources */,
 				06F519AB2AD5BAD400E3B217 /* StatisticsViewModel.swift in Sources */,
+				065779BF2AE0489400C2FDEB /* GetNFTRequest.swift in Sources */,
 				06F519AC2AD5BAD400E3B217 /* StatisticsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
