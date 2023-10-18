@@ -8,28 +8,40 @@
 import Foundation
 
 protocol CartCurrencyDataProviderProtocol {
-    var numberOfCurrencies: Int { get }
-    var currencyList: [CartCurrency] { get }
-    func getCurrencyList()
+    func getNumberOfCurrencies() -> Int
+    func getCurrencyList() -> [CartCurrency]
+    func reloadData()
     func getCurrencyInfo(for id: String)
+}
+
+extension CartCurrencyDataProviderProtocol {
+    var cartCurrencyListDidChangeNotification: Notification.Name {
+        Notification.Name(rawValue: "cartCurrencyListDidChangeNotification")
+    }
+    var cartCurrencyListChangeNotificationFailed: Notification.Name {
+        Notification.Name(rawValue: "cartCurrencyListDidChangeNotificationFailed")
+    }
+    var cartCurrencyGetInfoNotificationFailed: Notification.Name {
+        Notification.Name(rawValue: "cartCurrencyGetInfoNotificationFailed")
+    }
 }
 
 final class CartCurrencyDataProvider: CartCurrencyDataProviderProtocol {
     static let cartCurrencyNotificationUserInfo = "currencyInfo"
-    static var cartCurrencyListDidChangeNotification: Notification.Name {
-        Notification.Name(rawValue: "cartCurrencyListDidChangeNotification")
-    }
-    static var cartCurrencyGetInfoNotification: Notification.Name {
-        Notification.Name(rawValue: "cartCurrencyGetInfoNotification")
+    private var currencyList: [CartCurrency] = []
+
+    func getNumberOfCurrencies() -> Int {
+        currencyList.count
     }
 
-    private(set) var currencyList: [CartCurrency] = []
-    var numberOfCurrencies: Int { currencyList.count }
+    func getCurrencyList() -> [CartCurrency] {
+        currencyList
+    }
 
-    func getCurrencyList() {
+    func reloadData() {
         currencyList.removeAll()
         NotificationCenter.default.post(
-            name: Self.cartCurrencyListDidChangeNotification,
+            name: cartCurrencyListDidChangeNotification,
             object: nil
         )
         CurrencyListService.shared.get(onResponse: cartCurrencyDidReceive)
@@ -46,11 +58,14 @@ final class CartCurrencyDataProvider: CartCurrencyDataProviderProtocol {
             currencyList.removeAll()
             currencyList = currencies.currencyList
             NotificationCenter.default.post(
-                name: Self.cartCurrencyListDidChangeNotification,
+                name: cartCurrencyListDidChangeNotification,
                 object: nil
             )
-        case .failure(let error):
-            assertionFailure(error.localizedDescription)
+        case .failure:
+            NotificationCenter.default.post(
+                name: cartCurrencyListChangeNotificationFailed,
+                object: nil
+            )
         }
     }
 
@@ -58,12 +73,15 @@ final class CartCurrencyDataProvider: CartCurrencyDataProviderProtocol {
         switch result {
         case .success(let currency):
             NotificationCenter.default.post(
-                name: Self.cartCurrencyListDidChangeNotification,
+                name: cartCurrencyListDidChangeNotification,
                 object: nil,
                 userInfo: [Self.cartCurrencyNotificationUserInfo: currency]
             )
-        case .failure(let error):
-            assertionFailure(error.localizedDescription)
+        case .failure:
+            NotificationCenter.default.post(
+                name: cartCurrencyListChangeNotificationFailed,
+                object: nil
+            )
         }
     }
 }

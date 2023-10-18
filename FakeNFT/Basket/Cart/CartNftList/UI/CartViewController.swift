@@ -34,8 +34,7 @@ final class CartViewController: UIViewController {
     }
 
     @objc private func sortButtonDidTap() {
-        let alertController = createAlertController()
-        present(alertController, animated: true)
+        presentSortViewController()
     }
 
     @objc private func pullToRefreshDidTrigger() {
@@ -65,6 +64,16 @@ final class CartViewController: UIViewController {
             },
             isEmptyCartPlaceholderDisplaying: { [weak self] in
                 self?.displayEmptyCartPlaceholder($0)
+            },
+            isNetworkAlertDisplaying: { [weak self] isNetworkAlertDisplaying in
+                guard let self else { return }
+                if isNetworkAlertDisplaying {
+                    ProgressHUD.dismiss()
+                    if self.nftCartTableView.refreshControl?.isRefreshing == true {
+                        self.nftCartTableView.refreshControl?.endRefreshing()
+                    }
+                    self.displayNetworkAlert()
+                }
             }
         )
         viewModel?.bind(bindings)
@@ -77,33 +86,54 @@ final class CartViewController: UIViewController {
         navigationController?.isNavigationBarHidden = isPlaceHolderVisible
     }
 
-    private func createAlertController() -> UIAlertController {
-        let title = NSLocalizedString("CartViewController.SortAlert.title", comment: "")
-        let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+    private func displayNetworkAlert() {
+        let title = "CartViewController.NetworkAlert.title".localized()
+        let message = "CartViewController.NetworkAlert.message".localized()
+        let okActionTitle = "CartViewController.NetworkAlert.OkAction.title".localized()
+        let repeatActionTitle = "CartViewController.NetworkAlert.RepeatAction.title".localized()
 
-        let priceItemTitle = NSLocalizedString("CartViewController.SortAlert.byPrice", comment: "")
-        let priceItem = UIAlertAction(title: priceItemTitle, style: .default) { [weak self] _ in
-            self?.viewModel?.sortOrderDidChange(to: .byPrice)
-        }
-        controller.addAction(priceItem)
+        let controller = CartAlertController(
+            delegate: self,
+            title: title,
+            message: message,
+            actions: [
+                CartAlertAction(title: okActionTitle, style: .cancel) { [weak self] _ in
+                    self?.viewModel?.networkAlertDidCancel()
+                },
+                CartAlertAction(title: repeatActionTitle) { [weak self] _ in
+                    self?.viewModel?.networkAlertRepeatDidTap()
+                }
+            ]
+        )
+        controller.show()
+    }
 
-        let ratingItemTitle = NSLocalizedString("CartViewController.SortAlert.byRating", comment: "")
-        let ratingItem = UIAlertAction(title: ratingItemTitle, style: .default) { [weak self] _ in
-            self?.viewModel?.sortOrderDidChange(to: .byRating)
-        }
-        controller.addAction(ratingItem)
+    private func presentSortViewController() {
 
-        let nameItemTitle = NSLocalizedString("CartViewController.SortAlert.byName", comment: "")
-        let nameItem = UIAlertAction(title: nameItemTitle, style: .default) { [weak self] _ in
-            self?.viewModel?.sortOrderDidChange(to: .byName)
-        }
-        controller.addAction(nameItem)
+        let title = "CartViewController.SortAlert.title".localized()
+        let priceItemTitle = "CartViewController.SortAlert.byPrice".localized()
+        let ratingItemTitle = "CartViewController.SortAlert.byRating".localized()
+        let nameItemTitle = "CartViewController.SortAlert.byName".localized()
+        let cancelItemTitle = "CartViewController.SortAlert.cancel".localized()
 
-        let cancelItemTitle = NSLocalizedString("CartViewController.SortAlert.cancel", comment: "")
-        let cancel = UIAlertAction(title: cancelItemTitle, style: .cancel)
-        controller.addAction(cancel)
+        let alertController = CartAlertController(
+            delegate: self,
+            title: title,
+            actions: [
+                CartAlertAction(title: priceItemTitle) { [weak self] _ in
+                    self?.viewModel?.sortOrderDidChange(to: .byPrice)
+                },
+                CartAlertAction(title: ratingItemTitle) { [weak self] _ in
+                    self?.viewModel?.sortOrderDidChange(to: .byRating)
+                },
+                CartAlertAction(title: nameItemTitle) { [weak self] _ in
+                    self?.viewModel?.sortOrderDidChange(to: .byName)
+                },
+                CartAlertAction(title: cancelItemTitle, style: .cancel)
+            ],
+            style: .actionSheet)
 
-        return controller
+        alertController.show()
     }
 }
 
@@ -150,7 +180,11 @@ extension CartViewController: UITableViewDelegate {
         true
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath
+    ) {
         if editingStyle == .delete {
             guard let cell = tableView.cellForRow(at: indexPath) as? CartViewCell else { return }
             cell.viewModel?.deleteButtonDidTap(image: nil)

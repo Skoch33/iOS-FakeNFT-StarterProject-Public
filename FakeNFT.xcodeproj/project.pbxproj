@@ -50,6 +50,8 @@
 		22DBFE952ADD9CA10075A3C9 /* CartPaymentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBFE942ADD9CA10075A3C9 /* CartPaymentRequest.swift */; };
 		22DBFE972ADD9D630075A3C9 /* CartPaymentInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBFE962ADD9D630075A3C9 /* CartPaymentInfoDto.swift */; };
 		22DBFE9B2ADFFA980075A3C9 /* HelpfulClosures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBFE9A2ADFFA980075A3C9 /* HelpfulClosures.swift */; };
+		22DBFE9E2AE03EA90075A3C9 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBFE9D2AE03EA90075A3C9 /* String+Extensions.swift */; };
+		22DBFEA02AE041590075A3C9 /* CartAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBFE9F2AE041590075A3C9 /* CartAlertController.swift */; };
 		3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ECE29DB474E00F6D39E /* Colors.swift */; };
 		3F478ED129DB476500F6D39E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ED029DB476500F6D39E /* Fonts.swift */; };
 		3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3F603CCC29DB4A53000C43D7 /* ProgressHUD */; };
@@ -140,6 +142,8 @@
 		22DBFE942ADD9CA10075A3C9 /* CartPaymentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentRequest.swift; sourceTree = "<group>"; };
 		22DBFE962ADD9D630075A3C9 /* CartPaymentInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentInfoDto.swift; sourceTree = "<group>"; };
 		22DBFE9A2ADFFA980075A3C9 /* HelpfulClosures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpfulClosures.swift; sourceTree = "<group>"; };
+		22DBFE9D2AE03EA90075A3C9 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		22DBFE9F2AE041590075A3C9 /* CartAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartAlertController.swift; sourceTree = "<group>"; };
 		3F478ECE29DB474E00F6D39E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		3F478ED029DB476500F6D39E /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		3F68069329CBBAF100B4F915 /* FakeNFT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FakeNFT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -362,6 +366,19 @@
 			path = CartPayment;
 			sourceTree = "<group>";
 		};
+		22DBFE9C2AE03E390075A3C9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				224B63442AD478FA00084AC9 /* RoundedButton.swift */,
+				22DBFE3C2AD59F1B0075A3C9 /* RatingView.swift */,
+				22DBFE3E2AD5CB410075A3C9 /* PriceFormatter.swift */,
+				22DBFE9A2ADFFA980075A3C9 /* HelpfulClosures.swift */,
+				22DBFE9D2AE03EA90075A3C9 /* String+Extensions.swift */,
+				22DBFE9F2AE041590075A3C9 /* CartAlertController.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		3F478ECD29DB473000F6D39E /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -522,10 +539,7 @@
 		715D0F1E2AD1570000300497 /* Basket */ = {
 			isa = PBXGroup;
 			children = (
-				224B63442AD478FA00084AC9 /* RoundedButton.swift */,
-				22DBFE3C2AD59F1B0075A3C9 /* RatingView.swift */,
-				22DBFE3E2AD5CB410075A3C9 /* PriceFormatter.swift */,
-				22DBFE9A2ADFFA980075A3C9 /* HelpfulClosures.swift */,
+				22DBFE9C2AE03E390075A3C9 /* Helpers */,
 				224B63412AD42E4B00084AC9 /* Cart */,
 				22DBFE422AD714130075A3C9 /* CartServices */,
 				22DBFE4A2AD718910075A3C9 /* CartDataProvider */,
@@ -751,7 +765,9 @@
 				22DBFE3F2AD5CB410075A3C9 /* PriceFormatter.swift in Sources */,
 				22DBFE732AD9C4C30075A3C9 /* DeleteNftViewModel.swift in Sources */,
 				224B63432AD432A400084AC9 /* CartViewCell.swift in Sources */,
+				22DBFE9E2AE03EA90075A3C9 /* String+Extensions.swift in Sources */,
 				22DBFE832ADD7ADD0075A3C9 /* CurrencyListService.swift in Sources */,
+				22DBFEA02AE041590075A3C9 /* CartAlertController.swift in Sources */,
 				715D0F2B2AD1577A00300497 /* UIColor+Extensions.swift in Sources */,
 				22DBFE6E2AD997820075A3C9 /* NftSortingService.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,

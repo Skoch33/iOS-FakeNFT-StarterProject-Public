@@ -13,6 +13,8 @@ protocol CartViewModelProtocol {
     func sortOrderDidChange(to sortBy: CartSortOrder)
     func deleteNftDidApprove(for id: String)
     func pullToRefreshDidTrigger()
+    func networkAlertDidCancel()
+    func networkAlertRepeatDidTap()
 }
 
 final class CartViewModel: CartViewModelProtocol {
@@ -20,6 +22,7 @@ final class CartViewModel: CartViewModelProtocol {
     @Observable private var priceTotal: Decimal
     @Observable private var nftList: [CartNftInfo]
     @Observable private var isEmptyCartPlaceholderDisplaying: Bool
+    @Observable private var isNetworkAlertDisplaying: Bool
 
     private var dataProvider: CartDataProviderProtocol
     private var settingsStorage: CartSettingsStorageProtocol
@@ -37,17 +40,11 @@ final class CartViewModel: CartViewModelProtocol {
         self.priceTotal = 0
         self.nftList = []
         self.isEmptyCartPlaceholderDisplaying = true
+        self.isNetworkAlertDisplaying = false
     }
 
     func viewDidLoad() {
-        NotificationCenter.default.addObserver(
-            forName: dataProvider.cartDidChangeNotification,
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
-            guard let self else { return }
-            self.updateNftList()
-        }
+        subscribeDataProviderNotifications()
         dataProvider.reloadData()
     }
 
@@ -56,6 +53,7 @@ final class CartViewModel: CartViewModelProtocol {
         self.$priceTotal.bind(action: bindings.priceTotal)
         self.$nftList.bind(action: bindings.nftList)
         self.$isEmptyCartPlaceholderDisplaying.bind(action: bindings.isEmptyCartPlaceholderDisplaying)
+        self.$isNetworkAlertDisplaying.bind(action: bindings.isNetworkAlertDisplaying)
     }
 
     func sortOrderDidChange(to sortOder: CartSortOrder) {
@@ -73,6 +71,15 @@ final class CartViewModel: CartViewModelProtocol {
         dataProvider.reloadData()
     }
 
+    func networkAlertDidCancel() {
+        isNetworkAlertDisplaying = false
+    }
+
+    func networkAlertRepeatDidTap() {
+        isNetworkAlertDisplaying = false
+        dataProvider.reloadData()
+    }
+
     private func calcCartPriceTotal() -> Decimal {
         dataProvider.getNftList().reduce(Decimal(0), {$0 + $1.value.price})
     }
@@ -82,5 +89,29 @@ final class CartViewModel: CartViewModelProtocol {
         priceTotal = calcCartPriceTotal()
         nftList = sortingService.sorted(dataProvider.getNftList().map({ $0.value }), by: settingsStorage.cartSortOrder)
         isEmptyCartPlaceholderDisplaying = dataProvider.getNumberOfNft() == 0
+    }
+
+    private func networkFailureDidGet() {
+        isNetworkAlertDisplaying = true
+    }
+
+    private func subscribeDataProviderNotifications() {
+        NotificationCenter.default.addObserver(
+            forName: dataProvider.cartDidChangeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            guard let self else { return }
+            self.updateNftList()
+        }
+
+        NotificationCenter.default.addObserver(
+            forName: dataProvider.cartDidChangeNotificationFailed,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            guard let self else { return }
+            self.networkFailureDidGet()
+        }
     }
 }

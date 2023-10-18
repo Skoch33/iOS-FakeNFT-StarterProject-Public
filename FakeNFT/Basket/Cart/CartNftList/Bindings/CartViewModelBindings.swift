@@ -12,4 +12,5 @@ struct CartViewModelBindings {
     let priceTotal: ClosureDecimal
     let nftList: ([CartNftInfo]) -> Void
     let isEmptyCartPlaceholderDisplaying: ClosureBool
+    let isNetworkAlertDisplaying: ClosureBool
 }

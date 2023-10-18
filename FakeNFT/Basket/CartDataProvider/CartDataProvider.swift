@@ -17,6 +17,7 @@ protocol CartDataProviderProtocol {
 
 extension CartDataProviderProtocol {
     var cartDidChangeNotification: Notification.Name { Notification.Name(rawValue: "cartNftListDidChange") }
+    var cartDidChangeNotificationFailed: Notification.Name { Notification.Name(rawValue: "cartNftListDidChangeFailed") }
 }
 
 final class CartDataProvider: CartDataProviderProtocol {
@@ -58,8 +59,11 @@ final class CartDataProvider: CartDataProviderProtocol {
                 let nftInfoService = NftInfoService()
                 nftInfoService.get(for: id, onResponse: nftInfoDidReceive)
             }
-        case .failure(let error):
-            assertionFailure(error.localizedDescription)
+        case .failure:
+            NotificationCenter.default.post(
+                name: cartDidChangeNotificationFailed,
+                object: nil
+            )
         }
     }
 
@@ -67,16 +71,19 @@ final class CartDataProvider: CartDataProviderProtocol {
         switch result {
         case .success(let nft):
             append(nft, for: nft.id)
-        case .failure(let error):
-            assertionFailure(error.localizedDescription)
+        case .failure:
+            NotificationCenter.default.post(
+                name: cartDidChangeNotificationFailed,
+                object: nil
+            )
         }
     }
 
     private func append(_ nftInfo: CartNftInfo, for id: String) {
         nftList[id] = nftInfo
-        NotificationCenter.default
-            .post(
-                name: cartDidChangeNotification,
-                object: nil)
+        NotificationCenter.default.post(
+            name: cartDidChangeNotification,
+            object: nil
+        )
     }
 }
