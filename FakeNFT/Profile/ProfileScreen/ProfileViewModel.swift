@@ -24,7 +24,12 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     init(model: ProfileService, imageValidator: ImageValidatorProtocol = ImageValidator()) {
         self.model = model
         self.imageValidator = imageValidator
-        NotificationCenter.default.addObserver(self, selector: #selector(profileUpdated), name: NSNotification.Name("profileUpdated"), object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(profileUpdated),
+            name: NSNotification.Name("profileUpdated"),
+            object: nil
+        )
     }
     
     @objc

@@ -5,6 +5,53 @@ import ProgressHUD
 final class EditingViewController: UIViewController {
 
     // MARK: - UI properties
+    private lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .headline2
+        return label
+    }()
+    
+    private lazy var nameTextView: UITextView = {
+        let textView = UITextView()
+        textView.isScrollEnabled = false
+        textView.font = .bodyRegular
+        textView.backgroundColor = .nftLightgrey
+        textView.layer.cornerRadius = 12
+        textView.textContainerInset = UIEdgeInsets(top: 11, left: 10, bottom: 11, right: 10)
+        return textView
+    }()
+    
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = .headline2
+        return label
+    }()
+    
+    private lazy var descriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.isScrollEnabled = false
+        textView.font = .bodyRegular
+        textView.backgroundColor = .nftLightgrey
+        textView.layer.cornerRadius = 12
+        textView.textContainerInset = UIEdgeInsets(top: 11, left: 10, bottom: 11, right: 10)
+        return textView
+    }()
+    
+    private lazy var webSiteLabel: UILabel = {
+        let label = UILabel()
+        label.font = .headline2
+        return label
+    }()
+    
+    private lazy var webSiteTextView: UITextView = {
+        let textView = UITextView()
+        textView.isScrollEnabled = false
+        textView.font = .bodyRegular
+        textView.backgroundColor = .nftLightgrey
+        textView.layer.cornerRadius = 12
+        textView.textContainerInset = UIEdgeInsets(top: 11, left: 10, bottom: 11, right: 10)
+        return textView
+    }()
 
     private let userPhotoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -47,13 +94,6 @@ final class EditingViewController: UIViewController {
     }()
 
     private let viewModel: EditingViewModelProtocol
-
-    private lazy var nameLabel = ViewFactory.shared.createTextLabel()
-    private lazy var nameTextView = ViewFactory.shared.createTextView()
-    private lazy var descriptionLabel = ViewFactory.shared.createTextLabel()
-    private lazy var descriptionTextView = ViewFactory.shared.createTextView()
-    private lazy var webSiteLabel = ViewFactory.shared.createTextLabel()
-    private lazy var webSiteTextView = ViewFactory.shared.createTextView()
 
     // MARK: - Lifecycle
 

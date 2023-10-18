@@ -89,9 +89,9 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
 
         switch option {
         case .price:
-            nfts.sort(by: { $0.price < $1.price })
+            nfts.sort(by: { $0.price > $1.price })
         case .rating:
-            nfts.sort(by: { $0.rating < $1.rating })
+            nfts.sort(by: { $0.rating > $1.rating })
         case .title:
             nfts.sort(by: { $0.name.lowercased() < $1.name.lowercased() })
         }

@@ -26,7 +26,11 @@ class AlertService: AlertServiceProtocol {
     }
     
     func showAlert(model: AlertModel) {
-        let alertController = UIAlertController(title: model.title, message: model.message, preferredStyle: model.style)
+        let alertController = UIAlertController(
+            title: model.title,
+            message: model.message,
+            preferredStyle: model.style
+        )
         
         if let placeholder = model.textFieldPlaceholder {
             alertController.addTextField { textField in

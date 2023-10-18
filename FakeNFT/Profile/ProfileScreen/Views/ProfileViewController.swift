@@ -108,30 +108,21 @@ final class ProfileViewController: UIViewController {
 
     private func updateUI(with model: UserProfile) {
         DispatchQueue.main.async { [weak self] in
-            self?.profileImageView.kf.setImage(with: URL(string: model.avatar)) { result in
-                switch result {
-                case .success:
-                    DispatchQueue.main.async { [weak self] in
-                        self?.userNameLabel.text = model.name
-                        self?.userDescriptionLabel.text = model.description
-                        self?.userWebSiteTextView.text = model.website
-                        [self!.editButton, self!.profileImageView, self!.userNameLabel, self!.userDescriptionLabel, self!.userWebSiteTextView, self!.profileTableView].forEach { $0.isHidden = false }
-                        self?.tabBarController?.tabBar.isHidden = false
-                        self?.profileTableView.reloadData()
-                    }
-                case .failure(let error):
-                    print(error)
-                    // ToDo: Аллерт для пользователя
-                }
-            }
-            ProgressHUD.dismiss()
+            self?.profileImageView.kf.setImage(with: URL(string: model.avatar))
+            self?.userNameLabel.text = model.name
+            self?.userDescriptionLabel.text = model.description
+            self?.userWebSiteTextView.text = model.website
+            self?.tabBarController?.tabBar.isHidden = false
+            self?.profileTableView.reloadData()
+            [self?.editButton, self?.profileImageView, self?.userNameLabel, self?.userDescriptionLabel, self?.userWebSiteTextView, self?.profileTableView].forEach { $0?.isHidden = false }
         }
+        ProgressHUD.dismiss()
     }
-
+    
     // MARK: - Layout methods
 
     private func setupViews() {
-        view.backgroundColor = .white
+        view.backgroundColor = .nftWhite
 
         [editButton, profileImageView, userNameLabel, userDescriptionLabel, userWebSiteTextView, profileTableView].forEach {
             view.addViewWithNoTAMIC($0)

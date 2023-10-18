@@ -2,8 +2,19 @@ import UIKit
 import Kingfisher
 
 final class NFTCell: UITableViewCell, ReuseIdentifying {
-    private let nftImageView = ViewFactory.shared.createNFTImageView()
-    private let likeImageView = ViewFactory.shared.createLikeImageView()
+    
+    private var nftImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.layer.cornerRadius = 12
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
+    private var likeImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "favouritesIcons")
+        return imageView
+    }()
     
     private var name: UILabel = {
         let label = UILabel()
@@ -93,7 +104,8 @@ final class NFTCell: UITableViewCell, ReuseIdentifying {
     }
     
     func configure(nft: NFT, authorName: String) {
-        self.nftImageView.kf.setImage(with: URL(string: nft.images[0]))
+        self.nftImageView.kf.setImage(with: URL(string: nft.images[0]),
+                                      placeholder: UIImage(named: "nullImage"))
         self.name.text = nft.name
         self.setStarsState(nft.rating)
         self.author.text = authorName

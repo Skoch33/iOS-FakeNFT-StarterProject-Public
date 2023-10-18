@@ -22,7 +22,9 @@ final class EditingViewModel: EditingViewModelProtocol {
     
     private let imageValidator: ImageValidatorProtocol
     
-    init(profileService: ProfileService, imageValidator: ImageValidatorProtocol = ImageValidator()) {
+    init(profileService: ProfileService,
+         imageValidator: ImageValidatorProtocol = ImageValidator()
+    ) {
         self.profileService = profileService
         self.imageValidator = imageValidator
     }
