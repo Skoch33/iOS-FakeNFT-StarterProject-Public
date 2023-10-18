@@ -6,31 +6,16 @@
 import Foundation
 
 protocol UsersServiceProtocol: AnyObject {
-    func getUsers(completion: @escaping ([User]?, Error?) -> Void)
+    func getUsers(completion: @escaping (Result<[UserModel], Error>) -> Void)
 }
 
 final class UsersService: UsersServiceProtocol {
-    func getUsers(completion: @escaping ([User]?, Error?) -> Void) {
-        guard let url = URL(string: "https://651ff0d9906e276284c3c20a.mockapi.io/api/v1/users") else { return }
-        
-        let urlSession = URLSession.shared
-        let task = urlSession.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Error: \(error)")
-                completion(nil, error)
-                return
-            }
+    private let networkClient: NetworkClient = DefaultNetworkClient()
+    private var task: NetworkTask?
 
-            if let data = data {
-                do {
-                    let decoder = JSONDecoder()
-                    let users = try decoder.decode([User].self, from: data)
-                    completion(users, nil)
-                } catch {
-                    completion(nil, error)
-                }
-            }
-        }
-        task.resume()
+    func getUsers(completion: @escaping (Result<[UserModel], Error>) -> Void) {
+        task?.cancel()
+        let request = GetUserRequest()
+        task = networkClient.send(request: request, type: [UserModel].self, onResponse: completion)
     }
 }
