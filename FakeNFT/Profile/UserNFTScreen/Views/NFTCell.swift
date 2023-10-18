@@ -1,5 +1,4 @@
 import UIKit
-import Cosmos
 import Kingfisher
 
 final class NFTCell: UITableViewCell, ReuseIdentifying {
@@ -12,17 +11,20 @@ final class NFTCell: UITableViewCell, ReuseIdentifying {
         return label
     }()
     
-    private let ratingView: CosmosView = {
-        let view = CosmosView()
-        view.settings.starSize = 12
-        view.settings.totalStars = 5
-        view.settings.starMargin = 2
-        view.settings.filledColor = .nftYellowUniversal
-        view.settings.emptyBorderColor = .nftLightgrey
-        view.settings.filledBorderColor = .nftYellowUniversal
-        view.settings.updateOnTouch = false
-        view.settings.filledImage = UIImage(named: "stars")
-        view.settings.emptyImage = UIImage(named: "emptyStars")
+    private lazy var starsImage: [UIImageView] = {
+        (1...5).map { _ in
+            let view = UIImageView()
+            view.image = UIImage()
+            return view
+        }
+    }()
+
+    private lazy var starsView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: starsImage)
+        view.axis = .horizontal
+        view.spacing = CGFloat(2)
+        view.distribution = .fillEqually
+        view.alignment = .fill
         return view
     }()
     
@@ -83,10 +85,17 @@ final class NFTCell: UITableViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setStarsState(_ state: Int) {
+        starsImage.enumerated().forEach { position, star in
+            let color = position < state ? UIColor.nftYellowUniversal : UIColor.nftLightgrey
+            star.image = UIImage(named: "stars")?.withTintColor(color, renderingMode: .alwaysOriginal)
+        }
+    }
+    
     func configure(nft: NFT, authorName: String) {
         self.nftImageView.kf.setImage(with: URL(string: nft.images[0]))
         self.name.text = nft.name
-        self.ratingView.rating = Double(nft.rating)
+        self.setStarsState(nft.rating)
         self.author.text = authorName
         
         if let formattedPrice = NumberFormatter.defaultPriceFormatter.string(from: NSNumber(value: nft.price)) {
@@ -97,7 +106,7 @@ final class NFTCell: UITableViewCell, ReuseIdentifying {
     private func setupViews() {
         nftImageView.addViewWithNoTAMIC(likeImageView)
         [authorPrefix, author].forEach { authorStackView.addArrangedSubview($0) }
-        [name, ratingView, authorStackView].forEach { nftDetailsStackView.addArrangedSubview($0) }
+        [name, starsView, authorStackView].forEach { nftDetailsStackView.addArrangedSubview($0) }
         [priceLabel, currentPriceLabel].forEach { priceStackView.addArrangedSubview($0) }
         [nftImageView, nftDetailsStackView, priceStackView].forEach { contentView.addViewWithNoTAMIC($0) }
         
@@ -113,10 +122,15 @@ final class NFTCell: UITableViewCell, ReuseIdentifying {
             
             nftDetailsStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             nftDetailsStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
-            nftDetailsStackView.trailingAnchor.constraint(equalTo: priceStackView.leadingAnchor, constant: -39),
+            nftDetailsStackView.trailingAnchor.constraint(equalTo: priceStackView.leadingAnchor, constant: -60),
+            
+            author.trailingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: trailingAnchor, multiplier: 988),
             
             priceStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            priceStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -3)
+            priceStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -3),
+            
+            starsView.heightAnchor.constraint(equalToConstant: 12),
+            starsView.widthAnchor.constraint(equalToConstant: 68),
         ])
     }
 }

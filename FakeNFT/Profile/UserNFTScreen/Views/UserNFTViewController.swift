@@ -136,7 +136,7 @@ final class UserNFTViewController: UIViewController {
     // MARK: - Layout methods
     
     private func setupViews() {
-        view.backgroundColor = .white
+        view.backgroundColor = .nftWhite
 
         [nftTableView, noNFTLabel].forEach { view.addViewWithNoTAMIC($0) }
         
