@@ -94,7 +94,7 @@ final class StatisticsCell: UITableViewCell {
         ])
     }
 // MARK: - Configure
-    func configure(model: User) {
+    func configure(model: UserModel) {
         let cache = ImageCache.default
         cache.clearMemoryCache()
         cache.clearDiskCache()
