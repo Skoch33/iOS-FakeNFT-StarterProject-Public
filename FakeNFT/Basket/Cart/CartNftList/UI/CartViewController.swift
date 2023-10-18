@@ -38,6 +38,10 @@ final class CartViewController: UIViewController {
         present(alertController, animated: true)
     }
 
+    @objc private func pullToRefreshDidTrigger() {
+        viewModel?.pullToRefreshDidTrigger()
+    }
+
     private func bindViewModel() {
         let bindings = CartViewModelBindings(
             numberOfNft: { [weak self] in
@@ -54,6 +58,9 @@ final class CartViewController: UIViewController {
                 guard let self else { return }
                 self.nftList = $0
                 self.nftCartTableView.reloadData()
+                if nftCartTableView.refreshControl?.isRefreshing == true {
+                    nftCartTableView.refreshControl?.endRefreshing()
+                }
                 ProgressHUD.dismiss()
             },
             isEmptyCartPlaceholderDisplaying: { [weak self] in
@@ -195,6 +202,9 @@ private extension CartViewController {
         table.delegate = self
         table.dataSource = self
         table.register(CartViewCell.self)
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(pullToRefreshDidTrigger), for: .valueChanged)
+        table.refreshControl = refreshControl
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }

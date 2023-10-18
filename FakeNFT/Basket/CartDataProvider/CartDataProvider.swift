@@ -32,10 +32,6 @@ final class CartDataProvider: CartDataProviderProtocol {
 
     func reloadData() {
         nftList.removeAll()
-        NotificationCenter.default.post(
-            name: cartDidChangeNotification,
-            object: nil
-        )
         NftListService.shared.get(onResponse: nftInCartDidReceive)
     }
 

@@ -12,6 +12,7 @@ protocol CartViewModelProtocol {
     func bind(_ bindings: CartViewModelBindings)
     func sortOrderDidChange(to sortBy: CartSortOrder)
     func deleteNftDidApprove(for id: String)
+    func pullToRefreshDidTrigger()
 }
 
 final class CartViewModel: CartViewModelProtocol {
@@ -68,14 +69,18 @@ final class CartViewModel: CartViewModelProtocol {
         dataProvider.removeNftFromCart(nftId: id)
     }
 
+    func pullToRefreshDidTrigger() {
+        dataProvider.reloadData()
+    }
+
     private func calcCartPriceTotal() -> Decimal {
         dataProvider.getNftList().reduce(Decimal(0), {$0 + $1.value.price})
     }
 
     private func updateNftList() {
-        isEmptyCartPlaceholderDisplaying = dataProvider.getNumberOfNft() == 0
         numberOfNft = dataProvider.getNumberOfNft()
         priceTotal = calcCartPriceTotal()
         nftList = sortingService.sorted(dataProvider.getNftList().map({ $0.value }), by: settingsStorage.cartSortOrder)
+        isEmptyCartPlaceholderDisplaying = dataProvider.getNumberOfNft() == 0
     }
 }
