@@ -15,7 +15,7 @@ protocol StatisticsViewModelProtocol: AnyObject {
     var dataChanged: (() -> Void)? { get set }
     var isDataLoading: ((Bool) -> Void)? { get set }
     var showError: ((Error) -> Void)? { get set }
-    var users: [User] { get set }
+    var users: [UserModel] { get set }
     func usersCount() -> Int
     func loadData()
     func sortUsersByName()
@@ -31,7 +31,7 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
     
     var dataChanged: (() -> Void)?
     
-    var users: [User] = [] {
+    var users: [UserModel] = [] {
         didSet {
             dataChanged?()
         }
@@ -50,23 +50,18 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
     func loadData() {
         isDataLoading?(true)
 
-        usersService.getUsers { [weak self] users, error in
-            self?.isDataLoading?(false)
-            
-            if let error = error {
-                DispatchQueue.main.async {
-                    self?.showError?(error)
-                    self?.isDataLoading?(false)
-                }
-                print(error.localizedDescription)
-                return
-            }
-            
-            if let users = users {
-                DispatchQueue.main.async { [weak self] in
-                    self?.users = users
+        usersService.getUsers { [weak self] users in
+            DispatchQueue.main.async {
+                switch users {
+                case .success(let user):
+                    self?.users = user
                     self?.loadPreviousSortingState()
                     self?.isDataLoading?(false)
+                case .failure(let error):
+                    self?.showError?(error)
+                    self?.isDataLoading?(false)
+                    print(error.localizedDescription)
+                    return
                 }
             }
         }
