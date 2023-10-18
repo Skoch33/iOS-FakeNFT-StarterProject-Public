@@ -8,13 +8,11 @@
 import UIKit
 import Kingfisher
 
-class DeleteNftViewController: UIViewController {
+final class DeleteNftViewController: UIViewController {
 
-    var viewModel: DeleteNftViewModelProtocol?
-
-    var nftImage: UIImage?
-    var nftImageURL: URL?
-    var nftId: String?
+    private var viewModel: DeleteNftViewModelProtocol
+    private var nftImage: UIImage?
+    private var nftImageURL: URL?
 
     private lazy var nftImageView = createNFTImageView()
 
@@ -25,8 +23,19 @@ class DeleteNftViewController: UIViewController {
         setupUI()
     }
 
+    init(viewModel: DeleteNftViewModelProtocol, image: UIImage?, imageURL: URL?) {
+        self.viewModel = viewModel
+        self.nftImage = image
+        self.nftImageURL = imageURL
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     @objc private func deleteButtonDidTap() {
-        viewModel?.deleteButtonDidTap()
+        viewModel.deleteButtonDidTap()
         dismiss(animated: true)
     }
 

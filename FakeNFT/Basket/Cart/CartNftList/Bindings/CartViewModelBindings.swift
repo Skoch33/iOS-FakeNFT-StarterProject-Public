@@ -8,8 +8,8 @@
 import Foundation
 
 struct CartViewModelBindings {
-    let numberOfNft: (Int) -> Void
-    let priceTotal: (Decimal) -> Void
+    let numberOfNft: ClosureInt
+    let priceTotal: ClosureDecimal
     let nftList: ([CartNftInfo]) -> Void
-    let isEmptyCartPlaceholderDisplaying: (Bool) -> Void
+    let isEmptyCartPlaceholderDisplaying: ClosureBool
 }

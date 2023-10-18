@@ -8,8 +8,8 @@
 import Foundation
 
 struct CartCellViewModelBindings {
-    let rating: (Int) -> Void
-    let price: (Decimal) -> Void
-    let name: (String) -> Void
+    let rating: ClosureInt
+    let price: ClosureDecimal
+    let name: ClosureString
     let imageURL: (URL?) -> Void
 }

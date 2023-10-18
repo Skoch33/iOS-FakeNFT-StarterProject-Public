@@ -119,11 +119,8 @@ extension CartViewController: UITableViewDataSource {
 // MARK: CartCellDelegate
 extension CartViewController: CartCellDelegate {
     func deleteButtonDidTap(for nftId: String, with image: Any?, imageURL: URL?) {
-        let controller = DeleteNftViewController()
-        controller.nftImage = image as? UIImage
-        controller.nftImageURL = imageURL
         let viewModel = DeleteNftViewModel(delegate: self, nftId: nftId)
-        controller.viewModel = viewModel
+        let controller = DeleteNftViewController(viewModel: viewModel, image: image as? UIImage, imageURL: imageURL)
         controller.modalPresentationStyle = .overFullScreen
         controller.modalTransitionStyle = .crossDissolve
         present(controller, animated: true)

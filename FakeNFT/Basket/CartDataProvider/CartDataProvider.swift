@@ -8,10 +8,10 @@
 import Foundation
 
 protocol CartDataProviderProtocol {
-    var numberOfNft: Int { get }
-    var nftList: [String: CartNftInfo] { get }
-    var cartDidChangeNotification: Notification.Name { get }
-    func getAllNftInCart()
+    func getNumberOfNft() -> Int
+    func getNftList() -> [String: CartNftInfo]
+    func reloadData()
+    func updateNftList(with nftList: [String])
     func removeNftFromCart(nftId: String)
 }
 
@@ -20,16 +20,30 @@ extension CartDataProviderProtocol {
 }
 
 final class CartDataProvider: CartDataProviderProtocol {
-    var numberOfNft: Int { nftList.count }
-    private(set) var nftList: [String: CartNftInfo] = [:]
+    private var nftList: [String: CartNftInfo] = [:]
 
-    func getAllNftInCart() {
+    func getNumberOfNft() -> Int {
+        nftList.count
+    }
+
+    func getNftList() -> [String: CartNftInfo] {
+        nftList
+    }
+
+    func reloadData() {
         nftList.removeAll()
         NotificationCenter.default.post(
-            name: self.cartDidChangeNotification,
+            name: cartDidChangeNotification,
             object: nil
         )
         NftListService.shared.get(onResponse: nftInCartDidReceive)
+    }
+
+    func updateNftList(with nftList: [String]) {
+        NftListUpdateService.shared.put(
+            newNftList: CartNftListUpdate(nfts: nftList),
+            onResponse: nftInCartDidReceive
+        )
     }
 
     func removeNftFromCart(nftId: String) {
@@ -66,7 +80,7 @@ final class CartDataProvider: CartDataProviderProtocol {
         nftList[id] = nftInfo
         NotificationCenter.default
             .post(
-                name: self.cartDidChangeNotification,
+                name: cartDidChangeNotification,
                 object: nil)
     }
 }

@@ -16,8 +16,8 @@ final class DefaultNftSortingService: NftSortingServiceProtocol {
 
     private let sortPredicates: [CartSortOrder: NftSortingPredicate] = [
         .byName: { $0.name < $1.name },
-        .byPrice: { $0.price < $1.price },
-        // сортировка по рейтингу обратная сделана осознанно: лучшие - вверху списка (в ТЗ не оговорено)
+        // обратная сортировка по рейтингу и цене сделана осознанно: лучшие/дорогие - вверху списка (в ТЗ не оговорено)
+        .byPrice: { $0.price > $1.price },
         .byRating: { $0.rating > $1.rating }
     ]
 
