@@ -6,7 +6,7 @@
 import Foundation
 
 protocol UserCardViewModelProtocol {
-    var user: User? { get }
+    var user: UserModel? { get }
     var avatarUrl: URL? { get }
     var userName: String? { get }
     var userDescription: String? { get }
@@ -19,7 +19,7 @@ protocol UserCardViewModelProtocol {
 
 final class UserCardViewModel: UserCardViewModelProtocol {
 
-    var user: User?
+    var user: UserModel?
 
     var avatarUrl: URL? {
         if let avatarString = user?.avatar {
