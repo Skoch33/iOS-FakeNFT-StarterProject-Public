@@ -10,4 +10,12 @@
 "CartViewController.SortAlert.byRating" = "By Rating";
 "CartViewController.SortAlert.byName" = "By Name";
 "CartViewController.SortAlert.cancel" = "Close";
+"CartViewController.NetworkAlert.title" = "Network error";
+"CartViewController.NetworkAlert.message" = "Couldn't get data from network";
+"CartViewController.NetworkAlert.OkAction.title" = "Never mind";
+"CartViewController.NetworkAlert.RepeatAction.title" = "Repeat";
+
 "CartViewCell.Price" = "Price";
+"Cart.DeleteNftViewController.deleteButton" = "Remove";
+"Cart.DeleteNftViewController.backButton" = "Back";
+"Cart.DeleteNftViewController.deleteMessage" = "Are you sure you want to delete the object from the cart?";

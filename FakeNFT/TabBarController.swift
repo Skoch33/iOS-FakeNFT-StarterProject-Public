@@ -22,8 +22,11 @@ final class TabBarController: UITabBarController {
         )
 
         let basketViewController = CartViewController()
-        let cartDataProvider = CartDataProvider()
-        let cartViewModel = CartViewModel(dataProvider: cartDataProvider)
+        let cartViewModel = CartViewModel(
+            dataProvider: CartDataProvider(),
+            settingsStorage: DefaultCartSettingsStorage(),
+            sortingService: DefaultNftSortingService()
+        )
         basketViewController.viewModel = cartViewModel
         let basketNavigationController = UINavigationController(rootViewController: basketViewController)
         basketNavigationController.tabBarItem = UITabBarItem(

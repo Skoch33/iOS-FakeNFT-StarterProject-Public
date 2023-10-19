@@ -1,6 +1,10 @@
 import UIKit
 import ProgressHUD
 
+protocol DeleteNftDelegate: AnyObject {
+    func deleteNftDidApprove(for id: String)
+}
+
 final class CartViewController: UIViewController {
 
     var viewModel: CartViewModelProtocol? {
@@ -8,15 +12,15 @@ final class CartViewController: UIViewController {
             bindViewModel()
         }
     }
-    private let layoutMargin = CGFloat(16)
+    private let layoutMargin: CGFloat = 16
     private lazy var nftCountLabel = createCountLabel()
     private lazy var nftPriceTotalLabel = createPriceTotalLabel()
     private lazy var nftCartTableView = createTableView()
     private lazy var nftPaymentView = createPaymentView()
     private lazy var emptyCartPlaceholderView = createEmptyCartPlaceholder()
 
-    private var nftCount: Int = 0
-    private var nftPriceTotal: Decimal = Decimal(0)
+    private var nftCount: Int = .zero
+    private var nftPriceTotal: Decimal = .zero
     private var nftList: [CartNftInfo] = []
 
     override func viewDidLoad() {
@@ -30,8 +34,11 @@ final class CartViewController: UIViewController {
     }
 
     @objc private func sortButtonDidTap() {
-        let alertController = createAlertController()
-        present(alertController, animated: true)
+        presentSortViewController()
+    }
+
+    @objc private func pullToRefreshDidTrigger() {
+        viewModel?.pullToRefreshDidTrigger()
     }
 
     private func bindViewModel() {
@@ -50,56 +57,83 @@ final class CartViewController: UIViewController {
                 guard let self else { return }
                 self.nftList = $0
                 self.nftCartTableView.reloadData()
+                if nftCartTableView.refreshControl?.isRefreshing == true {
+                    nftCartTableView.refreshControl?.endRefreshing()
+                }
                 ProgressHUD.dismiss()
             },
             isEmptyCartPlaceholderDisplaying: { [weak self] in
                 self?.displayEmptyCartPlaceholder($0)
+            },
+            isNetworkAlertDisplaying: { [weak self] isNetworkAlertDisplaying in
+                guard let self else { return }
+                if isNetworkAlertDisplaying {
+                    ProgressHUD.dismiss()
+                    if self.nftCartTableView.refreshControl?.isRefreshing == true {
+                        self.nftCartTableView.refreshControl?.endRefreshing()
+                    }
+                    self.displayNetworkAlert()
+                }
             }
         )
         viewModel?.bind(bindings)
     }
 
     private func displayEmptyCartPlaceholder(_ isPlaceHolderVisible: Bool) {
-        if isPlaceHolderVisible {
-            emptyCartPlaceholderView.isHidden = false
-            nftCartTableView.isHidden = true
-            nftPaymentView.isHidden = true
-            navigationController?.isNavigationBarHidden = true
-        } else {
-            emptyCartPlaceholderView.isHidden = true
-            nftCartTableView.isHidden = false
-            nftPaymentView.isHidden = false
-            navigationController?.isNavigationBarHidden = false
-        }
+        emptyCartPlaceholderView.isHidden = !isPlaceHolderVisible
+        nftCartTableView.isHidden = isPlaceHolderVisible
+        nftPaymentView.isHidden = isPlaceHolderVisible
+        navigationController?.isNavigationBarHidden = isPlaceHolderVisible
     }
 
-    private func createAlertController() -> UIAlertController {
-        let title = NSLocalizedString("CartViewController.SortAlert.title", comment: "")
-        let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+    private func displayNetworkAlert() {
+        let title = "CartViewController.NetworkAlert.title".localized()
+        let message = "CartViewController.NetworkAlert.message".localized()
+        let okActionTitle = "CartViewController.NetworkAlert.OkAction.title".localized()
+        let repeatActionTitle = "CartViewController.NetworkAlert.RepeatAction.title".localized()
 
-        let priceItemTitle = NSLocalizedString("CartViewController.SortAlert.byPrice", comment: "")
-        let priceItem = UIAlertAction(title: priceItemTitle, style: .default) { [weak self] _ in
-            self?.viewModel?.sortOrderDidChange(to: .byPrice)
-        }
-        controller.addAction(priceItem)
+        let controller = CartAlertController(
+            delegate: self,
+            title: title,
+            message: message,
+            actions: [
+                CartAlertAction(title: okActionTitle, style: .cancel) { [weak self] _ in
+                    self?.viewModel?.networkAlertDidCancel()
+                },
+                CartAlertAction(title: repeatActionTitle) { [weak self] _ in
+                    self?.viewModel?.networkAlertRepeatDidTap()
+                }
+            ]
+        )
+        controller.show()
+    }
 
-        let ratingItemTitle = NSLocalizedString("CartViewController.SortAlert.byRating", comment: "")
-        let ratingItem = UIAlertAction(title: ratingItemTitle, style: .default) { [weak self] _ in
-            self?.viewModel?.sortOrderDidChange(to: .byRating)
-        }
-        controller.addAction(ratingItem)
+    private func presentSortViewController() {
 
-        let nameItemTitle = NSLocalizedString("CartViewController.SortAlert.byName", comment: "")
-        let nameItem = UIAlertAction(title: nameItemTitle, style: .default) { [weak self] _ in
-            self?.viewModel?.sortOrderDidChange(to: .byName)
-        }
-        controller.addAction(nameItem)
+        let title = "CartViewController.SortAlert.title".localized()
+        let priceItemTitle = "CartViewController.SortAlert.byPrice".localized()
+        let ratingItemTitle = "CartViewController.SortAlert.byRating".localized()
+        let nameItemTitle = "CartViewController.SortAlert.byName".localized()
+        let cancelItemTitle = "CartViewController.SortAlert.cancel".localized()
 
-        let cancelItemTitle = NSLocalizedString("CartViewController.SortAlert.cancel", comment: "")
-        let cancel = UIAlertAction(title: cancelItemTitle, style: .cancel)
-        controller.addAction(cancel)
+        let alertController = CartAlertController(
+            delegate: self,
+            title: title,
+            actions: [
+                CartAlertAction(title: priceItemTitle) { [weak self] _ in
+                    self?.viewModel?.sortOrderDidChange(to: .byPrice)
+                },
+                CartAlertAction(title: ratingItemTitle) { [weak self] _ in
+                    self?.viewModel?.sortOrderDidChange(to: .byRating)
+                },
+                CartAlertAction(title: nameItemTitle) { [weak self] _ in
+                    self?.viewModel?.sortOrderDidChange(to: .byName)
+                },
+                CartAlertAction(title: cancelItemTitle, style: .cancel)
+            ],
+            style: .actionSheet)
 
-        return controller
+        alertController.show()
     }
 }
 
@@ -121,9 +155,18 @@ extension CartViewController: UITableViewDataSource {
 
 // MARK: CartCellDelegate
 extension CartViewController: CartCellDelegate {
-    func deleteButtonDidTap(for nftId: String) {
-        // TODO: реализовать удаление NFT из корзины
-        print("delete \(nftId)")
+    func deleteButtonDidTap(for nftId: String, with image: Any?, imageURL: URL?) {
+        let viewModel = DeleteNftViewModel(delegate: self, nftId: nftId)
+        let controller = DeleteNftViewController(viewModel: viewModel, image: image as? UIImage, imageURL: imageURL)
+        controller.modalPresentationStyle = .overFullScreen
+        controller.modalTransitionStyle = .crossDissolve
+        present(controller, animated: true)
+    }
+}
+
+extension CartViewController: DeleteNftDelegate {
+    func deleteNftDidApprove(for id: String) {
+        viewModel?.deleteNftDidApprove(for: id)
     }
 }
 
@@ -131,6 +174,21 @@ extension CartViewController: CartCellDelegate {
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         140
+    }
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath
+    ) {
+        if editingStyle == .delete {
+            guard let cell = tableView.cellForRow(at: indexPath) as? CartViewCell else { return }
+            cell.viewModel?.deleteButtonDidTap(image: nil)
+        }
     }
 }
 
@@ -140,10 +198,12 @@ private extension CartViewController {
         view.backgroundColor = .nftWhite
         setupProgress()
 
-        let sortButton = UIBarButtonItem(image: UIImage(named: "action_sort") ?? UIImage(),
-                                          style: .plain,
-                                          target: self,
-                                          action: #selector(sortButtonDidTap))
+        let sortButton = UIBarButtonItem(
+            image: UIImage(named: "action_sort") ?? UIImage(),
+            style: .plain,
+            target: self,
+            action: #selector(sortButtonDidTap)
+        )
         sortButton.tintColor = .nftBlack
         navigationItem.rightBarButtonItem = sortButton
 
@@ -181,9 +241,15 @@ private extension CartViewController {
 
     func createTableView() -> UITableView {
         let table = UITableView()
+        table.separatorStyle = .none
+        table.allowsSelection = false
+        table.backgroundColor = .nftWhite
         table.delegate = self
         table.dataSource = self
         table.register(CartViewCell.self)
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(pullToRefreshDidTrigger), for: .valueChanged)
+        table.refreshControl = refreshControl
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }
@@ -232,7 +298,7 @@ private extension CartViewController {
 
     func createCountLabel() -> UILabel {
         let label = UILabel()
-        label.font = .caption1
+        label.font = .NftCaptionFonts.large
         label.textColor = .nftBlack
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -240,7 +306,7 @@ private extension CartViewController {
 
     func createPriceTotalLabel() -> UILabel {
         let label = UILabel()
-        label.font = .bodyBold
+        label.font = .NftBodyFonts.bold
         label.textColor = .nftGreenUniversal
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -249,7 +315,7 @@ private extension CartViewController {
     func createEmptyCartPlaceholder() -> UIView {
         let view = UILabel()
         view.text = NSLocalizedString("CartViewController.emptyCartPlaceholderText", comment: "")
-        view.font = .bodyBold
+        view.font = .NftBodyFonts.bold
         view.textColor = .nftBlack
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

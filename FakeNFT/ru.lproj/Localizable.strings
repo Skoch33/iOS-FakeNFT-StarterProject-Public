@@ -10,4 +10,12 @@
 "CartViewController.SortAlert.byRating" = "По рейтингу";
 "CartViewController.SortAlert.byName" = "По названию";
 "CartViewController.SortAlert.cancel" = "Закрыть";
+"CartViewController.NetworkAlert.title" = "Сетевая ошибка";
+"CartViewController.NetworkAlert.message" = "Не удалось получить данные из сети";
+"CartViewController.NetworkAlert.OkAction.title" = "Попробую позже";
+"CartViewController.NetworkAlert.RepeatAction.title" = "Повторить";
+
 "CartViewCell.Price" = "Цена";
+"Cart.DeleteNftViewController.deleteButton" = "Удалить";
+"Cart.DeleteNftViewController.backButton" = "Вернуться";
+"Cart.DeleteNftViewController.deleteMessage" = "Вы уверены, что хотите удалить объект из корзины?";
