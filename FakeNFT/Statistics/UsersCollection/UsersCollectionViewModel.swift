@@ -8,6 +8,7 @@ import Foundation
 protocol UsersCollectionViewModelProtocol: AnyObject {
     var dataChanged: (() -> Void)? { get set }
     var isDataLoading: ((Bool) -> Void)? { get set }
+    var showError: ((Error) -> Void)? { get set }
     var nftsID: [String] { get set }
     var nfts: [NFTModel] { get set }
     func nftCount() -> Int
@@ -15,9 +16,11 @@ protocol UsersCollectionViewModelProtocol: AnyObject {
 }
 
 final class UsersCollectionViewModel: UsersCollectionViewModelProtocol {
+    var dataChanged: (() -> Void)?
+
     var isDataLoading: ((Bool) -> Void)?
 
-    var dataChanged: (() -> Void)?
+    var showError: ((Error) -> Void)?
 
     var nftsID: [String] = []
 
@@ -46,11 +49,14 @@ final class UsersCollectionViewModel: UsersCollectionViewModelProtocol {
         for id in nftsID {
             dispatchGroup.enter()
             nftService.getNFTs(id: id) { result in
-                switch result {
-                case .success(let nft):
-                    loadedNFTs.append(nft)
-                case .failure(let error):
-                    print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let nft):
+                        loadedNFTs.append(nft)
+                    case .failure(let error):
+                        self.showError?(error)
+                        print(error.localizedDescription)
+                    }
                 }
                 dispatchGroup.leave()
             }
