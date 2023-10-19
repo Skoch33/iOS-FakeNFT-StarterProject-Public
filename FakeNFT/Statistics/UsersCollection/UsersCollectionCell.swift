@@ -11,12 +11,13 @@ final class UsersCollectionCell: UICollectionViewCell {
     // MARK: - Private Properties
     private var isLiked: Bool = false
     private var isOrder: Bool = false
-    private let placeholder: UIImage? = .placeholder
+    private let placeholder = UIImage(systemName: "xmark.circle")
     // MARK: - SubViews
     private lazy var imageNFT: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 12
         image.clipsToBounds = true
+        image.tintColor = .nftBlack
         return image
     }()
 
@@ -88,7 +89,7 @@ final class UsersCollectionCell: UICollectionViewCell {
     private func isOrderTapped() {
         isOrder.toggle()
         let lightOrder: UIImage? = isOrder ? .basketLightIsOrder : .basketDark
-        let darkOrder: UIImage? = isOrder ? .basketLightIsOrder : .basketLight
+        let darkOrder: UIImage? = isOrder ? .basketDarkIsOrder : .basketLight
         if traitCollection.userInterfaceStyle == .light {
             basketButton.setImage(lightOrder, for: .normal)
         } else {
