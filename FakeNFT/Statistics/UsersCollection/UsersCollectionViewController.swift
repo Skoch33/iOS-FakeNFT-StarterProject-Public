@@ -54,11 +54,11 @@ final class UserCollectionViewController: UIViewController {
         navigationItem.leftBarButtonItem = nil
         navigationController?.navigationBar.tintColor = .nftBlack
     }
-    
+
     private func setupCollectionView() {
         view.backgroundColor = .nftWhite
         view.addSubview(collectionView)
-        // MARK: - AutoLayouts
+
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -79,6 +79,32 @@ final class UserCollectionViewController: UIViewController {
         viewModel.dataChanged = { [weak self] in
             self?.collectionView.reloadData()
         }
+
+        viewModel.showError = { [weak self] _ in
+            self?.showNetworkError(message: "Не все NFT удалось загрузить")
+        }
+    }
+    // MARK: - NetworkErrorAlert
+    private func showNetworkError(message: String) {
+        let retryButton = AlertActionModel(
+            title: "Повторить",
+            style: .cancel,
+            handler: {  [weak self] _ in
+            self?.viewModel.loadData()
+        })
+
+        let closeButton = AlertActionModel(
+            title: "Отмена",
+            style: .default
+        )
+
+        let alertModel = AlertPresenter(
+            message: message,
+            actions: [retryButton, closeButton],
+            style: .alert
+        )
+
+        alertModel.showAlert(from: self)
     }
 }
 // MARK: - UICollectionViewDataSource
