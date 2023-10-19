@@ -12,9 +12,11 @@ class SelectCurrencyViewController: UIViewController {
     private enum Constants {
         static let cellInterimSpacing: CGFloat = 7
         static let cellLineSpacing: CGFloat = 7
+        static let cellHeight: CGFloat = 46
         static let cellsInRow: Int = 2
         static let collectionLeftMargin: CGFloat = 16
         static let collectionTopMargin: CGFloat = 20
+        static let paymentViewHeight: CGFloat = 186
     }
 
     var viewModel: SelectCurrencyViewModelProtocol? {
@@ -23,7 +25,7 @@ class SelectCurrencyViewController: UIViewController {
         }
     }
 
-    private var numberOfCurrencies: Int { 3 }
+    private var numberOfCurrencies: Int { 50 }
     private lazy var currencyCollectionView = createCurrencyCollectionView()
 
     override func viewDidLoad() {
@@ -60,6 +62,9 @@ extension SelectCurrencyViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell: CurrencyViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+        cell.imageURL = URL(string: "https://code.s3.yandex.net/Mobile/iOS/Currencies/Bitcoin_(BTC).png")
+        cell.currencyName = "Bitcoin"
+        cell.currencyCode = "BTC"
         return cell
     }
 }
@@ -98,7 +103,7 @@ private extension SelectCurrencyViewController {
             paymentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             paymentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             paymentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            paymentView.heightAnchor.constraint(equalToConstant: 186)
+            paymentView.heightAnchor.constraint(equalToConstant: Constants.paymentViewHeight)
         ])
     }
 
@@ -113,7 +118,9 @@ private extension SelectCurrencyViewController {
             bottom: Constants.collectionTopMargin,
             right: Constants.collectionLeftMargin
         )
-        layout.itemSize = CGSize(width: (view.bounds.width - 16*2 - 7)/2, height: 46)
+        let rowEmptySpace = Constants.collectionLeftMargin * CGFloat(2) + Constants.cellInterimSpacing
+        let cellWidth = (view.bounds.width - rowEmptySpace) / CGFloat(Constants.cellsInRow)
+        layout.itemSize = CGSize(width: cellWidth, height: Constants.cellHeight)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.backgroundColor = .nftWhite
         collection.register(CurrencyViewCell.self)
@@ -152,16 +159,16 @@ private extension SelectCurrencyViewController {
         view.addSubview(button)
 
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.collectionLeftMargin),
             label.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
-            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.collectionLeftMargin),
 
-            link.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            link.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.collectionLeftMargin),
             link.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 4),
 
-            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.collectionLeftMargin),
             button.topAnchor.constraint(equalTo: link.bottomAnchor, constant: 20),
-            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.collectionLeftMargin),
             button.heightAnchor.constraint(equalToConstant: 60)
         ])
         return view
