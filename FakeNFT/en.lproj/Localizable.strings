@@ -9,3 +9,5 @@
 "Catalog.Sorting.Close" = "Close";
 
 "Catalog.ErrorAlertButton" = "Retry";
+
+"Collection.AuthorLabel" = "Author of the collection:";

@@ -1,40 +1,36 @@
 import UIKit
 import Kingfisher
 
-private let nulPhotoImage = UIImage(named: "Catalog.nulImage") ?? UIImage()
-
 final class CatalogCell: UITableViewCell {
     static let identifier = "CatalogCell"
-
+    
     private var collectionImage: UIImageView = {
         let view = UIImageView()
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 12
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         return view
     }()
-
+    
     private var nameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.nftBlack
-        label.font = UIFont.bodyBold
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .nftBlack
+        label.font = .bodyBold
         return label
     }()
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .clear
         setupCollectionImage()
         setupNameLabel()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setupCollectionImage() {
         collectionImage.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(collectionImage)
@@ -45,7 +41,7 @@ final class CatalogCell: UITableViewCell {
             collectionImage.heightAnchor.constraint(equalToConstant: 140)
         ])
     }
-
+    
     private func setupNameLabel() {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(nameLabel)
@@ -54,12 +50,12 @@ final class CatalogCell: UITableViewCell {
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
         ])
     }
-
+    
     func config(_ collection: CollectionModel) {
         self.selectionStyle = .none
-
+        
         nameLabel.text = "\(collection.name) (\(collection.nfts.count))"
-
+        
         guard
             let urlString = collection.cover.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
             let url = URL(string: urlString)
@@ -69,5 +65,5 @@ final class CatalogCell: UITableViewCell {
         collectionImage.kf.indicatorType = .activity
         collectionImage.kf.setImage(with: url, placeholder: nulPhotoImage)
     }
-
+    
 }
