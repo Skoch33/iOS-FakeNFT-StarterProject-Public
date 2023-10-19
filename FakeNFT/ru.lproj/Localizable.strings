@@ -19,3 +19,8 @@
 "Cart.DeleteNftViewController.deleteButton" = "Удалить";
 "Cart.DeleteNftViewController.backButton" = "Вернуться";
 "Cart.DeleteNftViewController.deleteMessage" = "Вы уверены, что хотите удалить объект из корзины?";
+
+"SelectCurrencyViewController.navigationItem.title" = "Выберите способ оплаты";
+"SelectCurrencyViewController.paymentView.agreementLabel" = "Совершая покупку, вы соглашаетесь с условиями";
+"SelectCurrencyViewController.paymentView.agreementLink" = "Пользовательского соглашения";
+"SelectCurrencyViewController.paymentView.buttonTitle" = "Оплатить";

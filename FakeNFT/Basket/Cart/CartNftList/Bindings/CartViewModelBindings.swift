@@ -13,4 +13,5 @@ struct CartViewModelBindings {
     let nftList: ([CartNftInfo]) -> Void
     let isEmptyCartPlaceholderDisplaying: ClosureBool
     let isNetworkAlertDisplaying: ClosureBool
+    let isPaymentScreenDisplaying: ClosureBool
 }

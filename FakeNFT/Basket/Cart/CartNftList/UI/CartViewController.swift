@@ -30,7 +30,7 @@ final class CartViewController: UIViewController {
     }
 
     @objc private func payButtonDidTap() {
-        // TODO: реализовать оплату
+        viewModel?.payButtonDidTap()
     }
 
     @objc private func sortButtonDidTap() {
@@ -74,9 +74,22 @@ final class CartViewController: UIViewController {
                     }
                     self.displayNetworkAlert()
                 }
+            },
+            isPaymentScreenDisplaying: { [weak self] isPaymentScreenDisplaying in
+                if isPaymentScreenDisplaying {
+                    self?.presentPaymentViewController()
+                }
             }
         )
         viewModel?.bind(bindings)
+    }
+
+    private func presentPaymentViewController() {
+        let paymentController = SelectCurrencyViewController()
+        let viewModel = SelectCurrencyViewModel()
+        paymentController.viewModel = viewModel
+        paymentController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(paymentController, animated: true)
     }
 
     private func displayEmptyCartPlaceholder(_ isPlaceHolderVisible: Bool) {

@@ -19,3 +19,8 @@
 "Cart.DeleteNftViewController.deleteButton" = "Remove";
 "Cart.DeleteNftViewController.backButton" = "Back";
 "Cart.DeleteNftViewController.deleteMessage" = "Are you sure you want to delete the object from the cart?";
+
+"SelectCurrencyViewController.navigationItem.title" = "Select payment method";
+"SelectCurrencyViewController.paymentView.agreementLabel" = "By making this purchase, you agree to the terms of";
+"SelectCurrencyViewController.paymentView.agreementLink" = "The user agreement";
+"SelectCurrencyViewController.paymentView.buttonTitle" = "Pay";

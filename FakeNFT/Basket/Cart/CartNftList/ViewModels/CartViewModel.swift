@@ -15,6 +15,7 @@ protocol CartViewModelProtocol {
     func pullToRefreshDidTrigger()
     func networkAlertDidCancel()
     func networkAlertRepeatDidTap()
+    func payButtonDidTap()
 }
 
 final class CartViewModel: CartViewModelProtocol {
@@ -23,6 +24,7 @@ final class CartViewModel: CartViewModelProtocol {
     @Observable private var nftList: [CartNftInfo]
     @Observable private var isEmptyCartPlaceholderDisplaying: Bool
     @Observable private var isNetworkAlertDisplaying: Bool
+    @Observable private var isPaymentScreenDisplaying: Bool
 
     private var dataProvider: CartDataProviderProtocol
     private var settingsStorage: CartSettingsStorageProtocol
@@ -41,6 +43,7 @@ final class CartViewModel: CartViewModelProtocol {
         self.nftList = []
         self.isEmptyCartPlaceholderDisplaying = true
         self.isNetworkAlertDisplaying = false
+        self.isPaymentScreenDisplaying = false
     }
 
     func viewDidLoad() {
@@ -54,6 +57,7 @@ final class CartViewModel: CartViewModelProtocol {
         self.$nftList.bind(action: bindings.nftList)
         self.$isEmptyCartPlaceholderDisplaying.bind(action: bindings.isEmptyCartPlaceholderDisplaying)
         self.$isNetworkAlertDisplaying.bind(action: bindings.isNetworkAlertDisplaying)
+        self.$isPaymentScreenDisplaying.bind(action: bindings.isPaymentScreenDisplaying)
     }
 
     func sortOrderDidChange(to sortOder: CartSortOrder) {
@@ -78,6 +82,10 @@ final class CartViewModel: CartViewModelProtocol {
     func networkAlertRepeatDidTap() {
         isNetworkAlertDisplaying = false
         dataProvider.reloadData()
+    }
+
+    func payButtonDidTap() {
+        isPaymentScreenDisplaying = true
     }
 
     private func calcCartPriceTotal() -> Decimal {
