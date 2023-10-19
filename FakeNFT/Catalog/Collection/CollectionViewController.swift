@@ -157,7 +157,7 @@ final class CollectionViewController: UIViewController {
     
     private func setupAuthorNameLabel() {
         authorNameLabel.isUserInteractionEnabled = true
-        let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(labelClicked(_:)))
+        let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapUserNameLabel(_:)))
         authorNameLabel.addGestureRecognizer(guestureRecognizer)
         authorNameLabel.text = "Author Name"
         NSLayoutConstraint.activate([
@@ -176,7 +176,7 @@ final class CollectionViewController: UIViewController {
     }
     
     @objc
-    func labelClicked(_ sender: Any) {
+    func didTapUserNameLabel(_ sender: Any) {
         let webViewController = WebViewController("https://practicum.yandex.ru/go-basics/")
         navigationController?.pushViewController(webViewController, animated: true)
     }
