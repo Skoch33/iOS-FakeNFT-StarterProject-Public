@@ -1,9 +1,12 @@
 import UIKit
 import Kingfisher
+import ProgressHUD
 
 final class CollectionViewController: UIViewController {
     
-    let collectionCount = 19
+    private var collection: CollectionModel
+    private var collectionViewModel: CollectionViewModelProtocol
+    private var nfts: [NftModel] = []
     
     private enum Const {
         static let cellMargins: CGFloat = 9
@@ -35,13 +38,6 @@ final class CollectionViewController: UIViewController {
         label.textColor = .nftBlack
         return label
     }()
-    
-    private var collection: CollectionModel
-    
-    init(collection: CollectionModel) {
-        self.collection = collection
-        super.init(nibName: nil, bundle: nil)
-    }
     
     private lazy var authorTitleLabel: UILabel = {
         let label = UILabel()
@@ -75,15 +71,41 @@ final class CollectionViewController: UIViewController {
         return collectionView
     }()
     
+    init(collectionViewModel: CollectionViewModel, collection: CollectionModel) {
+        self.collectionViewModel = collectionViewModel
+        self.collection = collection
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .nftWhite
+        bindViewModel()
         setupNavigationBar()
         setupViews()
+        collectionViewModel.loadCollection(nftIds: collection.nfts)
+    }
+    
+    private func bindViewModel() {
+        let bindings = CollectionViewModelBindings(
+            isLoading: { [weak self] in
+                guard let self else { return }
+                if $0 {
+                    ProgressHUD.show()
+                } else {
+                    ProgressHUD.dismiss()
+                }
+            },
+            nfts: { [weak self] in
+                guard let self else { return }
+                self.nfts = $0
+                self.collectionView.reloadData()
+            }
+        )
+        collectionViewModel.bind(bindings)
     }
     
     private func setupNavigationBar() {
@@ -108,7 +130,7 @@ final class CollectionViewController: UIViewController {
         setupDescriptionLabel()
         setupCollectionView()
         
-        let collectionHeight = (Const.cellHeight + Const.lineMargins) * ceil(CGFloat(collectionCount) / Const.cellCols)
+        let collectionHeight = (Const.cellHeight + Const.lineMargins) * ceil(CGFloat(collection.nfts.count) / Const.cellCols)
         collectionView.heightAnchor.constraint(equalToConstant: collectionHeight).isActive = true
     }
     
@@ -194,7 +216,7 @@ final class CollectionViewController: UIViewController {
 extension CollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return collectionCount
+        return nfts.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -207,7 +229,7 @@ extension CollectionViewController: UICollectionViewDataSource {
             assertionFailure("Error get cell")
             return .init()
         }
-        cell.configure()
+        cell.configure(nft: nfts[indexPath.row])
         collectionViewCell = cell
         return collectionViewCell
     }

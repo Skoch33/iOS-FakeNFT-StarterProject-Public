@@ -159,7 +159,8 @@ extension CatalogViewController: UITableViewDataSource {
 
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let collectionViewController = CollectionViewController(collection: self.collections[indexPath.row])
+        let collectionViewModel = CollectionViewModel(networkClient: DefaultNetworkClient())
+        let collectionViewController = CollectionViewController(collectionViewModel: collectionViewModel, collection: self.collections[indexPath.row])
         navigationController?.pushViewController(collectionViewController, animated: true)
         self.tabBarController?.tabBar.isHidden = true
     }

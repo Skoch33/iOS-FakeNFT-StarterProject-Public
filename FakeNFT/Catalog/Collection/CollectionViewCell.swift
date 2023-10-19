@@ -132,23 +132,19 @@ final class CollectionViewCell: UICollectionViewCell {
     }
     
     
-    func configure() {
+    func configure(nft: NftModel) {
+        let urlString = nft.images[0].addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        let url = URL(string: urlString ?? "")
         
-        let urlString = "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Aurora/1.png"
-        guard
-            let urlString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-            let url = URL(string: urlString)
-        else {
-            return
-        }
         cardImage.kf.indicatorType = .activity
         cardImage.kf.setImage(with: url, placeholder: nulPhotoImage)
         
         setLikeButtonState(false)
-        setStarsState(3)
         
-        nameLabel.text = "Aurora"
-        priceLabel.text = "1 ETH"
+        setStarsState(nft.rating)
+        
+        nameLabel.text = nft.name
+        priceLabel.text = "\(nft.price) ETH"
         
         setCardButtonState(false)
     }

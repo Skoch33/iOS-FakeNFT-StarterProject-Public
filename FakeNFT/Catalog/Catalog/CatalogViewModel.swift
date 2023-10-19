@@ -56,18 +56,10 @@ final class CatalogViewModel: CatalogViewModelProtocol {
         collections = collections.collectionSort(sortMode)
     }
     
-    struct CollectionRequest: NetworkRequest {
-        var endpoint: URL? {
-            URL(string: "https://651ff0d9906e276284c3c20a.mockapi.io/api/v1/collections")
-        }
-        var httpMethod: HttpMethod = .get
-        var dto: Encodable?
-    }
-    
     func loadCollection() {
         isLoading = true
         DispatchQueue.global().async {
-            self.networkClient.send(request: CollectionRequest(),
+            self.networkClient.send(request: GetCollectionsRequest(),
                                     type: [CollectionModel].self,
                                     onResponse: {result in
                 DispatchQueue.main.async {
