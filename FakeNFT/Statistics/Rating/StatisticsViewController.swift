@@ -11,6 +11,7 @@ final class StatisticsViewController: UIViewController {
         let tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.rowHeight = 80
         tableView.register(
             StatisticsCell.self,
             forCellReuseIdentifier: StatisticsCell.identifier
@@ -22,10 +23,12 @@ final class StatisticsViewController: UIViewController {
     }()
     
     private let viewModel: StatisticsViewModelProtocol
+    private var alert: NetworkAlert?
     
     init(viewModel: StatisticsViewModelProtocol = StatisticsViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        alert = NetworkAlert(delegate: self)
     }
     
     required init?(coder: NSCoder) {
@@ -42,32 +45,35 @@ final class StatisticsViewController: UIViewController {
 // MARK: - Action
     @objc
     private func sortingUsers() {
-        let sortByNameButton = AlertActionModel(
+        let alert = UIAlertController(
+            title: "Сортировка",
+            message: nil,
+            preferredStyle: .actionSheet)
+
+        let sortByNameButton = UIAlertAction(
             title: "По имени",
             style: .default
         ) { [weak self] _ in
             self?.viewModel.sortUsersByName()
         }
         
-        let sortByRatingButton = AlertActionModel(
+        let sortByRatingButton = UIAlertAction(
             title: "По рейтингу",
             style: .default
         ) { [weak self] _ in
             self?.viewModel.sortUsersByRating()
         }
-        
-        let closeButton = AlertActionModel(
+
+        let closeButton = UIAlertAction(
             title: "Закрыть",
             style: .cancel
         )
 
-        let alertModel = AlertPresenter(
-            title: "Сортировка",
-            actions: [sortByNameButton, sortByRatingButton, closeButton],
-            style: .actionSheet
-        )
+        [sortByNameButton, sortByRatingButton, closeButton].forEach {
+            alert.addAction($0)
+        }
 
-        alertModel.showAlert(from: self)
+        present(alert, animated: true)
     }
 // MARK: - Setup
     private func setupUI() {
@@ -96,7 +102,7 @@ final class StatisticsViewController: UIViewController {
     
     private func bind() {
         viewModel.showError = { [weak self] _ in
-            self?.showNetworkError(message: "Не удалось получить данные")
+            self?.showNetworkError("Не удалось получить данные")
         }
 
         viewModel.isDataLoading = { isLoading in
@@ -112,34 +118,18 @@ final class StatisticsViewController: UIViewController {
         }
     }
 
-    private func showNetworkError(message: String) {
-        let retryButton = AlertActionModel(
-            title: "Повторить",
-            style: .cancel,
-            handler: {  [weak self] _ in
-            self?.viewModel.loadData()
-        })
-
-        let closeButton = AlertActionModel(
-            title: "Отмена",
-            style: .default
-        )
-
-        let alertModel = AlertPresenter(
+    private func showNetworkError(_ message: String) {
+        let alertModel = AlertModel(
             message: message,
-            actions: [retryButton, closeButton],
-            style: .alert
-        )
-
-        alertModel.showAlert(from: self)
+            style: .alert) { [weak self] _ in
+                guard let self = self else { return }
+                self.viewModel.loadData()
+            }
+        alert?.showAlert(alertModel)
     }
 }
 // MARK: - UITableViewDataSource
 extension StatisticsViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.usersCount()
     }
@@ -162,5 +152,11 @@ extension StatisticsViewController: UITableViewDelegate {
         userCardViewModel.user = viewModel.users[indexPath.row]
         let userCard = UserCardViewController(viewModel: userCardViewModel)
         navigationController?.pushViewController(userCard, animated: true)
+    }
+}
+// MARK: - NetworkAlert
+extension StatisticsViewController: NetworkAlertDelegate {
+    func presentNetworkAlert(_ alertController: UIAlertController) {
+        self.present(alertController, animated: true)
     }
 }

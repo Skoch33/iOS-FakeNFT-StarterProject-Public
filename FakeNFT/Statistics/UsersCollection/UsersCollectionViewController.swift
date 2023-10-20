@@ -25,11 +25,13 @@ final class UserCollectionViewController: UIViewController {
         return collectionView
     }()
     // MARK: - ViewModel
-    private var viewModel: UsersCollectionViewModelProtocol
+    private let viewModel: UsersCollectionViewModelProtocol
+    private var alert: NetworkAlert?
 
     init(viewModel: UsersCollectionViewModelProtocol = UsersCollectionViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        alert = NetworkAlert(delegate: self)
     }
 
     required init?(coder: NSCoder) {
@@ -81,30 +83,18 @@ final class UserCollectionViewController: UIViewController {
         }
 
         viewModel.showError = { [weak self] _ in
-            self?.showNetworkError(message: "Не все NFT удалось загрузить")
+            self?.showNetworkError("Не все NFT удалось загрузить")
         }
     }
     // MARK: - NetworkErrorAlert
-    private func showNetworkError(message: String) {
-        let retryButton = AlertActionModel(
-            title: "Повторить",
-            style: .cancel,
-            handler: {  [weak self] _ in
-            self?.viewModel.loadData()
-        })
-
-        let closeButton = AlertActionModel(
-            title: "Отмена",
-            style: .default
-        )
-
-        let alertModel = AlertPresenter(
+    private func showNetworkError(_ message: String) {
+        let alertModel = AlertModel(
             message: message,
-            actions: [retryButton, closeButton],
-            style: .alert
-        )
-
-        alertModel.showAlert(from: self)
+            style: .alert) { [weak self] _ in
+                guard let self = self else { return }
+                self.viewModel.loadData()
+            }
+        alert?.showAlert(alertModel)
     }
 }
 // MARK: - UICollectionViewDataSource
@@ -139,5 +129,11 @@ extension UserCollectionViewController: UICollectionViewDelegate, UICollectionVi
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         return CGSize(width:  108, height: 192)
+    }
+}
+// MARK: - NetworkAlert
+extension UserCollectionViewController: NetworkAlertDelegate {
+    func presentNetworkAlert(_ alertController: UIAlertController) {
+        self.present(alertController, animated: true)
     }
 }
