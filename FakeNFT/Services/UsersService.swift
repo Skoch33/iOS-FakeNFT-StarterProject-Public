@@ -14,6 +14,10 @@ final class UsersService: UsersServiceProtocol {
 
     func getUsers(completion: @escaping (Result<[UserModel], Error>) -> Void) {
         let request = GetUserRequest()
-        networkClient.send(request: request, type: [UserModel].self, onResponse: completion)
+        networkClient.send(request: request, type: [UserModel].self) { result in
+            DispatchQueue.main.async {
+                completion(result)
+            }
+        }
     }
 }

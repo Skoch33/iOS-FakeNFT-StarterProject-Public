@@ -14,6 +14,10 @@ final class NFTService: NFTServiceProtocol {
     
     func getNFTs(id: String, completion: @escaping (Result<NFTModel, Error>) -> Void) {
         let request = GetNFTRequest(id: id)
-        networkClient.send(request: request, type: NFTModel.self, onResponse: completion)
+        networkClient.send(request: request, type: NFTModel.self) { result in
+            DispatchQueue.main.async {
+                completion(result)
+            }
+        }
     }
 }

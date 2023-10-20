@@ -46,17 +46,15 @@ final class UsersCollectionViewModel: UsersCollectionViewModelProtocol {
 
         isDataLoading?(true)
 
-        for id in nftsID {
+        nftsID.forEach { id in
             dispatchGroup.enter()
             nftService.getNFTs(id: id) { result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let nft):
-                        loadedNFTs.append(nft)
-                    case .failure(let error):
-                        self.showError?(error)
-                        print(error.localizedDescription)
-                    }
+                switch result {
+                case .success(let nft):
+                    loadedNFTs.append(nft)
+                case .failure(let error):
+                    self.showError?(error)
+                    print(error.localizedDescription)
                 }
                 dispatchGroup.leave()
             }

@@ -51,18 +51,15 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
         isDataLoading?(true)
 
         usersService.getUsers { [weak self] users in
-            DispatchQueue.main.async {
-                switch users {
-                case .success(let user):
-                    self?.users = user
-                    self?.loadPreviousSortingState()
-                    self?.isDataLoading?(false)
-                case .failure(let error):
-                    self?.showError?(error)
-                    self?.isDataLoading?(false)
-                    print(error.localizedDescription)
-                    return
-                }
+            self?.isDataLoading?(false)
+            switch users {
+            case .success(let user):
+                self?.users = user
+                self?.loadPreviousSortingState()
+            case .failure(let error):
+                self?.showError?(error)
+                print(error.localizedDescription)
+                return
             }
         }
     }
