@@ -58,22 +58,20 @@ final class CatalogViewModel: CatalogViewModelProtocol {
     
     func loadCollection() {
         isLoading = true
-        DispatchQueue.global().async {
-            self.networkClient.send(request: GetCollectionsRequest(),
-                                    type: [CollectionModel].self,
-                                    onResponse: {result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let model):
-                        self.collections = model.collectionSort(self.sortMode)
-                        self.isLoading = false
-                    case .failure(let error):
-                        self.errorString = error.localizedDescription
-                        self.isLoading = false
-                    }
+        self.networkClient.send(request: GetCollectionsRequest(),
+                                type: [CollectionModel].self,
+                                onResponse: {result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let model):
+                    self.collections = model.collectionSort(self.sortMode)
+                    self.isLoading = false
+                case .failure(let error):
+                    self.errorString = error.localizedDescription
+                    self.isLoading = false
                 }
-            })
-        }
+            }
+        })
     }
     
 }

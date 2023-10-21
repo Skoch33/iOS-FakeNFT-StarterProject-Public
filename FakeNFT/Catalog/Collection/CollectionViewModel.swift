@@ -2,12 +2,14 @@ import Foundation
 
 protocol CollectionViewModelProtocol {
     func bind(_ bindings: CollectionViewModelBindings)
-    func loadCollection(nftIds: [String])
+    func load(nftIds: [String])
 }
 
 struct CollectionViewModelBindings {
     let isLoading: (Bool) -> Void
     let nfts: ([NftModel]) -> Void
+    let profile: (ProfileModel) -> Void
+    let order: (OrderModel) -> Void
 }
 
 final class CollectionViewModel: CollectionViewModelProtocol {
@@ -20,6 +22,12 @@ final class CollectionViewModel: CollectionViewModelProtocol {
     @Observable
     var nfts: [NftModel] = []
     
+    @Observable
+    var profile: ProfileModel = ProfileModel(name: "", website: "", likes: [])
+    
+    @Observable
+    var order: OrderModel = OrderModel(nfts: [])
+    
     init(networkClient: NetworkClient) {
         self.networkClient = networkClient
     }
@@ -27,6 +35,50 @@ final class CollectionViewModel: CollectionViewModelProtocol {
     func bind(_ bindings: CollectionViewModelBindings) {
         self.$isLoading.bind(action: bindings.isLoading)
         self.$nfts.bind(action: bindings.nfts)
+        self.$profile.bind(action: bindings.profile)
+        self.$order.bind(action: bindings.order)
+    }
+    
+    func load(nftIds: [String]) {
+        loadProfile()
+        loadOrder()
+        loadCollection(nftIds: nftIds)
+    }
+    
+    func loadProfile() {
+        isLoading = true
+        self.networkClient.send(request: GetProfileRequest(),
+                                type: ProfileModel.self,
+                                onResponse: {result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let model):
+                    self.profile = model
+                    self.isLoading = false
+                case .failure(let error):
+                    //self.errorString = error.localizedDescription
+                    self.isLoading = false
+                }
+            }
+        })
+    }
+    
+    func loadOrder() {
+        isLoading = true
+        self.networkClient.send(request: GetOrderRequest(),
+                                type: OrderModel.self,
+                                onResponse: {result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let model):
+                    self.order = model
+                    self.isLoading = false
+                case .failure(let error):
+                    //self.errorString = error.localizedDescription
+                    self.isLoading = false
+                }
+            }
+        })
     }
     
     func loadCollection(nftIds: [String]) {

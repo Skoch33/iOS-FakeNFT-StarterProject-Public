@@ -2,8 +2,6 @@ import UIKit
 
 final class CollectionViewCell: UICollectionViewCell {
     static let identifier = "CollectionCell"
-    var likeState = false
-    var cardState = false
     
     private lazy var cardImage: UIImageView = {
         let view = UIImageView()
@@ -132,21 +130,23 @@ final class CollectionViewCell: UICollectionViewCell {
     }
     
     
-    func configure(nft: NftModel) {
+    func configure(nft: NftModel, likes: [String], order: [String]) {
         let urlString = nft.images[0].addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         let url = URL(string: urlString ?? "")
         
         cardImage.kf.indicatorType = .activity
         cardImage.kf.setImage(with: url, placeholder: nulPhotoImage)
         
-        setLikeButtonState(false)
+        let isLiked = likes.contains(where: { $0 == nft.id })
+        setLikeButtonState(isLiked)
         
         setStarsState(nft.rating)
         
         nameLabel.text = nft.name
         priceLabel.text = "\(nft.price) ETH"
         
-        setCardButtonState(false)
+        let isOrdered = order.contains(where: { $0 == nft.id})
+        setCardButtonState(isOrdered)
     }
     
     func setLikeButtonState(_ state: Bool) {
@@ -168,14 +168,14 @@ final class CollectionViewCell: UICollectionViewCell {
     
     @objc
     func likeButtonTap() {
-        likeState = !likeState
-        setLikeButtonState(likeState)
-        setStarsState(likeState ? 4 : 3)
+//        likeState = !likeState
+//        setLikeButtonState(likeState)
+//        setStarsState(likeState ? 4 : 3)
     }
     
     @objc
     func cardButtonTap() {
-        cardState = !cardState
-        setCardButtonState(cardState)
+//        cardState = !cardState
+//        setCardButtonState(cardState)
     }
 }

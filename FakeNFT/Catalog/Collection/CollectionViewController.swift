@@ -7,6 +7,8 @@ final class CollectionViewController: UIViewController {
     private var collection: CollectionModel
     private var collectionViewModel: CollectionViewModelProtocol
     private var nfts: [NftModel] = []
+    private var profile: ProfileModel = ProfileModel(name: "", website: "", likes: [])
+    private var order: OrderModel = OrderModel(nfts: [])
     
     private enum Const {
         static let cellMargins: CGFloat = 9
@@ -86,7 +88,7 @@ final class CollectionViewController: UIViewController {
         bindViewModel()
         setupNavigationBar()
         setupViews()
-        collectionViewModel.loadCollection(nftIds: collection.nfts)
+        collectionViewModel.load(nftIds: collection.nfts)
     }
     
     private func bindViewModel() {
@@ -103,6 +105,15 @@ final class CollectionViewController: UIViewController {
                 guard let self else { return }
                 self.nfts = $0
                 self.collectionView.reloadData()
+            },
+            profile: { [weak self] in
+                guard let self else { return }
+                self.profile = $0
+                self.authorNameLabel.text = self.profile.name
+            },
+            order: { [weak self] in
+                guard let self else { return }
+                self.order = $0
             }
         )
         collectionViewModel.bind(bindings)
@@ -181,7 +192,6 @@ final class CollectionViewController: UIViewController {
         authorNameLabel.isUserInteractionEnabled = true
         let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapUserNameLabel(_:)))
         authorNameLabel.addGestureRecognizer(guestureRecognizer)
-        authorNameLabel.text = "Author Name"
         NSLayoutConstraint.activate([
             authorNameLabel.topAnchor.constraint(equalTo: authorTitleLabel.topAnchor),
             authorNameLabel.leadingAnchor.constraint(equalTo: authorTitleLabel.trailingAnchor, constant: 4)
@@ -199,7 +209,7 @@ final class CollectionViewController: UIViewController {
     
     @objc
     func didTapUserNameLabel(_ sender: Any) {
-        let webViewController = WebViewController("https://practicum.yandex.ru/go-basics/")
+        let webViewController = WebViewController(profile.website)
         navigationController?.pushViewController(webViewController, animated: true)
     }
     
@@ -229,7 +239,7 @@ extension CollectionViewController: UICollectionViewDataSource {
             assertionFailure("Error get cell")
             return .init()
         }
-        cell.configure(nft: nfts[indexPath.row])
+        cell.configure(nft: nfts[indexPath.row], likes: profile.likes, order: order.nfts)
         collectionViewCell = cell
         return collectionViewCell
     }

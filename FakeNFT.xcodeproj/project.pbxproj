@@ -45,6 +45,8 @@
 		715D0F3F2AD197F600300497 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D0F3E2AD197F600300497 /* CollectionViewController.swift */; };
 		715D0F432AD28AEC00300497 /* CollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D0F422AD28AEC00300497 /* CollectionModel.swift */; };
 		715D0F472AD2A5D900300497 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D0F462AD2A5D900300497 /* Observable.swift */; };
+		71A4C64B2AE3FF1F008FAC03 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A4C64A2AE3FF1F008FAC03 /* ProfileModel.swift */; };
+		71A4C64D2AE4038D008FAC03 /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A4C64C2AE4038D008FAC03 /* OrderModel.swift */; };
 		71E1A1DB2AE1D74000D6CD06 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E1A1DA2AE1D74000D6CD06 /* Request.swift */; };
 		71E1A1DD2AE1D7FE00D6CD06 /* CollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E1A1DC2AE1D7FE00D6CD06 /* CollectionViewModel.swift */; };
 		71E1A1DF2AE1D85400D6CD06 /* NftModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E1A1DE2AE1D85400D6CD06 /* NftModel.swift */; };
@@ -109,6 +111,8 @@
 		715D0F3E2AD197F600300497 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		715D0F422AD28AEC00300497 /* CollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionModel.swift; sourceTree = "<group>"; };
 		715D0F462AD2A5D900300497 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		71A4C64A2AE3FF1F008FAC03 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		71A4C64C2AE4038D008FAC03 /* OrderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
 		71E1A1DA2AE1D74000D6CD06 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		71E1A1DC2AE1D7FE00D6CD06 /* CollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewModel.swift; sourceTree = "<group>"; };
 		71E1A1DE2AE1D85400D6CD06 /* NftModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftModel.swift; sourceTree = "<group>"; };
@@ -328,6 +332,8 @@
 			isa = PBXGroup;
 			children = (
 				715D0F422AD28AEC00300497 /* CollectionModel.swift */,
+				71A4C64A2AE3FF1F008FAC03 /* ProfileModel.swift */,
+				71A4C64C2AE4038D008FAC03 /* OrderModel.swift */,
 				71E1A1DE2AE1D85400D6CD06 /* NftModel.swift */,
 				7136C2132AD5EA1C00DAB7A4 /* NulPhotoImage.swift */,
 				71E1A1DA2AE1D74000D6CD06 /* Request.swift */,
@@ -373,7 +379,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3F6806BD29CBBAF200B4F915 /* Build configuration list for PBXNativeTarget "FakeNFT" */;
 			buildPhases = (
-				3FC8C39529D24CDB0081F015 /* Swiftlint */,
 				3F68068F29CBBAF100B4F915 /* Sources */,
 				3F68069029CBBAF100B4F915 /* Frameworks */,
 				3F68069129CBBAF100B4F915 /* Resources */,
@@ -506,27 +511,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		3FC8C39529D24CDB0081F015 /* Swiftlint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = Swiftlint;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint --fix && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		3F68068F29CBBAF100B4F915 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -550,11 +534,13 @@
 				715D0F2B2AD1577A00300497 /* UIColor+Extensions.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
+				71A4C64B2AE3FF1F008FAC03 /* ProfileModel.swift in Sources */,
 				71E1A1DF2AE1D85400D6CD06 /* NftModel.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				715D0F172AD156E300300497 /* TabBarController.swift in Sources */,
 				7136C2192AD8944400DAB7A4 /* CollectionViewCell.swift in Sources */,
 				715D0F392AD1749A00300497 /* CatalogViewModel.swift in Sources */,
+				71A4C64D2AE4038D008FAC03 /* OrderModel.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
 				715D0F252AD1570000300497 /* BasketViewController.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
