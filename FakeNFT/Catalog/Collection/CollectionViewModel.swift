@@ -163,7 +163,6 @@ final class CollectionViewModel: CollectionViewModelProtocol {
                     self.isFailed = true
                 }
                 self.isLoading = false
-                self.isFailed = true // test
             }
         })
     }
