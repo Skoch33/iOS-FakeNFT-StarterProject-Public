@@ -7,14 +7,12 @@
 
 import Foundation
 
-protocol CartViewModelProtocol {
+protocol CartViewModelProtocol: AlertServiceDelegate {
     func viewDidLoad()
     func bind(_ bindings: CartViewModelBindings)
     func sortOrderDidChange(to sortBy: CartSortOrder)
     func deleteNftDidApprove(for id: String)
     func pullToRefreshDidTrigger()
-    func networkAlertDidCancel()
-    func networkAlertRepeatDidTap()
     func payButtonDidTap()
 }
 
@@ -75,15 +73,6 @@ final class CartViewModel: CartViewModelProtocol {
         dataProvider.reloadData()
     }
 
-    func networkAlertDidCancel() {
-        isNetworkAlertDisplaying = false
-    }
-
-    func networkAlertRepeatDidTap() {
-        isNetworkAlertDisplaying = false
-        dataProvider.reloadData()
-    }
-
     func payButtonDidTap() {
         isPaymentScreenDisplaying = true
     }
@@ -121,5 +110,17 @@ final class CartViewModel: CartViewModelProtocol {
             guard let self else { return }
             self.networkFailureDidGet()
         }
+    }
+}
+
+// MARK: AlertServiceDelegate
+extension CartViewModel: AlertServiceDelegate {
+    func networkAlertDidCancel() {
+        isNetworkAlertDisplaying = false
+    }
+
+    func networkAlertRepeatDidTap() {
+        isNetworkAlertDisplaying = false
+        dataProvider.reloadData()
     }
 }

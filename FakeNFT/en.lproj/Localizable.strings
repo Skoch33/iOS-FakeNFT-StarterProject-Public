@@ -10,10 +10,11 @@
 "CartViewController.SortAlert.byRating" = "By Rating";
 "CartViewController.SortAlert.byName" = "By Name";
 "CartViewController.SortAlert.cancel" = "Close";
-"CartViewController.NetworkAlert.title" = "Network error";
-"CartViewController.NetworkAlert.message" = "Couldn't get data from network";
-"CartViewController.NetworkAlert.OkAction.title" = "Never mind";
-"CartViewController.NetworkAlert.RepeatAction.title" = "Repeat";
+
+"DefaultNetworkAlert.title" = "Network error";
+"DefaultNetworkAlert.message" = "Couldn't get data from network";
+"DefaultNetworkAlert.OkAction.title" = "Never mind";
+"DefaultNetworkAlert.RepeatAction.title" = "Repeat";
 
 "CartViewCell.Price" = "Price";
 "Cart.DeleteNftViewController.deleteButton" = "Remove";

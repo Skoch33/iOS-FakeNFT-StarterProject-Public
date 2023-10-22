@@ -86,7 +86,8 @@ final class CartViewController: UIViewController {
 
     private func presentPaymentViewController() {
         let paymentController = SelectCurrencyViewController()
-        let viewModel = SelectCurrencyViewModel()
+        let currencyDataProvider = CartCurrencyDataProvider()
+        let viewModel = SelectCurrencyViewModel(dataProvider: currencyDataProvider)
         paymentController.viewModel = viewModel
         paymentController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(paymentController, animated: true)
@@ -100,25 +101,9 @@ final class CartViewController: UIViewController {
     }
 
     private func displayNetworkAlert() {
-        let title = "CartViewController.NetworkAlert.title".localized()
-        let message = "CartViewController.NetworkAlert.message".localized()
-        let okActionTitle = "CartViewController.NetworkAlert.OkAction.title".localized()
-        let repeatActionTitle = "CartViewController.NetworkAlert.RepeatAction.title".localized()
-
-        let controller = CartAlertController(
-            delegate: self,
-            title: title,
-            message: message,
-            actions: [
-                CartAlertAction(title: okActionTitle, style: .cancel) { [weak self] _ in
-                    self?.viewModel?.networkAlertDidCancel()
-                },
-                CartAlertAction(title: repeatActionTitle) { [weak self] _ in
-                    self?.viewModel?.networkAlertRepeatDidTap()
-                }
-            ]
-        )
-        controller.show()
+        guard let viewModel else { return }
+        let alertService = DefaultAlertService(delegate: viewModel, controller: self)
+        alertService.presentNetworkErrorAlert()
     }
 
     private func presentSortViewController() {

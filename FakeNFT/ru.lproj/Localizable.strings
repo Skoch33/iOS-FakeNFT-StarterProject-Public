@@ -10,10 +10,11 @@
 "CartViewController.SortAlert.byRating" = "По рейтингу";
 "CartViewController.SortAlert.byName" = "По названию";
 "CartViewController.SortAlert.cancel" = "Закрыть";
-"CartViewController.NetworkAlert.title" = "Сетевая ошибка";
-"CartViewController.NetworkAlert.message" = "Не удалось получить данные из сети";
-"CartViewController.NetworkAlert.OkAction.title" = "Попробую позже";
-"CartViewController.NetworkAlert.RepeatAction.title" = "Повторить";
+
+"DefaultNetworkAlert.title" = "Сетевая ошибка";
+"DefaultNetworkAlert.message" = "Не удалось получить данные из сети";
+"DefaultNetworkAlert.OkAction.title" = "Попробую позже";
+"DefaultNetworkAlert.RepeatAction.title" = "Повторить";
 
 "CartViewCell.Price" = "Цена";
 "Cart.DeleteNftViewController.deleteButton" = "Удалить";

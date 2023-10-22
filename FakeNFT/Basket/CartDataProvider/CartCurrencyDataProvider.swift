@@ -40,10 +40,6 @@ final class CartCurrencyDataProvider: CartCurrencyDataProviderProtocol {
 
     func reloadData() {
         currencyList.removeAll()
-        NotificationCenter.default.post(
-            name: cartCurrencyListDidChangeNotification,
-            object: nil
-        )
         CurrencyListService.shared.get(onResponse: cartCurrencyDidReceive)
     }
 

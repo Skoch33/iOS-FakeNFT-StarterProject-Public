@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 class SelectCurrencyViewController: UIViewController {
 
@@ -25,12 +26,13 @@ class SelectCurrencyViewController: UIViewController {
         }
     }
 
-    private var numberOfCurrencies: Int { 50 }
+    private var currencyList: [CartCurrency] = []
+    private var numberOfCurrencies: Int { currencyList.count }
     private lazy var currencyCollectionView = createCurrencyCollectionView()
+    private lazy var payButton = createPayButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupUI()
         viewModel?.viewDidLoad()
     }
@@ -47,8 +49,60 @@ class SelectCurrencyViewController: UIViewController {
         viewModel?.payButtonDidTap()
     }
 
+    @objc private func pullToRefreshDidTrigger() {
+        viewModel?.pullToRefreshDidTrigger()
+    }
+
     private func bindViewModel() {
-        // TODO: написать биндинг viewModel'и
+        viewModel?.bind(SelectCurrencyViewModelBindings(
+            currencyList: { [ weak self ] in
+                guard let self else { return }
+                self.currencyList = $0
+                self.currencyCollectionView.reloadData()
+                self.currencyCollectionView.refreshControl?.endRefreshing()
+                ProgressHUD.dismiss()
+            },
+            isViewDismissing: { [ weak self ] in
+                if $0 {
+                    self?.navigationController?.popViewController(animated: true)
+                }
+            },
+            isAgreementDisplaying: { [ weak self ] in
+                if $0 {
+                    self?.presentAgreement()
+                }
+            },
+            isNetworkAlertDisplaying: { [ weak self ] in
+                guard let self else { return }
+                self.currencyCollectionView.refreshControl?.endRefreshing()
+                ProgressHUD.dismiss()
+                if $0 {
+                    self.displayNetworkAlert()
+                }
+            },
+            isPaymentResultDisplaying: { [ weak self ] in
+                guard let isPaymentSuccessful = $0 else { return }
+                self?.presentPaymentResult(isPaymentSuccessful)
+            },
+            isCurrencyDidSelect: { [ weak self ] in
+                self?.payButton.isEnabled = $0
+            })
+        )
+    }
+
+    private func presentAgreement() {
+
+    }
+
+    private func presentPaymentResult(_ success: Bool) {
+        // TODO: Показать результат оплаты
+        print(success)
+    }
+
+    private func displayNetworkAlert() {
+        guard let viewModel else { return }
+        let alertService = DefaultAlertService(delegate: viewModel, controller: self)
+        alertService.presentNetworkErrorAlert()
     }
 }
 
@@ -62,15 +116,19 @@ extension SelectCurrencyViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell: CurrencyViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-        cell.imageURL = URL(string: "https://code.s3.yandex.net/Mobile/iOS/Currencies/Bitcoin_(BTC).png")
-        cell.currencyName = "Bitcoin"
-        cell.currencyCode = "BTC"
+
+        let currency = currencyList[indexPath.item]
+        cell.viewModel = CurrencyCellViewModel()
+        cell.viewModel?.cellReused(for: currency)
         return cell
     }
 }
 
 extension SelectCurrencyViewController: UICollectionViewDelegateFlowLayout {
-
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedCurrency = currencyList[indexPath.item].id
+        viewModel?.didSelectCurrency(selectedCurrency)
+    }
 }
 
 // MARK: Setup & Layout UI
@@ -105,6 +163,7 @@ private extension SelectCurrencyViewController {
             paymentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             paymentView.heightAnchor.constraint(equalToConstant: Constants.paymentViewHeight)
         ])
+        setupProgress()
     }
 
     func createCurrencyCollectionView() -> UICollectionView {
@@ -122,12 +181,22 @@ private extension SelectCurrencyViewController {
         let cellWidth = (view.bounds.width - rowEmptySpace) / CGFloat(Constants.cellsInRow)
         layout.itemSize = CGSize(width: cellWidth, height: Constants.cellHeight)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(pullToRefreshDidTrigger), for: .valueChanged)
+        collection.refreshControl = refreshControl
         collection.backgroundColor = .nftWhite
         collection.register(CurrencyViewCell.self)
         collection.delegate = self
         collection.dataSource = self
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
+    }
+
+    private func createPayButton() -> RoundedButton {
+        let button = RoundedButton(title: "SelectCurrencyViewController.paymentView.buttonTitle".localized())
+        button.isEnabled = false
+        button.addTarget(self, action: #selector(payButtonDidTap), for: .touchUpInside)
+        return button
     }
 
     func createPaymentView() -> UIView {
@@ -153,10 +222,7 @@ private extension SelectCurrencyViewController {
         link.addTarget(self, action: #selector(userAgreementDidTap), for: .touchUpInside)
         link.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(link)
-
-        let button = RoundedButton(title: "SelectCurrencyViewController.paymentView.buttonTitle".localized())
-        button.addTarget(self, action: #selector(payButtonDidTap), for: .touchUpInside)
-        view.addSubview(button)
+        view.addSubview(payButton)
 
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.collectionLeftMargin),
@@ -166,11 +232,18 @@ private extension SelectCurrencyViewController {
             link.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.collectionLeftMargin),
             link.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 4),
 
-            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.collectionLeftMargin),
-            button.topAnchor.constraint(equalTo: link.bottomAnchor, constant: 20),
-            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.collectionLeftMargin),
-            button.heightAnchor.constraint(equalToConstant: 60)
+            payButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.collectionLeftMargin),
+            payButton.topAnchor.constraint(equalTo: link.bottomAnchor, constant: 20),
+            payButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.collectionLeftMargin),
+            payButton.heightAnchor.constraint(equalToConstant: 60)
         ])
         return view
+    }
+
+    func setupProgress() {
+        ProgressHUD.animationType = .systemActivityIndicator
+        ProgressHUD.colorHUD = .nftBlack
+        ProgressHUD.colorAnimation = .nftLightgrey
+        ProgressHUD.show()
     }
 }

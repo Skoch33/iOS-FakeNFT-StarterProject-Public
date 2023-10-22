@@ -23,24 +23,6 @@ final class CurrencyViewCell: UICollectionViewCell, ReuseIdentifying {
         }
     }
 
-    var imageURL: URL? {
-        didSet {
-            imageView.kf.setImage(with: imageURL)
-        }
-    }
-
-    var currencyName: String {
-        didSet {
-            nameLabel.text = currencyName
-        }
-    }
-
-    var currencyCode: String {
-        didSet {
-            codeLabel.text = currencyCode
-        }
-    }
-
     private lazy var imageView = createCurrencyImageView()
     private lazy var nameLabel = createCurrencyLabel(textColor: .nftBlack)
     private lazy var codeLabel = createCurrencyLabel(textColor: .nftGreenUniversal)
@@ -52,8 +34,6 @@ final class CurrencyViewCell: UICollectionViewCell, ReuseIdentifying {
     }
 
     override init(frame: CGRect) {
-        self.currencyName = " "
-        self.currencyCode = " "
         super.init(frame: .zero)
         setupUI()
     }
@@ -63,7 +43,17 @@ final class CurrencyViewCell: UICollectionViewCell, ReuseIdentifying {
     }
 
     private func bindViewModel() {
-        // TODO: bind view model
+        viewModel?.bind(CurrencyCellViewModelBindings(
+            imageURL: { [ weak self ] in
+                self?.imageView.kf.setImage(with: $0)
+            },
+            currencyName: { [ weak self ] in
+                self?.nameLabel.text = $0
+            },
+            currencyCode: { [ weak self ] in
+                self?.codeLabel.text = $0
+            })
+        )
     }
 }
 
