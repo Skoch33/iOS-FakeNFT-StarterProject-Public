@@ -95,8 +95,13 @@ class SelectCurrencyViewController: UIViewController {
     }
 
     private func presentPaymentResult(_ success: Bool) {
-        // TODO: Показать результат оплаты
-        print(success)
+        if success {
+            print("Всё хорошо!")
+        } else {
+            guard let viewModel else { return }
+            let alertController = DefaultAlertService(delegate: viewModel, controller: self)
+            alertController.presentSomethingWrongAlert()
+        }
     }
 
     private func displayNetworkAlert() {

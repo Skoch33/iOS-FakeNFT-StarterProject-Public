@@ -16,6 +16,10 @@
 "DefaultNetworkAlert.OkAction.title" = "Попробую позже";
 "DefaultNetworkAlert.RepeatAction.title" = "Повторить";
 
+"DefaultSomethingWrongAlert.title" = "Упс! Что-то пошло не так :(";
+"DefaultSomethingWrongAlert.message" = "Попробуйте еще раз!";
+"DefaultSomethingWrongAlert.OkAction.title" = "OK";
+
 "CartViewCell.Price" = "Цена";
 "Cart.DeleteNftViewController.deleteButton" = "Удалить";
 "Cart.DeleteNftViewController.backButton" = "Вернуться";

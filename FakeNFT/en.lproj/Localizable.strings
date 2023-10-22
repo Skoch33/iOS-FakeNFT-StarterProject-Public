@@ -16,6 +16,10 @@
 "DefaultNetworkAlert.OkAction.title" = "Never mind";
 "DefaultNetworkAlert.RepeatAction.title" = "Repeat";
 
+"DefaultSomethingWrongAlert.title" = "Oops! Something went wrong :(";
+"DefaultSomethingWrongAlert.message" = "Try again!";
+"DefaultSomethingWrongAlert.OkAction.title" = "Ok";
+
 "CartViewCell.Price" = "Price";
 "Cart.DeleteNftViewController.deleteButton" = "Remove";
 "Cart.DeleteNftViewController.backButton" = "Back";
