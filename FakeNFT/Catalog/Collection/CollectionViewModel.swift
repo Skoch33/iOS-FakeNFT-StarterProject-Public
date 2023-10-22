@@ -3,6 +3,8 @@ import Foundation
 protocol CollectionViewModelProtocol {
     func bind(_ bindings: CollectionViewModelBindings)
     func load(nftIds: [String])
+    func reversLike(nftId: String)
+    func reversCart(nftId: String)
 }
 
 struct CollectionViewModelBindings {
@@ -89,7 +91,7 @@ final class CollectionViewModel: CollectionViewModelProtocol {
         
         nftIds.forEach { nftId in
             collectionGroup.enter()
-            self.networkClient.send(request: GetNftRequest(nft: nftId),
+            self.networkClient.send(request: GetNftRequest(nftId: nftId),
                                     type: NftModel.self,
                                     onResponse: {result in
                 DispatchQueue.main.async {
@@ -107,6 +109,54 @@ final class CollectionViewModel: CollectionViewModelProtocol {
             self.nfts = nfts
             self.isLoading = false
         }
+    }
+    
+    func reversLike(nftId: String) {
+        if profile.likes.contains(where: {$0 == nftId}) {
+            profile.likes.removeAll(where: {$0 == nftId})
+        } else {
+            profile.likes.append(nftId)
+        }
+        
+        isLoading = true
+        self.networkClient.send(request: PutProfileRequest(profile: profile),
+                                type: ProfileModel.self,
+                                onResponse: {result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let model):
+                    //self.profile = model
+                    self.isLoading = false
+                case .failure(let error):
+                    //self.errorString = error.localizedDescription
+                    self.isLoading = false
+                }
+            }
+        })
+    }
+    
+    func reversCart(nftId: String) {
+        if order.nfts.contains(where: {$0 == nftId}) {
+            order.nfts.removeAll(where: {$0 == nftId})
+        } else {
+            order.nfts.append(nftId)
+        }
+        
+        isLoading = true
+        self.networkClient.send(request: PutOrderRequest(order: order),
+                                type: OrderModel.self,
+                                onResponse: {result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let model):
+                    //self.order = model
+                    self.isLoading = false
+                case .failure(let error):
+                    //self.errorString = error.localizedDescription
+                    self.isLoading = false
+                }
+            }
+        })
     }
     
 }

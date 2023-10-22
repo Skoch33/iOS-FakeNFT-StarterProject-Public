@@ -4,8 +4,8 @@ import ProgressHUD
 
 final class CollectionViewController: UIViewController {
     
-    private var collection: CollectionModel
     private var collectionViewModel: CollectionViewModelProtocol
+    private var collection: CollectionModel
     private var nfts: [NftModel] = []
     private var profile: ProfileModel = ProfileModel(name: "", website: "", likes: [])
     private var order: OrderModel = OrderModel(nfts: [])
@@ -239,7 +239,11 @@ extension CollectionViewController: UICollectionViewDataSource {
             assertionFailure("Error get cell")
             return .init()
         }
-        cell.configure(nft: nfts[indexPath.row], likes: profile.likes, order: order.nfts)
+        cell.configure(nft: nfts[indexPath.row],
+                       likes: profile.likes,
+                       order: order.nfts,
+                       onReversLike: collectionViewModel.reversLike(nftId:),
+                       onReversCart: collectionViewModel.reversCart(nftId:))
         collectionViewCell = cell
         return collectionViewCell
     }

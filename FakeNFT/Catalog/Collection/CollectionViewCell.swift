@@ -2,6 +2,12 @@ import UIKit
 
 final class CollectionViewCell: UICollectionViewCell {
     static let identifier = "CollectionCell"
+    private var nftId: String = ""
+    private var isLiked: Bool = false
+    private var isInCart: Bool = false
+    
+    private var reversLike: (String) -> Void = { _ in return }
+    private var reversCart: (String) -> Void = { _ in return }
     
     private lazy var cardImage: UIImageView = {
         let view = UIImageView()
@@ -130,14 +136,23 @@ final class CollectionViewCell: UICollectionViewCell {
     }
     
     
-    func configure(nft: NftModel, likes: [String], order: [String]) {
+    func configure(nft: NftModel, 
+                   likes: [String],
+                   order: [String],
+                   onReversLike: @escaping (String) -> Void,
+                   onReversCart: @escaping (String) -> Void) {
+        
+        nftId = nft.id
+        reversLike = onReversLike
+        reversCart = onReversCart
+        
         let urlString = nft.images[0].addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         let url = URL(string: urlString ?? "")
         
         cardImage.kf.indicatorType = .activity
         cardImage.kf.setImage(with: url, placeholder: nulPhotoImage)
         
-        let isLiked = likes.contains(where: { $0 == nft.id })
+        isLiked = likes.contains(where: { $0 == nft.id })
         setLikeButtonState(isLiked)
         
         setStarsState(nft.rating)
@@ -145,8 +160,8 @@ final class CollectionViewCell: UICollectionViewCell {
         nameLabel.text = nft.name
         priceLabel.text = "\(nft.price) ETH"
         
-        let isOrdered = order.contains(where: { $0 == nft.id})
-        setCardButtonState(isOrdered)
+        isInCart = order.contains(where: { $0 == nft.id})
+        setCartButtonState(isInCart)
     }
     
     func setLikeButtonState(_ state: Bool) {
@@ -161,21 +176,22 @@ final class CollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func setCardButtonState(_ state: Bool) {
+    func setCartButtonState(_ state: Bool) {
         let name = state ? "Catalog.CardFull" : "Catalog.CardEmpty"
         cardButton.setImage(UIImage(named: name)?.withTintColor(.nftBlack, renderingMode: .alwaysOriginal), for: .normal)
     }
     
     @objc
     func likeButtonTap() {
-//        likeState = !likeState
-//        setLikeButtonState(likeState)
-//        setStarsState(likeState ? 4 : 3)
+        isLiked = !isLiked
+        reversLike(nftId)
+        setLikeButtonState(isLiked)
     }
     
     @objc
     func cardButtonTap() {
-//        cardState = !cardState
-//        setCardButtonState(cardState)
+        isInCart = !isInCart
+        reversCart(nftId)
+        setCartButtonState(isInCart)
     }
 }
