@@ -16,6 +16,9 @@
 		2280DDF92AE5728400C2EDD7 /* SelectCurrencyViewModelBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2280DDF82AE5728400C2EDD7 /* SelectCurrencyViewModelBindings.swift */; };
 		2280DDFB2AE57B7900C2EDD7 /* DefaultAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2280DDFA2AE57B7900C2EDD7 /* DefaultAlertService.swift */; };
 		2280DDFD2AE5880A00C2EDD7 /* CurrencyCellViewModelBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2280DDFC2AE5880A00C2EDD7 /* CurrencyCellViewModelBindings.swift */; };
+		2280DE022AE5B4BD00C2EDD7 /* SuccessfulPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2280DE012AE5B4BD00C2EDD7 /* SuccessfulPaymentViewController.swift */; };
+		2280DE042AE5BBA100C2EDD7 /* SuccessfulPaymentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2280DE032AE5BBA100C2EDD7 /* SuccessfulPaymentViewModel.swift */; };
+		2280DE062AE5BC0800C2EDD7 /* SuccessfulPaymentViewModelBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2280DE052AE5BC0800C2EDD7 /* SuccessfulPaymentViewModelBindings.swift */; };
 		22DBFE3D2AD59F1B0075A3C9 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBFE3C2AD59F1B0075A3C9 /* RatingView.swift */; };
 		22DBFE3F2AD5CB410075A3C9 /* PriceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBFE3E2AD5CB410075A3C9 /* PriceFormatter.swift */; };
 		22DBFE412AD6F5210075A3C9 /* CartDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DBFE402AD6F5210075A3C9 /* CartDataProvider.swift */; };
@@ -115,6 +118,9 @@
 		2280DDF82AE5728400C2EDD7 /* SelectCurrencyViewModelBindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCurrencyViewModelBindings.swift; sourceTree = "<group>"; };
 		2280DDFA2AE57B7900C2EDD7 /* DefaultAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAlertService.swift; sourceTree = "<group>"; };
 		2280DDFC2AE5880A00C2EDD7 /* CurrencyCellViewModelBindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCellViewModelBindings.swift; sourceTree = "<group>"; };
+		2280DE012AE5B4BD00C2EDD7 /* SuccessfulPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessfulPaymentViewController.swift; sourceTree = "<group>"; };
+		2280DE032AE5BBA100C2EDD7 /* SuccessfulPaymentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessfulPaymentViewModel.swift; sourceTree = "<group>"; };
+		2280DE052AE5BC0800C2EDD7 /* SuccessfulPaymentViewModelBindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessfulPaymentViewModelBindings.swift; sourceTree = "<group>"; };
 		22DBFE3C2AD59F1B0075A3C9 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		22DBFE3E2AD5CB410075A3C9 /* PriceFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceFormatter.swift; sourceTree = "<group>"; };
 		22DBFE402AD6F5210075A3C9 /* CartDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDataProvider.swift; sourceTree = "<group>"; };
@@ -244,6 +250,16 @@
 				2280DDFC2AE5880A00C2EDD7 /* CurrencyCellViewModelBindings.swift */,
 			);
 			path = Bindings;
+			sourceTree = "<group>";
+		};
+		2280DE002AE5B48300C2EDD7 /* SuccessfulPayment */ = {
+			isa = PBXGroup;
+			children = (
+				2280DE012AE5B4BD00C2EDD7 /* SuccessfulPaymentViewController.swift */,
+				2280DE032AE5BBA100C2EDD7 /* SuccessfulPaymentViewModel.swift */,
+				2280DE052AE5BC0800C2EDD7 /* SuccessfulPaymentViewModelBindings.swift */,
+			);
+			path = SuccessfulPayment;
 			sourceTree = "<group>";
 		};
 		22DBFE422AD714130075A3C9 /* CartServices */ = {
@@ -410,6 +426,7 @@
 				22DBFEA42AE14CE30075A3C9 /* UI */,
 				22DBFEA52AE14CEE0075A3C9 /* ViewModel */,
 				2280DDF72AE5724B00C2EDD7 /* Bindings */,
+				2280DE002AE5B48300C2EDD7 /* SuccessfulPayment */,
 			);
 			path = SelectCurrency;
 			sourceTree = "<group>";
@@ -783,6 +800,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22DBFE4D2AD718CD0075A3C9 /* NftInfoRequest.swift in Sources */,
+				2280DE062AE5BC0800C2EDD7 /* SuccessfulPaymentViewModelBindings.swift in Sources */,
 				22DBFEA72AE14DA10075A3C9 /* SelectCurrencyViewModel.swift in Sources */,
 				22DBFE8E2ADD92E00075A3C9 /* CurrencyInfoService.swift in Sources */,
 				71E3D1FC2AD2F20C0019EBCC /* Observable.swift in Sources */,
@@ -791,6 +809,7 @@
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				22DBFE972ADD9D630075A3C9 /* CartPaymentInfoDto.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
+				2280DE022AE5B4BD00C2EDD7 /* SuccessfulPaymentViewController.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				22DBFE582AD71BDE0075A3C9 /* CartNftList.swift in Sources */,
 				22DBFE5A2AD8083E0075A3C9 /* CartViewModel.swift in Sources */,
@@ -810,6 +829,7 @@
 				22DBFE9B2ADFFA980075A3C9 /* HelpfulClosures.swift in Sources */,
 				22DBFE642AD96BFA0075A3C9 /* CartViewModelBindings.swift in Sources */,
 				715D0F242AD1570000300497 /* StatisticsViewController.swift in Sources */,
+				2280DE042AE5BBA100C2EDD7 /* SuccessfulPaymentViewModel.swift in Sources */,
 				22DBFE5E2AD823100075A3C9 /* CartCellViewModel.swift in Sources */,
 				22DBFE4F2AD719060075A3C9 /* CartNetworkRequest.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,

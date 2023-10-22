@@ -29,3 +29,6 @@
 "SelectCurrencyViewController.paymentView.agreementLabel" = "By making this purchase, you agree to the terms of";
 "SelectCurrencyViewController.paymentView.agreementLink" = "The user agreement";
 "SelectCurrencyViewController.paymentView.buttonTitle" = "Pay";
+
+"SuccessfulPaymentViewController.message" = "Success! Payment has been completed, congratulations on your purchase!";
+"SuccessfulPaymentViewController.buttonTitle" = "Back to catalog";

@@ -29,3 +29,6 @@
 "SelectCurrencyViewController.paymentView.agreementLabel" = "Совершая покупку, вы соглашаетесь с условиями";
 "SelectCurrencyViewController.paymentView.agreementLink" = "Пользовательского соглашения";
 "SelectCurrencyViewController.paymentView.buttonTitle" = "Оплатить";
+
+"SuccessfulPaymentViewController.message" = "Успех! Оплата прошла, поздравляем с покупкой!";
+"SuccessfulPaymentViewController.buttonTitle" = "Вернуться в каталог";

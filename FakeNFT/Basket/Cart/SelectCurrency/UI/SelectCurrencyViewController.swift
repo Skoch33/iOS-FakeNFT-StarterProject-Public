@@ -8,7 +8,7 @@
 import UIKit
 import ProgressHUD
 
-class SelectCurrencyViewController: UIViewController {
+final class SelectCurrencyViewController: UIViewController {
 
     private enum Constants {
         static let cellInterimSpacing: CGFloat = 7
@@ -96,7 +96,10 @@ class SelectCurrencyViewController: UIViewController {
 
     private func presentPaymentResult(_ success: Bool) {
         if success {
-            print("Всё хорошо!")
+            let viewModel = SuccessfulPaymentViewModel()
+            let controller = SuccessfulPaymentViewController(viewModel: viewModel)
+            controller.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(controller, animated: true)
         } else {
             guard let viewModel else { return }
             let alertController = DefaultAlertService(delegate: viewModel, controller: self)
