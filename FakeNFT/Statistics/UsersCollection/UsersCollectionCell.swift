@@ -81,8 +81,7 @@ final class UsersCollectionCell: UICollectionViewCell {
     @objc
     private func isLikeTapped() {
         isLiked.toggle()
-        let like: UIImage? = isLiked ? .activeLike : .noActiveLike
-        favoriteButton.setImage(like, for: .normal)
+        setIsLiked(isLiked: isLiked)
     }
 
     @objc
@@ -142,7 +141,7 @@ final class UsersCollectionCell: UICollectionViewCell {
         ])
     }
     //MARK: - Setup
-    func configure(nft: NFTModel, rating: Int) {
+    func configure(nft: NFTModel, rating: Int, isLiked: Bool) {
         let cache = ImageCache.default
         cache.clearMemoryCache()
         cache.clearDiskCache()
@@ -157,7 +156,13 @@ final class UsersCollectionCell: UICollectionViewCell {
 
         nameNFT.text = nft.name
         priceLabel.text = "\(nft.price) ETH"
+        setIsLiked(isLiked: isLiked)
         setupStarRating(with: rating)
+    }
+
+    private func setIsLiked(isLiked: Bool) {
+        let like: UIImage? = isLiked ? .activeLike : .noActiveLike
+        favoriteButton.setImage(like, for: .normal)
     }
 
     private func setupStarRating(with rating: Int) {
@@ -177,5 +182,10 @@ final class UsersCollectionCell: UICollectionViewCell {
         } else {
             basketButton.setImage(.basketDark, for: .normal)
         }
+    }
+
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+        imageNFT.kf.cancelDownloadTask()
     }
 }

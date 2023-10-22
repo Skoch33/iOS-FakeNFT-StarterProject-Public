@@ -18,6 +18,9 @@
 		065779BF2AE0489400C2FDEB /* GetNFTRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779BE2AE0489400C2FDEB /* GetNFTRequest.swift */; };
 		065779C12AE055ED00C2FDEB /* GetUserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779C02AE055ED00C2FDEB /* GetUserRequest.swift */; };
 		065779C62AE0747900C2FDEB /* UIImage + Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779C52AE0747900C2FDEB /* UIImage + Extentions.swift */; };
+		065779CC2AE5A7A700C2FDEB /* GetProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779CB2AE5A7A700C2FDEB /* GetProfileRequest.swift */; };
+		065779CE2AE5A81400C2FDEB /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779CD2AE5A81400C2FDEB /* ProfileService.swift */; };
+		065779D02AE5A8BF00C2FDEB /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779CF2AE5A8BF00C2FDEB /* ProfileModel.swift */; };
 		06F519A92AD5BAD400E3B217 /* UserCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A12AD5BAD400E3B217 /* UserCardViewController.swift */; };
 		06F519AA2AD5BAD400E3B217 /* StatisticsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A32AD5BAD400E3B217 /* StatisticsCell.swift */; };
 		06F519AB2AD5BAD400E3B217 /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A42AD5BAD400E3B217 /* StatisticsViewModel.swift */; };
@@ -85,6 +88,9 @@
 		065779BE2AE0489400C2FDEB /* GetNFTRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNFTRequest.swift; sourceTree = "<group>"; };
 		065779C02AE055ED00C2FDEB /* GetUserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserRequest.swift; sourceTree = "<group>"; };
 		065779C52AE0747900C2FDEB /* UIImage + Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Extentions.swift"; sourceTree = "<group>"; };
+		065779CB2AE5A7A700C2FDEB /* GetProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProfileRequest.swift; sourceTree = "<group>"; };
+		065779CD2AE5A81400C2FDEB /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
+		065779CF2AE5A8BF00C2FDEB /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		06F519A12AD5BAD400E3B217 /* UserCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCardViewController.swift; sourceTree = "<group>"; };
 		06F519A32AD5BAD400E3B217 /* StatisticsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsCell.swift; sourceTree = "<group>"; };
 		06F519A42AD5BAD400E3B217 /* StatisticsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
@@ -201,6 +207,7 @@
 				065779B62ADEFBBE00C2FDEB /* UsersCollectionCell.swift */,
 				065779BA2ADF014800C2FDEB /* UsersCollectionViewModel.swift */,
 				065779B82ADEFC4600C2FDEB /* NFTModel.swift */,
+				065779CF2AE5A8BF00C2FDEB /* ProfileModel.swift */,
 			);
 			path = UsersCollection;
 			sourceTree = "<group>";
@@ -290,6 +297,7 @@
 			children = (
 				065779A82ADAF14F00C2FDEB /* UsersService.swift */,
 				065779BC2ADF019200C2FDEB /* NFTService.swift */,
+				065779CD2AE5A81400C2FDEB /* ProfileService.swift */,
 				3FC8C38F29D245250081F015 /* Requests */,
 			);
 			path = Services;
@@ -355,6 +363,7 @@
 				3FC8C39029D2453B0081F015 /* ExampleRequest.swift */,
 				065779BE2AE0489400C2FDEB /* GetNFTRequest.swift */,
 				065779C02AE055ED00C2FDEB /* GetUserRequest.swift */,
+				065779CB2AE5A7A700C2FDEB /* GetProfileRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -570,6 +579,7 @@
 				06F519AD2AD5BAD400E3B217 /* UserModel.swift in Sources */,
 				065779B72ADEFBBE00C2FDEB /* UsersCollectionCell.swift in Sources */,
 				065779AB2ADB04E500C2FDEB /* WebViewViewController.swift in Sources */,
+				065779CC2AE5A7A700C2FDEB /* GetProfileRequest.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				715D0F272AD1570000300497 /* ProfileViewController.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
@@ -580,6 +590,7 @@
 				065779B12ADC70CA00C2FDEB /* NetworkAlert.swift in Sources */,
 				065779AD2ADB0F7000C2FDEB /* UserCardViewModel.swift in Sources */,
 				065779B92ADEFC4600C2FDEB /* NFTModel.swift in Sources */,
+				065779D02AE5A8BF00C2FDEB /* ProfileModel.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				065779BB2ADF014800C2FDEB /* UsersCollectionViewModel.swift in Sources */,
@@ -589,6 +600,7 @@
 				06F519A92AD5BAD400E3B217 /* UserCardViewController.swift in Sources */,
 				715D0F252AD1570000300497 /* BasketViewController.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
+				065779CE2AE5A81400C2FDEB /* ProfileService.swift in Sources */,
 				715D0F262AD1570000300497 /* CatalogViewController.swift in Sources */,
 				06F519AB2AD5BAD400E3B217 /* StatisticsViewModel.swift in Sources */,
 				065779BF2AE0489400C2FDEB /* GetNFTRequest.swift in Sources */,

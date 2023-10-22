@@ -43,7 +43,7 @@ final class UserCollectionViewController: UIViewController {
         setupNavigationBar()
         setupCollectionView()
         bind()
-        viewModel.loadData()
+        viewModel.viewDidLoad()
     }
     // MARK: - Setup Views
     private func setupNavigationBar() {
@@ -71,18 +71,14 @@ final class UserCollectionViewController: UIViewController {
     // MARK: - bind
     private func bind() {
         viewModel.isDataLoading = { isLoading in
-            if isLoading {
-                ProgressHUD.show()
-            } else {
-                ProgressHUD.dismiss()
-            }
+            isLoading ? ProgressHUD.show() : ProgressHUD.dismiss()
         }
 
         viewModel.dataChanged = { [weak self] in
             self?.collectionView.reloadData()
         }
 
-        viewModel.showError = { [weak self] _ in
+        viewModel.showNetworkError = { [weak self] _ in
             self?.showNetworkError("Не все NFT удалось загрузить")
         }
     }
@@ -92,7 +88,7 @@ final class UserCollectionViewController: UIViewController {
             message: message,
             style: .alert) { [weak self] _ in
                 guard let self = self else { return }
-                self.viewModel.loadData()
+                self.viewModel.viewDidLoad()
             }
         alert?.showAlert(alertModel)
     }
@@ -117,7 +113,8 @@ extension UserCollectionViewController: UICollectionViewDataSource {
 
         let nft = viewModel.nfts[indexPath.row]
         let rating = nft.rating
-        cell.configure(nft: nft, rating: rating)
+        let isLiked = viewModel.isLikedNFT(at: indexPath.row)
+        cell.configure(nft: nft, rating: rating, isLiked: isLiked)
         return cell
     }
 }

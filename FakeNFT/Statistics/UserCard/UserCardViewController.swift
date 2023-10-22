@@ -162,7 +162,7 @@ final class UserCardViewController: UIViewController {
 
         viewModel.onCollectionButtonClick = { [weak self] nfts in
             let usersCollectionVM: UsersCollectionViewModelProtocol = UsersCollectionViewModel()
-            usersCollectionVM.nftsID = nfts
+            usersCollectionVM.usersNFTCollectionByID = nfts
             let usersCollectionVC = UserCollectionViewController(viewModel: usersCollectionVM)
             usersCollectionVC.title = "Коллекция NFT"
             self?.navigationController?.pushViewController(usersCollectionVC, animated: true)

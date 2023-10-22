@@ -8,21 +8,19 @@ import Foundation
 protocol UsersCollectionViewModelProtocol: AnyObject {
     var dataChanged: (() -> Void)? { get set }
     var isDataLoading: ((Bool) -> Void)? { get set }
-    var showError: ((Error) -> Void)? { get set }
-    var nftsID: [String] { get set }
+    var showNetworkError: ((Error) -> Void)? { get set }
+    var usersNFTCollectionByID: [String] { get set }
     var nfts: [NFTModel] { get set }
+    var myLikes: [String] { get set }
     func nftCount() -> Int
-    func loadData()
+    func isLikedNFT(at index: Int) -> Bool
+    func viewDidLoad()
 }
 
 final class UsersCollectionViewModel: UsersCollectionViewModelProtocol {
     var dataChanged: (() -> Void)?
-
     var isDataLoading: ((Bool) -> Void)?
-
-    var showError: ((Error) -> Void)?
-
-    var nftsID: [String] = []
+    var showNetworkError: ((Error) -> Void)?
 
     var nfts: [NFTModel] = [] {
         didSet {
@@ -30,30 +28,49 @@ final class UsersCollectionViewModel: UsersCollectionViewModelProtocol {
         }
     }
 
-    private let nftService: NFTServiceProtocol
+    var usersNFTCollectionByID: [String] = []
+    var myLikes: [String] = []
 
-    init(nftService: NFTServiceProtocol = NFTService()) {
+    private let nftService: NFTServiceProtocol
+    private let profileService: ProfileServiceProtocol
+
+    init(
+        nftService: NFTServiceProtocol = NFTService(),
+        profileService: ProfileServiceProtocol = ProfileService()
+    ) {
         self.nftService = nftService
+        self.profileService = profileService
     }
 
     func nftCount() -> Int {
         return nfts.count
     }
 
-    func loadData() {
+    func isLikedNFT(at index: Int) -> Bool {
+        guard index >= 0 && index < nfts.count else { return false }
+        return myLikes.contains(nfts[index].id)
+    }
+
+    // MARK: - Load Data
+    func viewDidLoad() {
+        getNFTsFromUserCollection()
+        getLikesFromOurProfile()
+    }
+
+    private func getNFTsFromUserCollection() {
         let dispatchGroup = DispatchGroup()
         var loadedNFTs: [NFTModel] = []
 
         isDataLoading?(true)
 
-        nftsID.forEach { id in
+        usersNFTCollectionByID.forEach { id in
             dispatchGroup.enter()
             nftService.getNFTs(id: id) { result in
                 switch result {
                 case .success(let nft):
                     loadedNFTs.append(nft)
                 case .failure(let error):
-                    self.showError?(error)
+                    self.showNetworkError?(error)
                     print(error.localizedDescription)
                 }
                 dispatchGroup.leave()
@@ -64,6 +81,17 @@ final class UsersCollectionViewModel: UsersCollectionViewModelProtocol {
             loadedNFTs.sort { $0.name < $1.name }
             self.nfts = loadedNFTs
             self.isDataLoading?(false)
+        }
+    }
+
+    private func getLikesFromOurProfile() {
+        profileService.getProfile { result in
+            switch result {
+            case .success(let myProfile):
+                self.myLikes = myProfile.likes
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
     }
 }
