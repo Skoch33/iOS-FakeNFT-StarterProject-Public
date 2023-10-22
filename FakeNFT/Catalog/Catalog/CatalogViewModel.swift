@@ -9,7 +9,7 @@ protocol CatalogViewModelProtocol {
 struct CatalogViewModelBindings {
     let isLoading: (Bool) -> Void
     let collections: ([CollectionModel]) -> Void
-    let errorString: (String) -> Void
+    let isError: (Bool) -> Void
 }
 
 final class CatalogViewModel: CatalogViewModelProtocol {
@@ -25,7 +25,7 @@ final class CatalogViewModel: CatalogViewModelProtocol {
     var isLoading = false
     
     @Observable
-    var errorString: String = ""
+    var isError = false
     
     init(networkClient: NetworkClient) {
         self.networkClient = networkClient
@@ -35,7 +35,7 @@ final class CatalogViewModel: CatalogViewModelProtocol {
     func bind(_ bindings: CatalogViewModelBindings) {
         self.$isLoading.bind(action: bindings.isLoading)
         self.$collections.bind(action: bindings.collections)
-        self.$errorString.bind(action: bindings.errorString)
+        self.$isError.bind(action: bindings.isError)
     }
     
     private func loadSortMode() {
@@ -57,6 +57,7 @@ final class CatalogViewModel: CatalogViewModelProtocol {
     }
     
     func loadCollection() {
+        isError = false
         isLoading = true
         self.networkClient.send(request: GetCollectionsRequest(),
                                 type: [CollectionModel].self,
@@ -66,8 +67,8 @@ final class CatalogViewModel: CatalogViewModelProtocol {
                 case .success(let model):
                     self.collections = model.collectionSort(self.sortMode)
                     self.isLoading = false
-                case .failure(let error):
-                    self.errorString = error.localizedDescription
+                case .failure(_):
+                    self.isError = true
                     self.isLoading = false
                 }
             }

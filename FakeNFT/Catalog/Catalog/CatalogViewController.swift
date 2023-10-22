@@ -53,9 +53,14 @@ final class CatalogViewController: UIViewController {
                 self.collections = $0
                 self.tableView.reloadData()
             },
-            errorString: { [weak self] in
+            isError: { [weak self] in
                 guard let self else { return }
-                showErrorAlert($0)
+                if $0 {
+                    AlertWithRetryAction().show(view: self, 
+                                                title: NSLocalizedString("Catalog.ErrorAlertLoad", comment: ""),
+                                                action: { self.catalogViewModel.loadCollection()
+                    })
+                }
             }
         )
         catalogViewModel.bind(bindings)
@@ -116,22 +121,6 @@ final class CatalogViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
-    }
-    
-    private func showErrorAlert(_ alertString: String) {
-        let alert = UIAlertController(
-            title: nil,
-            message: alertString,
-            preferredStyle: .alert
-        )
-        let action = UIAlertAction(title: NSLocalizedString("Catalog.ErrorAlertButton",
-                                                            comment: ""),
-                                   style: .cancel) { [weak self] _ in
-            guard let self else { return }
-            self.catalogViewModel.loadCollection()
-        }
-        alert.addAction(action)
-        self.present(alert, animated: true)
     }
 }
 

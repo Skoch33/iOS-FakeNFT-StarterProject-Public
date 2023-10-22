@@ -12,6 +12,8 @@ struct CollectionViewModelBindings {
     let nfts: ([NftModel]) -> Void
     let profile: (ProfileModel) -> Void
     let order: (OrderModel) -> Void
+    let isCollectionLoadError: (Bool) -> Void
+    let isFailed: (Bool) -> Void
 }
 
 final class CollectionViewModel: CollectionViewModelProtocol {
@@ -30,6 +32,12 @@ final class CollectionViewModel: CollectionViewModelProtocol {
     @Observable
     var order: OrderModel = OrderModel(nfts: [])
     
+    @Observable
+    var isCollectionLoadError = false
+    
+    @Observable
+    var isFailed = false
+    
     init(networkClient: NetworkClient) {
         self.networkClient = networkClient
     }
@@ -39,9 +47,12 @@ final class CollectionViewModel: CollectionViewModelProtocol {
         self.$nfts.bind(action: bindings.nfts)
         self.$profile.bind(action: bindings.profile)
         self.$order.bind(action: bindings.order)
+        self.$isCollectionLoadError.bind(action: bindings.isCollectionLoadError)
+        self.$isFailed.bind(action: bindings.isFailed)
     }
     
     func load(nftIds: [String]) {
+        self.isCollectionLoadError = false
         loadProfile()
         loadOrder()
         loadCollection(nftIds: nftIds)
@@ -57,8 +68,8 @@ final class CollectionViewModel: CollectionViewModelProtocol {
                 case .success(let model):
                     self.profile = model
                     self.isLoading = false
-                case .failure(let error):
-                    //self.errorString = error.localizedDescription
+                case .failure(_):
+                    self.isCollectionLoadError = true
                     self.isLoading = false
                 }
             }
@@ -75,8 +86,8 @@ final class CollectionViewModel: CollectionViewModelProtocol {
                 case .success(let model):
                     self.order = model
                     self.isLoading = false
-                case .failure(let error):
-                    //self.errorString = error.localizedDescription
+                case .failure(_):
+                    self.isCollectionLoadError = true
                     self.isLoading = false
                 }
             }
@@ -95,10 +106,13 @@ final class CollectionViewModel: CollectionViewModelProtocol {
                                     type: NftModel.self,
                                     onResponse: {result in
                 DispatchQueue.main.async {
-                    if case .success(let model) = result {
+                    switch result {
+                    case .success(let model):
                         if let index = nfts.firstIndex(where: { $0.id == model.id}) {
                             nfts[index] = model
                         }
+                    case .failure(_):
+                        self.isCollectionLoadError = true
                     }
                     collectionGroup.leave()
                 }
@@ -112,6 +126,7 @@ final class CollectionViewModel: CollectionViewModelProtocol {
     }
     
     func reversLike(nftId: String) {
+        isFailed = false
         if profile.likes.contains(where: {$0 == nftId}) {
             profile.likes.removeAll(where: {$0 == nftId})
         } else {
@@ -123,19 +138,16 @@ final class CollectionViewModel: CollectionViewModelProtocol {
                                 type: ProfileModel.self,
                                 onResponse: {result in
             DispatchQueue.main.async {
-                switch result {
-                case .success(let model):
-                    //self.profile = model
-                    self.isLoading = false
-                case .failure(let error):
-                    //self.errorString = error.localizedDescription
-                    self.isLoading = false
+                if case .failure(_) = result {
+                    self.isFailed = true
                 }
+                self.isLoading = false
             }
         })
     }
     
     func reversCart(nftId: String) {
+        isFailed = false
         if order.nfts.contains(where: {$0 == nftId}) {
             order.nfts.removeAll(where: {$0 == nftId})
         } else {
@@ -147,14 +159,11 @@ final class CollectionViewModel: CollectionViewModelProtocol {
                                 type: OrderModel.self,
                                 onResponse: {result in
             DispatchQueue.main.async {
-                switch result {
-                case .success(let model):
-                    //self.order = model
-                    self.isLoading = false
-                case .failure(let error):
-                    //self.errorString = error.localizedDescription
-                    self.isLoading = false
+                if case .failure(_) = result {
+                    self.isFailed = true
                 }
+                self.isLoading = false
+                self.isFailed = true // test
             }
         })
     }

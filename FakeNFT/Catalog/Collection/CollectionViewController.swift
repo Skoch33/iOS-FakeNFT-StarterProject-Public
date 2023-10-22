@@ -114,11 +114,27 @@ final class CollectionViewController: UIViewController {
             order: { [weak self] in
                 guard let self else { return }
                 self.order = $0
+            }, 
+            isCollectionLoadError: { [weak self] in
+                guard let self else { return }
+                if $0 {
+                    AlertWithCountdownTimer().show(
+                        view: self,
+                        title: NSLocalizedString("Catalog.CollectionErrorAlertTitle", comment: ""),
+                        timerCount: 20,
+                        action: {self.collectionViewModel.load(nftIds: self.collection.nfts)})
+                }
+            },
+            isFailed: { [weak self] in
+                guard let self else { return }
+                if $0 {
+                    ProgressHUD.showFailed()
+                }
             }
         )
         collectionViewModel.bind(bindings)
     }
-    
+        
     private func setupNavigationBar() {
         let backItem = UIBarButtonItem()
         backItem.title = nil
