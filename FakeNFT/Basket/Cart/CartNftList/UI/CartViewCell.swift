@@ -52,7 +52,10 @@ final class CartViewCell: UITableViewCell, ReuseIdentifying {
                 self?.nftNameLabel.text = $0
             },
             imageURL: { [weak self] in
-                self?.nftImageView.kf.setImage(with: $0)
+                guard let self else { return }
+                let placeholderImage = UIImage(named: "nft_card_placeholder")
+                self.nftImageView.kf.indicatorType = .activity
+                self.nftImageView.kf.setImage(with: $0, placeholder: placeholderImage)
             }
         )
         viewModel?.bind(bindings)
