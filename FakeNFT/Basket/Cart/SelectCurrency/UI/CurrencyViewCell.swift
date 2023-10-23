@@ -33,6 +33,11 @@ final class CurrencyViewCell: UICollectionViewCell, ReuseIdentifying {
         }
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.kf.cancelDownloadTask()
+    }
+
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setupUI()
