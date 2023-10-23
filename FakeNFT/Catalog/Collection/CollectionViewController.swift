@@ -6,9 +6,8 @@ final class CollectionViewController: UIViewController {
     
     private var collectionViewModel: CollectionViewModelProtocol
     private var collection: CollectionModel
-    private var nfts: [NftModel] = []
-    private var profile: ProfileModel = ProfileModel(name: "", website: "", likes: [])
-    private var order: OrderModel = OrderModel(nfts: [])
+    private var collectionCells: [CollectionCellModel] = []
+    private var authorURL: String = ""
     
     private enum Const {
         static let cellMargins: CGFloat = 9
@@ -101,20 +100,17 @@ final class CollectionViewController: UIViewController {
                     ProgressHUD.dismiss()
                 }
             },
-            nfts: { [weak self] in
-                guard let self else { return }
-                self.nfts = $0
-                self.collectionView.reloadData()
-            },
             profile: { [weak self] in
                 guard let self else { return }
-                self.profile = $0
-                self.authorNameLabel.text = self.profile.name
+                let profileModel: ProfileModel = $0
+                self.authorURL = profileModel.website
+                self.authorNameLabel.text = profileModel.name
             },
-            order: { [weak self] in
+            collectionCells: { [weak self] in
                 guard let self else { return }
-                self.order = $0
-            }, 
+                self.collectionCells = $0
+                self.collectionView.reloadData()
+            },
             isCollectionLoadError: { [weak self] in
                 guard let self else { return }
                 if $0 {
@@ -225,7 +221,7 @@ final class CollectionViewController: UIViewController {
     
     @objc
     func didTapUserNameLabel(_ sender: Any) {
-        let webViewController = WebViewController(profile.website)
+        let webViewController = WebViewController(authorURL)
         navigationController?.pushViewController(webViewController, animated: true)
     }
     
@@ -242,7 +238,7 @@ final class CollectionViewController: UIViewController {
 extension CollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return nfts.count
+        return collectionCells.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -255,9 +251,7 @@ extension CollectionViewController: UICollectionViewDataSource {
             assertionFailure("Error get cell")
             return .init()
         }
-        cell.configure(nft: nfts[indexPath.row],
-                       likes: profile.likes,
-                       order: order.nfts,
+        cell.configure(cellModel: collectionCells[indexPath.row],
                        onReversLike: collectionViewModel.reversLike(nftId:),
                        onReversCart: collectionViewModel.reversCart(nftId:))
         collectionViewCell = cell

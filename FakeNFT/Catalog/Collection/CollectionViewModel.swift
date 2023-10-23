@@ -9,9 +9,8 @@ protocol CollectionViewModelProtocol {
 
 struct CollectionViewModelBindings {
     let isLoading: (Bool) -> Void
-    let nfts: ([NftModel]) -> Void
     let profile: (ProfileModel) -> Void
-    let order: (OrderModel) -> Void
+    let collectionCells: ([CollectionCellModel]) -> Void
     let isCollectionLoadError: (Bool) -> Void
     let isFailed: (Bool) -> Void
 }
@@ -20,17 +19,17 @@ final class CollectionViewModel: CollectionViewModelProtocol {
     
     private let networkClient: NetworkClient
     
+    var nfts: [NftModel] = []
+    var order: OrderModel = OrderModel(nfts: [])
+    
     @Observable
     var isLoading = false
-
+    
     @Observable
-    var nfts: [NftModel] = []
+    var collectionCells: [CollectionCellModel] = []
     
     @Observable
     var profile: ProfileModel = ProfileModel(name: "", website: "", likes: [])
-    
-    @Observable
-    var order: OrderModel = OrderModel(nfts: [])
     
     @Observable
     var isCollectionLoadError = false
@@ -44,22 +43,47 @@ final class CollectionViewModel: CollectionViewModelProtocol {
     
     func bind(_ bindings: CollectionViewModelBindings) {
         self.$isLoading.bind(action: bindings.isLoading)
-        self.$nfts.bind(action: bindings.nfts)
         self.$profile.bind(action: bindings.profile)
-        self.$order.bind(action: bindings.order)
         self.$isCollectionLoadError.bind(action: bindings.isCollectionLoadError)
         self.$isFailed.bind(action: bindings.isFailed)
+        self.$collectionCells.bind(action: bindings.collectionCells)
     }
     
     func load(nftIds: [String]) {
-        self.isCollectionLoadError = false
+        isLoading = true
+        isCollectionLoadError = false
         loadProfile()
         loadOrder()
         loadCollection(nftIds: nftIds)
     }
     
+    func makeCollectionCells(nftIds: [String]) {
+        collectionCells = nftIds.map {
+            let nftId = $0
+            guard let index = nfts.firstIndex(where: { $0.id == nftId}) else {
+                return CollectionCellModel(id: nftId,
+                                    name: nil,
+                                    image: nil,
+                                    isLiked: nil,
+                                    isInCart: nil,
+                                    rating: nil,
+                                    price: nil
+                )
+            }
+            let isLiked = profile.likes.contains(where: { $0 == nftId })
+            let isInCart = order.nfts.contains(where: { $0 == nftId })
+            return CollectionCellModel(id: nftId,
+                                name: nfts[index].name,
+                                image: nfts[index].images[0],
+                                isLiked: isLiked,
+                                isInCart: isInCart,
+                                rating: nfts[index].rating,
+                                price: nfts[index].price
+            )
+        }
+    }
+    
     func loadProfile() {
-        isLoading = true
         self.networkClient.send(request: GetProfileRequest(),
                                 type: ProfileModel.self,
                                 onResponse: {result in
@@ -67,17 +91,14 @@ final class CollectionViewModel: CollectionViewModelProtocol {
                 switch result {
                 case .success(let model):
                     self.profile = model
-                    self.isLoading = false
                 case .failure(_):
                     self.isCollectionLoadError = true
-                    self.isLoading = false
                 }
             }
         })
     }
     
     func loadOrder() {
-        isLoading = true
         self.networkClient.send(request: GetOrderRequest(),
                                 type: OrderModel.self,
                                 onResponse: {result in
@@ -85,19 +106,14 @@ final class CollectionViewModel: CollectionViewModelProtocol {
                 switch result {
                 case .success(let model):
                     self.order = model
-                    self.isLoading = false
                 case .failure(_):
                     self.isCollectionLoadError = true
-                    self.isLoading = false
                 }
             }
         })
     }
     
     func loadCollection(nftIds: [String]) {
-        isLoading = true
-        var nfts: [NftModel]
-        nfts = nftIds.map {NftModel(name: "", images: [""], rating: 0, price: 0, id: $0)}
         let collectionGroup = DispatchGroup()
         
         nftIds.forEach { nftId in
@@ -108,9 +124,7 @@ final class CollectionViewModel: CollectionViewModelProtocol {
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let model):
-                        if let index = nfts.firstIndex(where: { $0.id == model.id}) {
-                            nfts[index] = model
-                        }
+                        self.nfts.append(model)
                     case .failure(_):
                         self.isCollectionLoadError = true
                     }
@@ -120,7 +134,7 @@ final class CollectionViewModel: CollectionViewModelProtocol {
         }
         
         collectionGroup.notify(queue: .main) {
-            self.nfts = nfts
+            self.makeCollectionCells(nftIds: nftIds)
             self.isLoading = false
         }
     }
@@ -133,15 +147,19 @@ final class CollectionViewModel: CollectionViewModelProtocol {
             profile.likes.append(nftId)
         }
         
-        isLoading = true
         self.networkClient.send(request: PutProfileRequest(profile: profile),
                                 type: ProfileModel.self,
                                 onResponse: {result in
             DispatchQueue.main.async {
-                if case .failure(_) = result {
+                switch result {
+                case .success(let model):
+                    self.profile = model
+                    if let index = self.collectionCells.firstIndex(where: { $0.id == nftId}) {
+                        self.collectionCells[index].isLiked =  self.profile.likes.contains(where: { $0 == nftId })
+                    }
+                case .failure(_):
                     self.isFailed = true
                 }
-                self.isLoading = false
             }
         })
     }
@@ -154,15 +172,19 @@ final class CollectionViewModel: CollectionViewModelProtocol {
             order.nfts.append(nftId)
         }
         
-        isLoading = true
         self.networkClient.send(request: PutOrderRequest(order: order),
                                 type: OrderModel.self,
                                 onResponse: {result in
             DispatchQueue.main.async {
-                if case .failure(_) = result {
+                switch result {
+                case .success(let model):
+                    self.order = model
+                    if let index = self.collectionCells.firstIndex(where: { $0.id == nftId}) {
+                        self.collectionCells[index].isInCart =  self.order.nfts.contains(where: { $0 == nftId })
+                    }
+                case .failure(_):
                     self.isFailed = true
                 }
-                self.isLoading = false
             }
         })
     }
