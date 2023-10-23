@@ -6,20 +6,21 @@
 import Foundation
 
 protocol UserCardViewModelProtocol {
-    var user: User? { get }
+    var user: UserModel? { get }
     var avatarUrl: URL? { get }
     var userName: String? { get }
     var userDescription: String? { get }
     var userWebsiteUrl: URL? { get }
-    var nftCount: Int { get }
     var nftsID: [String] { get }
-    var onWebsiteButtonClick: (() -> ())? { get set }
-    var onCollectionButtonClick: (() -> ())? { get set }
+    var onWebsiteButtonClick: ((URL) -> ())? { get set }
+    var onCollectionButtonClick: (([String]) -> ())? { get set }
+    func nftCount() -> Int
+    func didTapOnWebsiteButton()
+    func didTapOnCollectionButton()
 }
 
 final class UserCardViewModel: UserCardViewModelProtocol {
-
-    var user: User?
+    var user: UserModel?
 
     var avatarUrl: URL? {
         if let avatarString = user?.avatar {
@@ -42,16 +43,25 @@ final class UserCardViewModel: UserCardViewModelProtocol {
         }
         return nil
     }
-
-    var nftCount: Int {
-        return user?.nfts.count ?? 0
-    }
     
     var nftsID: [String] {
         return user?.nfts ?? []
     }
 
-    var onWebsiteButtonClick: (() -> ())?
+    var onWebsiteButtonClick: ((URL) -> ())?
 
-    var onCollectionButtonClick: (() -> ())?
+    var onCollectionButtonClick: (([String]) -> ())?
+
+    func nftCount() -> Int {
+        return user?.nfts.count ?? 0
+    }
+    
+    func didTapOnWebsiteButton() {
+        guard let userURL = userWebsiteUrl else { return }
+        onWebsiteButtonClick?(userURL)
+    }
+
+    func didTapOnCollectionButton() {
+        onCollectionButtonClick?(nftsID)
+    }
 }

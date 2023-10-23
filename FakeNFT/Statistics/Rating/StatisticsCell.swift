@@ -8,7 +8,7 @@ import Kingfisher
 
 final class StatisticsCell: UITableViewCell {
     static let identifier = "StatisticsCell"
-    private let placeholder = UIImage(named: "person.crop.circle.fill")
+    private let placeholder: UIImage? = .placeholder
  // MARK: - UI
     private lazy var ratingLabel: UILabel = {
         let label = UILabel()
@@ -27,7 +27,7 @@ final class StatisticsCell: UITableViewCell {
     }()
     
     private lazy var userImage: UIImageView = {
-        let image = UIImageView(image: UIImage(systemName: "person.crop.circle.fill"))
+        let image = UIImageView(image: .placeholder)
         image.tintColor = .nftGrayUniversal
         image.layer.cornerRadius = 14
         image.clipsToBounds = true
@@ -94,7 +94,7 @@ final class StatisticsCell: UITableViewCell {
         ])
     }
 // MARK: - Configure
-    func configure(model: User) {
+    func configure(model: UserModel) {
         let cache = ImageCache.default
         cache.clearMemoryCache()
         cache.clearDiskCache()

@@ -46,7 +46,7 @@ final class UserCardViewController: UIViewController {
     
     private lazy var userCollectionButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Коллекция NFT " + "(\(String(describing: viewModel.nftCount)))",
+        button.setTitle("Коллекция NFT " + "(\(String(describing: viewModel.nftCount())))",
                         for: .normal)
         button.setTitleColor(.nftBlack, for: .normal)
         button.titleLabel?.font = .bodyBold
@@ -55,14 +55,13 @@ final class UserCardViewController: UIViewController {
     }()
     
     private lazy var chevronImage: UIImageView = {
-        let pic = UIImage(named: "chevron.forward")
-        let image = UIImageView(image: pic)
+        let image = UIImageView(image: .chevron)
         image.tintColor = .nftBlack
         return image
     }()
     
     private var viewModel: UserCardViewModelProtocol
-    private let placeholder = UIImage(named: "person.crop.circle.fill")
+    private let placeholder: UIImage? = .placeholder
     
     init(viewModel: UserCardViewModelProtocol = UserCardViewModel()) {
         self.viewModel = viewModel
@@ -83,12 +82,12 @@ final class UserCardViewController: UIViewController {
     // MARK: - Actions
     @objc
     private func goToWebView() {
-        viewModel.onWebsiteButtonClick?()
+        viewModel.didTapOnWebsiteButton()
     }
     
     @objc
     private func goToCollection() {
-        viewModel.onCollectionButtonClick?()
+        viewModel.didTapOnCollectionButton()
     }
     // MARK: - setupView
     private func setupNavigationBar() {
@@ -156,16 +155,17 @@ final class UserCardViewController: UIViewController {
     }
 // MARK: - bind
     private func bind() {
-        viewModel.onWebsiteButtonClick = { [weak self] in
-            guard let userURL = self?.viewModel.userWebsiteUrl else { return }
-            let webView = WebViewViewController(webSite: userURL)
+        viewModel.onWebsiteButtonClick = { [weak self] url in
+            let webView = WebViewViewController(webSite: url)
             self?.navigationController?.pushViewController(webView, animated: true)
         }
 
-        viewModel.onCollectionButtonClick = { [weak self] in
-            let usersCollection = UserCollectionViewController()
-            usersCollection.title = "Коллекция NFT"
-            self?.navigationController?.pushViewController(usersCollection, animated: true)
+        viewModel.onCollectionButtonClick = { [weak self] nfts in
+            let usersCollectionVM: UsersCollectionViewModelProtocol = UsersCollectionViewModel()
+            usersCollectionVM.usersNFTCollectionByID = nfts
+            let usersCollectionVC = UserCollectionViewController(viewModel: usersCollectionVM)
+            usersCollectionVC.title = "Коллекция NFT"
+            self?.navigationController?.pushViewController(usersCollectionVC, animated: true)
         }
     }
 }
