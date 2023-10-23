@@ -13,7 +13,12 @@ import UIKit
     @objc optional func alertOkButtonDidTap()
 }
 
-final class DefaultAlertService {
+protocol AlertServiceProtocol {
+    func presentNetworkErrorAlert()
+    func presentSomethingWrongAlert()
+}
+
+final class DefaultAlertService: AlertServiceProtocol {
     private var delegate: AlertServiceDelegate
     private var presentingViewController: UIViewController
 

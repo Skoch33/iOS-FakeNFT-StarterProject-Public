@@ -13,6 +13,7 @@ final class CartViewController: UIViewController {
         }
     }
     private let layoutMargin: CGFloat = 16
+    private lazy var alertService = createAlertService()
     private lazy var nftCountLabel = createCountLabel()
     private lazy var nftPriceTotalLabel = createPriceTotalLabel()
     private lazy var nftCartTableView = createTableView()
@@ -72,7 +73,7 @@ final class CartViewController: UIViewController {
                     if self.nftCartTableView.refreshControl?.isRefreshing == true {
                         self.nftCartTableView.refreshControl?.endRefreshing()
                     }
-                    self.displayNetworkAlert()
+                    self.alertService?.presentNetworkErrorAlert()
                 }
             },
             isPaymentScreenDisplaying: { [weak self] isPaymentScreenDisplaying in
@@ -105,12 +106,6 @@ final class CartViewController: UIViewController {
         navigationController?.isNavigationBarHidden = isPlaceHolderVisible
     }
 
-    private func displayNetworkAlert() {
-        guard let viewModel else { return }
-        let alertService = DefaultAlertService(delegate: viewModel, controller: self)
-        alertService.presentNetworkErrorAlert()
-    }
-
     private func presentSortViewController() {
 
         let title = "CartViewController.SortAlert.title".localized()
@@ -137,6 +132,12 @@ final class CartViewController: UIViewController {
             style: .actionSheet)
 
         alertController.show()
+    }
+
+    private func createAlertService() -> AlertServiceProtocol? {
+        guard let viewModel else { return nil }
+        let alertService = DefaultAlertService(delegate: viewModel, controller: self)
+        return alertService
     }
 }
 

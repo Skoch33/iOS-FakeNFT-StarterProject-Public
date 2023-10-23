@@ -30,6 +30,7 @@ final class SelectCurrencyViewController: UIViewController {
 
     private var currencyList: [CartCurrency] = []
     private var numberOfCurrencies: Int { currencyList.count }
+    private lazy var alertService = createAlertService()
     private lazy var currencyCollectionView = createCurrencyCollectionView()
     private lazy var payButton = createPayButton()
 
@@ -80,7 +81,7 @@ final class SelectCurrencyViewController: UIViewController {
                 self.currencyCollectionView.refreshControl?.endRefreshing()
                 ProgressHUD.dismiss()
                 if $0 {
-                    self.displayNetworkAlert()
+                    self.alertService?.presentNetworkErrorAlert()
                 }
             },
             isPaymentResultDisplaying: { [ weak self ] in
@@ -107,16 +108,14 @@ final class SelectCurrencyViewController: UIViewController {
             controller.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(controller, animated: true)
         } else {
-            guard let viewModel else { return }
-            let alertController = DefaultAlertService(delegate: viewModel, controller: self)
-            alertController.presentSomethingWrongAlert()
+            alertService?.presentSomethingWrongAlert()
         }
     }
 
-    private func displayNetworkAlert() {
-        guard let viewModel else { return }
+    private func createAlertService() -> AlertServiceProtocol? {
+        guard let viewModel else { return nil }
         let alertService = DefaultAlertService(delegate: viewModel, controller: self)
-        alertService.presentNetworkErrorAlert()
+        return alertService
     }
 }
 
