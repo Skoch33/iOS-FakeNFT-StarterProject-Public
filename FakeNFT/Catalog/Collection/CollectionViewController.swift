@@ -69,6 +69,7 @@ final class CollectionViewController: UIViewController {
         collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.identifier)
         collectionView.delegate = self
         collectionView.isScrollEnabled = false
+        collectionView.backgroundColor = .clear
         return collectionView
     }()
     
