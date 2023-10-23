@@ -84,11 +84,16 @@ final class CartViewController: UIViewController {
         viewModel?.bind(bindings)
     }
 
+    private func backToCartViewController() {
+        viewModel?.didGetBackToCart()
+    }
+
     private func presentPaymentViewController() {
         let paymentController = SelectCurrencyViewController()
         let currencyDataProvider = CartCurrencyDataProvider()
         let viewModel = SelectCurrencyViewModel(dataProvider: currencyDataProvider)
         paymentController.viewModel = viewModel
+        paymentController.onBackToCartViewController = backToCartViewController
         paymentController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(paymentController, animated: true)
     }

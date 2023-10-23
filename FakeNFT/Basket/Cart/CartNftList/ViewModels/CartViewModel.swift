@@ -14,6 +14,7 @@ protocol CartViewModelProtocol: AlertServiceDelegate {
     func deleteNftDidApprove(for id: String)
     func pullToRefreshDidTrigger()
     func payButtonDidTap()
+    func didGetBackToCart()
 }
 
 final class CartViewModel: CartViewModelProtocol {
@@ -75,6 +76,10 @@ final class CartViewModel: CartViewModelProtocol {
 
     func payButtonDidTap() {
         isPaymentScreenDisplaying = true
+    }
+
+    func didGetBackToCart() {
+        dataProvider.reloadData()
     }
 
     private func calcCartPriceTotal() -> Decimal {

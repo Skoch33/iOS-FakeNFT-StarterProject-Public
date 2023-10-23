@@ -26,6 +26,8 @@ final class SelectCurrencyViewController: UIViewController {
         }
     }
 
+    var onBackToCartViewController: (() -> Void)?
+
     private var currencyList: [CartCurrency] = []
     private var numberOfCurrencies: Int { currencyList.count }
     private lazy var currencyCollectionView = createCurrencyCollectionView()
@@ -64,6 +66,7 @@ final class SelectCurrencyViewController: UIViewController {
             },
             isViewDismissing: { [ weak self ] in
                 if $0 {
+                    self?.onBackToCartViewController?()
                     self?.navigationController?.popViewController(animated: true)
                 }
             },
@@ -98,6 +101,7 @@ final class SelectCurrencyViewController: UIViewController {
         if success {
             let viewModel = SuccessfulPaymentViewModel()
             let controller = SuccessfulPaymentViewController(viewModel: viewModel)
+            controller.onBackToCartViewController = onBackToCartViewController
             controller.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(controller, animated: true)
         } else {

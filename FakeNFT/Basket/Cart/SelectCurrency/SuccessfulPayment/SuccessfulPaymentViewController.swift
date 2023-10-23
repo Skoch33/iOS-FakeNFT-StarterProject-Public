@@ -9,6 +9,7 @@ import UIKit
 
 final class SuccessfulPaymentViewController: UIViewController {
 
+    var onBackToCartViewController: (() -> Void)?
     private var viewModel: SuccessfulPaymentViewModelProtocol
 
     override func viewDidLoad() {
@@ -34,6 +35,7 @@ final class SuccessfulPaymentViewController: UIViewController {
         viewModel.bind(SuccessfulPaymentViewModelBindings(
             isViewDismissing: { [ weak self ] in
                 if $0 {
+                    self?.onBackToCartViewController?()
                     self?.navigationController?.popToRootViewController(animated: true)
                 }
             }
