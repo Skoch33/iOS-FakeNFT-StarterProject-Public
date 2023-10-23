@@ -7,16 +7,17 @@ final class ViewControllerFactory {
     }
     
     func makeUserNFTViewController(nftList: [String]) -> UserNFTViewController {
-        let userNFTViewController = UserNFTViewController(nftList: nftList,
-                                                          viewModel: UserNFTViewModel(model: UserNFTModel()))
-        return userNFTViewController
+        return UserNFTViewController(nftList: nftList,
+                                     viewModel: UserNFTViewModel(nftService: NFTService.shared))
     }
     
-    func makeFavoritesNFTViewController() -> FavoritesNFTViewController {
-        return FavoritesNFTViewController()
+    func makeFavoritesNFTViewController(nftList: [String]) -> FavoritesNFTViewController {
+        return FavoritesNFTViewController(nftList: nftList,
+                                          viewModel: FavoritesNFTViewModel(nftService: NFTService.shared))
     }
     
     func makeEditingViewController() -> EditingViewController {
-        return EditingViewController(viewModel: EditingViewModel(profileService: ProfileService(networkClient: DefaultNetworkClient())))
+        return EditingViewController(viewModel: EditingViewModel(profileService: ProfileService.shared))
     }
 }
+

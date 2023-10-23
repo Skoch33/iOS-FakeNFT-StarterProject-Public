@@ -1,13 +1,6 @@
 import Foundation
 import ProgressHUD
 
-enum LoadingState {
-    case idle
-    case loading
-    case loaded
-    case error(Error)
-}
-
 protocol UserNFTViewModelProtocol {
     var userNFT: [NFT]? { get }
     var authors: [String: Author] { get }
@@ -30,10 +23,10 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
     private (set) var state: LoadingState = .idle
     
     private (set) var authors: [String: Author] = [:]
-    private let model: UserNFTModel
+    private let service: NFTService
     
-    init(model: UserNFTModel) {
-        self.model = model
+    init(nftService: NFTService) {
+        self.service = nftService
     }
     
     func observeUserNFT(_ handler: @escaping ([NFT]?) -> Void) {
@@ -54,7 +47,7 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
         for element in nftList {
             group.enter()
             
-            model.fetchNFT(nftID: element) { (result) in
+            service.fetchNFT(nftID: element) { (result) in
                 switch result {
                 case .success(let nft):
                     fetchedNFTs.append(nft)
@@ -71,7 +64,7 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
     }
     
     func fetchAuthor(authorID: String, completion: @escaping (Result<Author, Error>) -> Void) {
-        model.fetchAuthor(authorID: authorID) { result in
+        service.fetchAuthor(authorID: authorID) { result in
             switch result {
             case .success(let author):
                 completion(.success(author))

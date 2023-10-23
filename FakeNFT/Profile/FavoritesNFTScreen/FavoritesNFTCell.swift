@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 final class FavoritesNFTCell: UICollectionViewCell, ReuseIdentifying {
     
@@ -17,7 +18,7 @@ final class FavoritesNFTCell: UICollectionViewCell, ReuseIdentifying {
     
     private var likeImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "favouritesIcons")
+        imageView.image = UIImage(named: "emptyHeartButtonImage")
         return imageView
     }()
     
@@ -68,14 +69,25 @@ final class FavoritesNFTCell: UICollectionViewCell, ReuseIdentifying {
         }
     }
     
+    func configure(with nft: NFT) {
+        self.nftImageView.kf.setImage(with: URL(string: nft.images[0]),
+                                      placeholder: UIImage(named: "nullImage"))
+        self.name.text = nft.name
+        self.setStarsState(nft.rating)
+        
+        if let formattedPrice = NumberFormatter.defaultPriceFormatter.string(from: NSNumber(value: nft.price)) {
+            self.currentPriceLabel.text = "\(formattedPrice) ETH"
+        }
+    }
+    
     private func setupViews() {
         nftImageView.addViewWithNoTAMIC(likeImageView)
         [name, starsView, currentPriceLabel].forEach { nftDetailsStackView.addArrangedSubview($0) }
         [nftImageView, nftDetailsStackView].forEach { contentView.addViewWithNoTAMIC($0) }
         
         NSLayoutConstraint.activate([
-            likeImageView.topAnchor.constraint(equalTo: nftImageView.topAnchor),
-            likeImageView.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor),
+            likeImageView.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: -6),
+            likeImageView.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 6),
             
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -87,15 +99,4 @@ final class FavoritesNFTCell: UICollectionViewCell, ReuseIdentifying {
             nftDetailsStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 12)
         ])
     }
-    
-    func configure() {
-        self.nftImageView.image = UIImage(named: "NFT")
-        setStarsState(3)
-        self.name.text = "Archie"
-
-        if let formattedPrice = NumberFormatter.defaultPriceFormatter.string(from: NSNumber(value: 1.98)) {
-            self.currentPriceLabel.text = "\(formattedPrice) ETH"
-        }
-    }
-    
 }
