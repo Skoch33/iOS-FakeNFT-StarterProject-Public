@@ -94,7 +94,9 @@ final class SelectCurrencyViewController: UIViewController {
     }
 
     private func presentAgreement() {
-
+        let viewModel = AgreementViewModel()
+        let controller = AgreementViewController(viewModel: viewModel)
+        navigationController?.pushViewController(controller, animated: true)
     }
 
     private func presentPaymentResult(_ success: Bool) {
