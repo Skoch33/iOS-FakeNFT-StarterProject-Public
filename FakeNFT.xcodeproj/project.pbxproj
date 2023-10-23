@@ -36,6 +36,8 @@
 		37E7D7022AD81D8000107140 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E7D7012AD81D8000107140 /* ProfileViewModel.swift */; };
 		37E7D7062AD8238400107140 /* ProfileRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E7D7052AD8238400107140 /* ProfileRouting.swift */; };
 		37E7D70F2AD82C4800107140 /* ProfileNetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E7D70E2AD82C4800107140 /* ProfileNetworkRequest.swift */; };
+		37FD36D62AE66DCA000E14BC /* FavoritesNFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD36D52AE66DCA000E14BC /* FavoritesNFTCell.swift */; };
+		37FD36D82AE66E60000E14BC /* GeometricParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD36D72AE66E60000E14BC /* GeometricParams.swift */; };
 		3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ECE29DB474E00F6D39E /* Colors.swift */; };
 		3F478ED129DB476500F6D39E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ED029DB476500F6D39E /* Fonts.swift */; };
 		3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3F603CCC29DB4A53000C43D7 /* ProgressHUD */; };
@@ -112,6 +114,8 @@
 		37E7D7012AD81D8000107140 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		37E7D7052AD8238400107140 /* ProfileRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouting.swift; sourceTree = "<group>"; };
 		37E7D70E2AD82C4800107140 /* ProfileNetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNetworkRequest.swift; sourceTree = "<group>"; };
+		37FD36D52AE66DCA000E14BC /* FavoritesNFTCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesNFTCell.swift; sourceTree = "<group>"; };
+		37FD36D72AE66E60000E14BC /* GeometricParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometricParams.swift; sourceTree = "<group>"; };
 		3F478ECE29DB474E00F6D39E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		3F478ED029DB476500F6D39E /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		3F68069329CBBAF100B4F915 /* FakeNFT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FakeNFT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -188,6 +192,7 @@
 				37BFE34B2AD8437700C553BA /* AlertService.swift */,
 				37BFE34F2AD859DE00C553BA /* ImageValidator.swift */,
 				37C5B9D12ADE9D67006FC37E /* SortOptions.swift */,
+				37FD36D72AE66E60000E14BC /* GeometricParams.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -237,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				37BFE3462AD8338B00C553BA /* FavoritesNFTViewController.swift */,
+				37FD36D52AE66DCA000E14BC /* FavoritesNFTCell.swift */,
 			);
 			path = FavoritesNFTScreen;
 			sourceTree = "<group>";
@@ -620,6 +626,7 @@
 				37C5B9CA2ADD5341006FC37E /* UserNFTModel.swift in Sources */,
 				37E7D6F22AD8163900107140 /* ProfileCell.swift in Sources */,
 				37C5B9BF2ADD4946006FC37E /* NFTCell.swift in Sources */,
+				37FD36D82AE66E60000E14BC /* GeometricParams.swift in Sources */,
 				37BFE34C2AD8437700C553BA /* AlertService.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
@@ -632,6 +639,7 @@
 				715D0F272AD1570000300497 /* ProfileViewController.swift in Sources */,
 				715D0F242AD1570000300497 /* StatisticsViewController.swift in Sources */,
 				37BFE3432AD832EC00C553BA /* ProfileService.swift in Sources */,
+				37FD36D62AE66DCA000E14BC /* FavoritesNFTCell.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				715D0F2B2AD1577A00300497 /* UIColor+Extensions.swift in Sources */,
 				37E7D70F2AD82C4800107140 /* ProfileNetworkRequest.swift in Sources */,
