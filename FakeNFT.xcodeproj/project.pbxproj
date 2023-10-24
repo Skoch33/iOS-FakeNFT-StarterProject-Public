@@ -21,6 +21,9 @@
 		065779CC2AE5A7A700C2FDEB /* GetProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779CB2AE5A7A700C2FDEB /* GetProfileRequest.swift */; };
 		065779CE2AE5A81400C2FDEB /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779CD2AE5A81400C2FDEB /* ProfileService.swift */; };
 		065779D02AE5A8BF00C2FDEB /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779CF2AE5A8BF00C2FDEB /* ProfileModel.swift */; };
+		065779DA2AE864BF00C2FDEB /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779D92AE864BE00C2FDEB /* OnboardingView.swift */; };
+		065779DC2AE864FA00C2FDEB /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779DB2AE864FA00C2FDEB /* OnboardingViewController.swift */; };
+		065779DE2AE8652A00C2FDEB /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065779DD2AE8652A00C2FDEB /* CustomPageControl.swift */; };
 		06F519A92AD5BAD400E3B217 /* UserCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A12AD5BAD400E3B217 /* UserCardViewController.swift */; };
 		06F519AA2AD5BAD400E3B217 /* StatisticsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A32AD5BAD400E3B217 /* StatisticsCell.swift */; };
 		06F519AB2AD5BAD400E3B217 /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A42AD5BAD400E3B217 /* StatisticsViewModel.swift */; };
@@ -91,6 +94,9 @@
 		065779CB2AE5A7A700C2FDEB /* GetProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProfileRequest.swift; sourceTree = "<group>"; };
 		065779CD2AE5A81400C2FDEB /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		065779CF2AE5A8BF00C2FDEB /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		065779D92AE864BE00C2FDEB /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		065779DB2AE864FA00C2FDEB /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		065779DD2AE8652A00C2FDEB /* CustomPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
 		06F519A12AD5BAD400E3B217 /* UserCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCardViewController.swift; sourceTree = "<group>"; };
 		06F519A32AD5BAD400E3B217 /* StatisticsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsCell.swift; sourceTree = "<group>"; };
 		06F519A42AD5BAD400E3B217 /* StatisticsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
@@ -166,6 +172,16 @@
 				065779B02ADC70CA00C2FDEB /* NetworkAlert.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		065779D82AE8644100C2FDEB /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				065779D92AE864BE00C2FDEB /* OnboardingView.swift */,
+				065779DB2AE864FA00C2FDEB /* OnboardingViewController.swift */,
+				065779DD2AE8652A00C2FDEB /* CustomPageControl.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		06F5199F2AD5BAD400E3B217 /* Statistics */ = {
@@ -259,6 +275,7 @@
 			children = (
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				715D0F162AD156E300300497 /* TabBarController.swift */,
+				065779D82AE8644100C2FDEB /* Onboarding */,
 				715D0F222AD1570000300497 /* Profile */,
 				715D0F1E2AD1570000300497 /* Basket */,
 				715D0F202AD1570000300497 /* Catalog */,
@@ -581,6 +598,7 @@
 				065779AB2ADB04E500C2FDEB /* WebViewViewController.swift in Sources */,
 				065779CC2AE5A7A700C2FDEB /* GetProfileRequest.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
+				065779DE2AE8652A00C2FDEB /* CustomPageControl.swift in Sources */,
 				715D0F272AD1570000300497 /* ProfileViewController.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				065779C12AE055ED00C2FDEB /* GetUserRequest.swift in Sources */,
@@ -591,8 +609,10 @@
 				065779AD2ADB0F7000C2FDEB /* UserCardViewModel.swift in Sources */,
 				065779B92ADEFC4600C2FDEB /* NFTModel.swift in Sources */,
 				065779D02AE5A8BF00C2FDEB /* ProfileModel.swift in Sources */,
+				065779DA2AE864BF00C2FDEB /* OnboardingView.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
+				065779DC2AE864FA00C2FDEB /* OnboardingViewController.swift in Sources */,
 				065779BB2ADF014800C2FDEB /* UsersCollectionViewModel.swift in Sources */,
 				06F519AE2AD5BAD400E3B217 /* UsersCollectionViewController.swift in Sources */,
 				715D0F172AD156E300300497 /* TabBarController.swift in Sources */,
