@@ -37,17 +37,18 @@
 
 `Total:` est: 14h; fact: 11.5h
 
-## Итерация 3 (est: 14h; fact: )
+## Итерация 3 (est: 16h; fact: 14h)
 #### Экран "Выбор способа оплаты"
-- Верстка: Коллекция валют (est: 2h; fact: )
-- Верстка: Ячейка (валюта) (est: 3h; fact: )
-- Верстка: Navigation Bar (est: 1h; fact: )
-- Верстка: Панель оплаты (est: 2h; fact: )
-- viewModel экрана, выбор валюты (est: 3h, fact: )
-- Оплата (est: 1h,  fact: )
+- Верстка: Коллекция валют (est: 2h; fact: 2h)
+- Верстка: Ячейка (валюта) (est: 3h; fact: 3h)
+- Верстка: Navigation Bar (est: 1h; fact: 0.5h)
+- Верстка: Панель оплаты (est: 2h; fact: 1h)
+- viewModel экрана, выбор валюты (est: 3h, fact: 3h)
+- Оплата (est: 1h,  fact: 0.5h)
+- webView "Пользовательское соглашение" (est: 2h, fact: 2h)
 
 #### Экран результатов оплаты "Успех/Упс"
-- Верстка всего экрана (est: 1h; fact: )
-- viewModel, логика экрана (est: 1h,  fact: )
+- Верстка всего экрана (est: 1h; fact: 1h)
+- viewModel, логика экрана (est: 1h,  fact: 1h)
 
-`Total:` est: 14h; fact: 
+`Total:` est: 16h; fact: 14h

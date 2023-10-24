@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol CartViewModelProtocol {
+protocol CartViewModelProtocol: AlertServiceDelegate {
     func viewDidLoad()
     func bind(_ bindings: CartViewModelBindings)
     func sortOrderDidChange(to sortBy: CartSortOrder)
     func deleteNftDidApprove(for id: String)
     func pullToRefreshDidTrigger()
-    func networkAlertDidCancel()
-    func networkAlertRepeatDidTap()
+    func payButtonDidTap()
+    func didGetBackToCart()
 }
 
 final class CartViewModel: CartViewModelProtocol {
@@ -23,6 +23,7 @@ final class CartViewModel: CartViewModelProtocol {
     @Observable private var nftList: [CartNftInfo]
     @Observable private var isEmptyCartPlaceholderDisplaying: Bool
     @Observable private var isNetworkAlertDisplaying: Bool
+    @Observable private var isPaymentScreenDisplaying: Bool
 
     private var dataProvider: CartDataProviderProtocol
     private var settingsStorage: CartSettingsStorageProtocol
@@ -41,6 +42,7 @@ final class CartViewModel: CartViewModelProtocol {
         self.nftList = []
         self.isEmptyCartPlaceholderDisplaying = true
         self.isNetworkAlertDisplaying = false
+        self.isPaymentScreenDisplaying = false
     }
 
     func viewDidLoad() {
@@ -54,6 +56,7 @@ final class CartViewModel: CartViewModelProtocol {
         self.$nftList.bind(action: bindings.nftList)
         self.$isEmptyCartPlaceholderDisplaying.bind(action: bindings.isEmptyCartPlaceholderDisplaying)
         self.$isNetworkAlertDisplaying.bind(action: bindings.isNetworkAlertDisplaying)
+        self.$isPaymentScreenDisplaying.bind(action: bindings.isPaymentScreenDisplaying)
     }
 
     func sortOrderDidChange(to sortOder: CartSortOrder) {
@@ -71,12 +74,11 @@ final class CartViewModel: CartViewModelProtocol {
         dataProvider.reloadData()
     }
 
-    func networkAlertDidCancel() {
-        isNetworkAlertDisplaying = false
+    func payButtonDidTap() {
+        isPaymentScreenDisplaying = true
     }
 
-    func networkAlertRepeatDidTap() {
-        isNetworkAlertDisplaying = false
+    func didGetBackToCart() {
         dataProvider.reloadData()
     }
 
@@ -113,5 +115,17 @@ final class CartViewModel: CartViewModelProtocol {
             guard let self else { return }
             self.networkFailureDidGet()
         }
+    }
+}
+
+// MARK: AlertServiceDelegate
+extension CartViewModel: AlertServiceDelegate {
+    func networkAlertDidCancel() {
+        isNetworkAlertDisplaying = false
+    }
+
+    func networkAlertRepeatDidTap() {
+        isNetworkAlertDisplaying = false
+        dataProvider.reloadData()
     }
 }

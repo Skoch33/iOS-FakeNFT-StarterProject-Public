@@ -9,6 +9,7 @@ import Foundation
 
 final class NftInfoService {
 
+    static let shared = NftInfoService()
     private let networkClient = DefaultNetworkClient()
     private var task: NetworkTask?
     private var currentId: String?

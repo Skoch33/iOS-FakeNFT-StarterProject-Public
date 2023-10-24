@@ -10,12 +10,25 @@
 "CartViewController.SortAlert.byRating" = "По рейтингу";
 "CartViewController.SortAlert.byName" = "По названию";
 "CartViewController.SortAlert.cancel" = "Закрыть";
-"CartViewController.NetworkAlert.title" = "Сетевая ошибка";
-"CartViewController.NetworkAlert.message" = "Не удалось получить данные из сети";
-"CartViewController.NetworkAlert.OkAction.title" = "Попробую позже";
-"CartViewController.NetworkAlert.RepeatAction.title" = "Повторить";
+
+"DefaultNetworkAlert.title" = "Сетевая ошибка";
+"DefaultNetworkAlert.message" = "Не удалось получить данные из сети";
+"DefaultNetworkAlert.OkAction.title" = "Попробую позже";
+"DefaultNetworkAlert.RepeatAction.title" = "Повторить";
+
+"DefaultSomethingWrongAlert.title" = "Упс! Что-то пошло не так :(";
+"DefaultSomethingWrongAlert.message" = "Попробуйте еще раз!";
+"DefaultSomethingWrongAlert.OkAction.title" = "OK";
 
 "CartViewCell.Price" = "Цена";
 "Cart.DeleteNftViewController.deleteButton" = "Удалить";
 "Cart.DeleteNftViewController.backButton" = "Вернуться";
 "Cart.DeleteNftViewController.deleteMessage" = "Вы уверены, что хотите удалить объект из корзины?";
+
+"SelectCurrencyViewController.navigationItem.title" = "Выберите способ оплаты";
+"SelectCurrencyViewController.paymentView.agreementLabel" = "Совершая покупку, вы соглашаетесь с условиями";
+"SelectCurrencyViewController.paymentView.agreementLink" = "Пользовательского соглашения";
+"SelectCurrencyViewController.paymentView.buttonTitle" = "Оплатить";
+
+"SuccessfulPaymentViewController.message" = "Успех! Оплата прошла, поздравляем с покупкой!";
+"SuccessfulPaymentViewController.buttonTitle" = "Вернуться в каталог";

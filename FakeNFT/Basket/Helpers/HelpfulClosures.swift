@@ -11,3 +11,4 @@ typealias ClosureString = (String) -> Void
 typealias ClosureInt = (Int) -> Void
 typealias ClosureDecimal = (Decimal) -> Void
 typealias ClosureBool = (Bool) -> Void
+typealias ClosureFloat = (Float) -> Void

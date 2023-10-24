@@ -56,8 +56,7 @@ final class CartDataProvider: CartDataProviderProtocol {
         case .success(let nfts):
             nftList.removeAll()
             nfts.ids.forEach { id in
-                let nftInfoService = NftInfoService()
-                nftInfoService.get(for: id, onResponse: nftInfoDidReceive)
+                NftInfoService.shared.get(for: id, onResponse: self.nftInfoDidReceive)
             }
         case .failure:
             NotificationCenter.default.post(
