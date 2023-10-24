@@ -43,6 +43,7 @@ final class FavoritesNFTViewModel: FavoritesNFTViewModelProtocol {
     
     func viewWillDisappear() {
         nftService.stopAllTasks()
+        NotificationCenter.default.post(name: NSNotification.Name("profileUpdated"), object: nil)
         ProgressHUD.dismiss()
     }
     
@@ -65,8 +66,8 @@ final class FavoritesNFTViewModel: FavoritesNFTViewModelProtocol {
                 )
                 self.profileService.updateProfile(with: updatedProfile) { result in
                     switch result {
-                    case .success(let updatedProfile):
-                        print("Профиль получен - успех \(updatedProfile)")
+                    case .success(_):
+                        break
                     case .failure(let error):
                         // ToDo: - обработать ошибку
                         print(error)

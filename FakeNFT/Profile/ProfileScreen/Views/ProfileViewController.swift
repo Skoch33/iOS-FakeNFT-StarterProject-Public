@@ -1,6 +1,5 @@
 import UIKit
 import Kingfisher
-import ProgressHUD
 
 final class ProfileViewController: UIViewController {
 
@@ -116,7 +115,6 @@ final class ProfileViewController: UIViewController {
             self?.profileTableView.reloadData()
             [self?.editButton, self?.profileImageView, self?.userNameLabel, self?.userDescriptionLabel, self?.userWebSiteTextView, self?.profileTableView].forEach { $0?.isHidden = false }
         }
-        ProgressHUD.dismiss()
     }
     
     // MARK: - Layout methods

@@ -20,6 +20,14 @@ final class FavoritesNFTViewController: UIViewController {
         return collection
     }()
     
+    private lazy var noNFTLabel: UILabel = {
+        let label = UILabel()
+        label.text = "У вас еще нет избранных NFT"
+        label.font = .bodyBold
+        label.isHidden = true
+        return label
+    }()
+    
     init(nftList: [String], viewModel: FavoritesNFTViewModelProtocol) {
         self.nftList = nftList
         self.viewModel = viewModel
@@ -52,11 +60,19 @@ final class FavoritesNFTViewController: UIViewController {
         
         viewModel.observeState { [weak self] state in
             guard let self = self else { return }
+            
             switch state {
             case .loading:
-                print("Загрузка")
+                setUIInteraction(false)
             case .loaded:
-                self.updateUIBasedOnNFTData()
+                guard
+                    let favoritesNFT = self.viewModel.favoritesNFT,
+                    favoritesNFT.count == 0
+                else {
+                    self.updateUI(isNoNFT: false)
+                    return
+                }
+                self.updateUI(isNoNFT: true)
             case .error(_):
                 print("Ошибка")
                 // ToDo: - Error Alert
@@ -65,8 +81,19 @@ final class FavoritesNFTViewController: UIViewController {
             }
         }
     }
-    private func updateUIBasedOnNFTData() {
-        navigationItem.title = NSLocalizedString("ProfileViewController.favouritesNFT", comment: "")
+    
+    private func setUIInteraction(_ enabled: Bool) {
+        DispatchQueue.main.async {
+            self.nftCollectionView.isUserInteractionEnabled = enabled
+            self.navigationItem.leftBarButtonItem?.isEnabled = enabled
+            self.nftCollectionView.alpha = enabled ? 1.0 : 0.5
+        }
+    }
+    
+    private func updateUI(isNoNFT: Bool) {
+        setUIInteraction(true)
+        self.noNFTLabel.isHidden = !isNoNFT
+        navigationItem.title = isNoNFT ? nil : NSLocalizedString("ProfileViewController.favouritesNFT", comment: "")
     }
     
     private func configNavigationBar() {
@@ -76,13 +103,16 @@ final class FavoritesNFTViewController: UIViewController {
     private func setupViews() {
         view.backgroundColor = .white
         
-        view.addViewWithNoTAMIC(nftCollectionView)
+        [nftCollectionView, noNFTLabel].forEach { view.addViewWithNoTAMIC($0) }
         
         NSLayoutConstraint.activate([
             nftCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             nftCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             nftCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            nftCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            nftCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            noNFTLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            noNFTLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 }
@@ -123,6 +153,8 @@ extension FavoritesNFTViewController: UICollectionViewDelegateFlowLayout {
         UIEdgeInsets(top: 20, left: geometricParams.cellLeftInset, bottom: 0, right: geometricParams.cellRightInset)
     }
 }
+
+// MARK: - FavoritesNFTCellDelegateProtocol
 
 extension FavoritesNFTViewController: FavoritesNFTCellDelegateProtocol {
     func didTapHeartButton(in cell: FavoritesNFTCell) {
