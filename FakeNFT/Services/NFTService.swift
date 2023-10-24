@@ -2,6 +2,7 @@ import Foundation
 
 final class NFTService {
     private let networkClient: NetworkClient
+    private var currentTasks: [NetworkTask] = []
     static let shared = NFTService(networkClient: DefaultNetworkClient())
     
     init(networkClient: NetworkClient) {
@@ -19,6 +20,11 @@ final class NFTService {
                 completion(.failure(error))
             }
         }
+    }
+    
+    func stopAllTasks() {
+        currentTasks.forEach { $0.cancel() }
+        currentTasks.removeAll()
     }
     
     func fetchAuthor(authorID: String,

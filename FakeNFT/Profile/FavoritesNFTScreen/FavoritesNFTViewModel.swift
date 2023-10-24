@@ -9,6 +9,7 @@ protocol FavoritesNFTViewModelProtocol {
     func observeState(_ handler: @escaping (LoadingState) -> Void)
 
     func viewDidLoad(nftList: [String])
+    func viewWillDisappear()
     func fetchNFT(nftList: [String])
 }
 
@@ -36,6 +37,11 @@ final class FavoritesNFTViewModel: FavoritesNFTViewModelProtocol {
     func viewDidLoad(nftList: [String]) {
         self.fetchNFT(nftList: nftList)
     }
+    
+    func viewWillDisappear() {
+        service.stopAllTasks()
+        ProgressHUD.dismiss()
+    }
 
     func fetchNFT(nftList: [String]) {
         ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
@@ -47,8 +53,7 @@ final class FavoritesNFTViewModel: FavoritesNFTViewModelProtocol {
         for element in nftList {
             group.enter()
             
-            service.fetchNFT(nftID: element) { [weak self] result in
-                guard let self = self else { return }
+            service.fetchNFT(nftID: element) { result in
                 switch result {
                 case .success(let nft):
                     fetchedNFTs.append(nft)
@@ -63,7 +68,7 @@ final class FavoritesNFTViewModel: FavoritesNFTViewModelProtocol {
         group.notify(queue: .main) {
             self.favoritesNFT = fetchedNFTs
             self.state = .loaded
+            ProgressHUD.dismiss()
         }
-        ProgressHUD.dismiss()
     }
 }
