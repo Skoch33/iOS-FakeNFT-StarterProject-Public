@@ -7,8 +7,8 @@
 "CartViewController.emptyCartPlaceholderText" = "The cart is empty";
 "CartViewController.SortAlert.title" = "Sort";
 "CartViewController.SortAlert.byPrice" = "By price";
-"CartViewController.SortAlert.byRating" = "By Rating";
-"CartViewController.SortAlert.byName" = "By Name";
+"CartViewController.SortAlert.byRating" = "By rating";
+"CartViewController.SortAlert.byName" = "By name";
 "CartViewController.SortAlert.cancel" = "Close";
 
 "DefaultNetworkAlert.title" = "Network error";

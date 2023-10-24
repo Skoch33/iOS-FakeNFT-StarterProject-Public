@@ -57,41 +57,45 @@ final class SelectCurrencyViewController: UIViewController {
     }
 
     private func bindViewModel() {
-        viewModel?.bind(SelectCurrencyViewModelBindings(
-            currencyList: { [ weak self ] in
-                guard let self else { return }
-                self.currencyList = $0
-                self.currencyCollectionView.reloadData()
-                self.currencyCollectionView.refreshControl?.endRefreshing()
-                ProgressHUD.dismiss()
-            },
-            isViewDismissing: { [ weak self ] in
-                if $0 {
-                    self?.onBackToCartViewController?()
-                    self?.navigationController?.popViewController(animated: true)
-                }
-            },
+        let currencyListBinding = { [ weak self ] in
+            guard let self else { return }
+            self.currencyList = $0
+            self.currencyCollectionView.reloadData()
+            self.currencyCollectionView.refreshControl?.endRefreshing()
+            ProgressHUD.dismiss()
+        }
+        let viewDismissBinding = { [ weak self ] in
+            if $0 {
+                self?.onBackToCartViewController?()
+                self?.navigationController?.popViewController(animated: true)
+            }
+        }
+        let networkAlertBinding = { [ weak self ] in
+            guard let self else { return }
+            self.currencyCollectionView.refreshControl?.endRefreshing()
+            ProgressHUD.dismiss()
+            if $0 {
+                self.alertService?.presentNetworkErrorAlert()
+            }
+        }
+        let paymentResultBinding = { [ weak self ] in
+            guard let isPaymentSuccessful: Bool = $0 else { return }
+            self?.presentPaymentResult(isPaymentSuccessful)
+        }
+        let bindings = SelectCurrencyViewModelBindings(
+            currencyList: currencyListBinding,
+            isViewDismissing: viewDismissBinding,
             isAgreementDisplaying: { [ weak self ] in
                 if $0 {
                     self?.presentAgreement()
                 }
             },
-            isNetworkAlertDisplaying: { [ weak self ] in
-                guard let self else { return }
-                self.currencyCollectionView.refreshControl?.endRefreshing()
-                ProgressHUD.dismiss()
-                if $0 {
-                    self.alertService?.presentNetworkErrorAlert()
-                }
-            },
-            isPaymentResultDisplaying: { [ weak self ] in
-                guard let isPaymentSuccessful = $0 else { return }
-                self?.presentPaymentResult(isPaymentSuccessful)
-            },
+            isNetworkAlertDisplaying: networkAlertBinding,
+            isPaymentResultDisplaying: paymentResultBinding,
             isCurrencyDidSelect: { [ weak self ] in
                 self?.payButton.isEnabled = $0
             })
-        )
+        viewModel?.bind(bindings)
     }
 
     private func presentAgreement() {

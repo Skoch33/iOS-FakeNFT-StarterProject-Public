@@ -43,44 +43,49 @@ final class CartViewController: UIViewController {
     }
 
     private func bindViewModel() {
-        let bindings = CartViewModelBindings(
-            numberOfNft: { [weak self] in
-                guard let self else { return }
-                self.nftCount = $0
-                self.displayNftCount()
-            },
-            priceTotal: { [weak self] in
-                guard let self else { return }
-                self.nftPriceTotal = $0
-                self.displayPriceTotal()
-            },
-            nftList: { [weak self] in
-                guard let self else { return }
-                self.nftList = $0
-                self.nftCartTableView.reloadData()
-                if nftCartTableView.refreshControl?.isRefreshing == true {
-                    nftCartTableView.refreshControl?.endRefreshing()
-                }
+        let numberOfNftBinding = { [weak self] in
+            guard let self else { return }
+            self.nftCount = $0
+            self.displayNftCount()
+        }
+        let priceTotalBinding = { [weak self] in
+            guard let self else { return }
+            self.nftPriceTotal = $0
+            self.displayPriceTotal()
+        }
+        let nftListBinding = { [weak self] in
+            guard let self else { return }
+            self.nftList = $0
+            self.nftCartTableView.reloadData()
+            if nftCartTableView.refreshControl?.isRefreshing == true {
+                nftCartTableView.refreshControl?.endRefreshing()
+            }
+            ProgressHUD.dismiss()
+        }
+        let networkAlertDisplayBinding = { [weak self] isNetworkAlertDisplaying in
+            guard let self else { return }
+            if isNetworkAlertDisplaying {
                 ProgressHUD.dismiss()
-            },
+                if self.nftCartTableView.refreshControl?.isRefreshing == true {
+                    self.nftCartTableView.refreshControl?.endRefreshing()
+                }
+                self.alertService?.presentNetworkErrorAlert()
+            }
+        }
+        let paymentScreenDisplayBinding = { [weak self] isPaymentScreenDisplaying in
+            if isPaymentScreenDisplaying {
+                self?.presentPaymentViewController()
+            }
+        }
+        let bindings = CartViewModelBindings(
+            numberOfNft: numberOfNftBinding,
+            priceTotal: priceTotalBinding,
+            nftList: nftListBinding,
             isEmptyCartPlaceholderDisplaying: { [weak self] in
                 self?.displayEmptyCartPlaceholder($0)
             },
-            isNetworkAlertDisplaying: { [weak self] isNetworkAlertDisplaying in
-                guard let self else { return }
-                if isNetworkAlertDisplaying {
-                    ProgressHUD.dismiss()
-                    if self.nftCartTableView.refreshControl?.isRefreshing == true {
-                        self.nftCartTableView.refreshControl?.endRefreshing()
-                    }
-                    self.alertService?.presentNetworkErrorAlert()
-                }
-            },
-            isPaymentScreenDisplaying: { [weak self] isPaymentScreenDisplaying in
-                if isPaymentScreenDisplaying {
-                    self?.presentPaymentViewController()
-                }
-            }
+            isNetworkAlertDisplaying: networkAlertDisplayBinding,
+            isPaymentScreenDisplaying: paymentScreenDisplayBinding
         )
         viewModel?.bind(bindings)
     }
@@ -271,6 +276,7 @@ private extension CartViewController {
         view.backgroundColor = .nftLightgrey
         view.layer.cornerRadius = 16
         view.layer.masksToBounds = true
+        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.translatesAutoresizingMaskIntoConstraints = false
 
         let labelView = UIStackView(arrangedSubviews: [nftCountLabel, nftPriceTotalLabel])
