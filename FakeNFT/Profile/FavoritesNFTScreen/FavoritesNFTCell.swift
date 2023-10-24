@@ -1,7 +1,13 @@
 import UIKit
 import Kingfisher
 
+protocol FavoritesNFTCellDelegateProtocol: AnyObject {
+    func didTapHeartButton(in cell: FavoritesNFTCell)
+}
+
 final class FavoritesNFTCell: UICollectionViewCell, ReuseIdentifying {
+    
+    weak var delegate: FavoritesNFTCellDelegateProtocol?
     
     private let currentPriceLabel: UILabel = {
         let label = UILabel()
@@ -52,6 +58,18 @@ final class FavoritesNFTCell: UICollectionViewCell, ReuseIdentifying {
         return label
     }()
     
+    private lazy var likeButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "filledHeartButtonImage"), for: .normal)
+        button.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc
+    private func likeButtonTapped() {
+        delegate?.didTapHeartButton(in: self)
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -81,13 +99,14 @@ final class FavoritesNFTCell: UICollectionViewCell, ReuseIdentifying {
     }
     
     private func setupViews() {
-        nftImageView.addViewWithNoTAMIC(likeImageView)
         [name, starsView, currentPriceLabel].forEach { nftDetailsStackView.addArrangedSubview($0) }
-        [nftImageView, nftDetailsStackView].forEach { contentView.addViewWithNoTAMIC($0) }
+        [nftImageView, nftDetailsStackView, likeButton].forEach { contentView.addViewWithNoTAMIC($0) }
         
         NSLayoutConstraint.activate([
-            likeImageView.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: -6),
-            likeImageView.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 6),
+            likeButton.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: -6),
+            likeButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 6),
+            likeButton.heightAnchor.constraint(equalToConstant: 44),
+            likeButton.widthAnchor.constraint(equalToConstant: 44),
             
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),

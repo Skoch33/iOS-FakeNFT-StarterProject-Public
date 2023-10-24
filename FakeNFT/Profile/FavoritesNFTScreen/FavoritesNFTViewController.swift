@@ -98,6 +98,7 @@ extension FavoritesNFTViewController: UICollectionViewDataSource {
         let cell: FavoritesNFTCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         guard let nft = viewModel.favoritesNFT?[indexPath.row] else { return cell }
         cell.configure(with: nft)
+        cell.delegate = self
         return cell
     }
 }
@@ -120,5 +121,16 @@ extension FavoritesNFTViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 20, left: geometricParams.cellLeftInset, bottom: 0, right: geometricParams.cellRightInset)
+    }
+}
+
+extension FavoritesNFTViewController: FavoritesNFTCellDelegateProtocol {
+    func didTapHeartButton(in cell: FavoritesNFTCell) {
+        guard
+            let indexPath = nftCollectionView.indexPath(for: cell),
+            let nft = viewModel.favoritesNFT?[indexPath.row]
+        else { return }
+        viewModel.dislike(for: nft)
+        nftCollectionView.reloadData()
     }
 }
