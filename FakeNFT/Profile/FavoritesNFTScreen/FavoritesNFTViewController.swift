@@ -1,7 +1,6 @@
 import UIKit
 
 final class FavoritesNFTViewController: UIViewController {
-    
     private let viewModel: FavoritesNFTViewModelProtocol
     private let nftList: [String]
     private let geometricParams: GeometricParams = {
@@ -22,7 +21,7 @@ final class FavoritesNFTViewController: UIViewController {
     
     private lazy var noNFTLabel: UILabel = {
         let label = UILabel()
-        label.text = "У вас еще нет избранных NFT"
+        label.text = NSLocalizedString("FavoritesNFTViewController.nonft", comment: "")
         label.font = .bodyBold
         label.isHidden = true
         return label
@@ -48,9 +47,9 @@ final class FavoritesNFTViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-            super.viewWillDisappear(animated)
-            viewModel.viewWillDisappear()
-        }
+        super.viewWillDisappear(animated)
+        viewModel.viewWillDisappear()
+    }
     
     private func bind() {
         viewModel.observeFavoritesNFT { [weak self] _ in
@@ -63,16 +62,10 @@ final class FavoritesNFTViewController: UIViewController {
             
             switch state {
             case .loading:
-                setUIInteraction(false)
-            case .loaded:
-                guard
-                    let favoritesNFT = self.viewModel.favoritesNFT,
-                    favoritesNFT.count == 0
-                else {
-                    self.updateUI(isNoNFT: false)
-                    return
-                }
-                self.updateUI(isNoNFT: true)
+                self.setUIInteraction(false)
+            case .loaded(let hasData):
+                self.updateUI(isNoNFT: !hasData)
+                self.nftCollectionView.reloadData()
             case .error(_):
                 print("Ошибка")
                 // ToDo: - Error Alert
@@ -121,13 +114,14 @@ final class FavoritesNFTViewController: UIViewController {
 
 extension FavoritesNFTViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.favoritesNFT?.count ?? 0
+        return viewModel.favoritesNFT.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: FavoritesNFTCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-        guard let nft = viewModel.favoritesNFT?[indexPath.row] else { return cell }
-        cell.configure(with: nft)
+        let nft = viewModel.favoritesNFT[indexPath.row]
+        let viewModel = FavoritesNFTCellViewModel(nft: nft)
+        cell.configure(with: viewModel)
         cell.delegate = self
         return cell
     }
@@ -158,11 +152,8 @@ extension FavoritesNFTViewController: UICollectionViewDelegateFlowLayout {
 
 extension FavoritesNFTViewController: FavoritesNFTCellDelegateProtocol {
     func didTapHeartButton(in cell: FavoritesNFTCell) {
-        guard
-            let indexPath = nftCollectionView.indexPath(for: cell),
-            let nft = viewModel.favoritesNFT?[indexPath.row]
-        else { return }
+        guard let indexPath = nftCollectionView.indexPath(for: cell) else { return }
+        let nft = viewModel.favoritesNFT[indexPath.row]
         viewModel.dislike(for: nft)
-        nftCollectionView.reloadData()
     }
 }

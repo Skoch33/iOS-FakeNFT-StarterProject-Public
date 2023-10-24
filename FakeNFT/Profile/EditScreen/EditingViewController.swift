@@ -115,15 +115,11 @@ final class EditingViewController: UIViewController {
         setupDelegates()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        viewModel.viewWillDisappear()
-    }
-
     // MARK: - Actions
 
     @objc
     private func exitButtonTapped() {
+        viewModel.exitButtonTapped()
         dismiss(animated: true)
     }
 

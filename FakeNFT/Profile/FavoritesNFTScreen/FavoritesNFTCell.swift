@@ -87,15 +87,12 @@ final class FavoritesNFTCell: UICollectionViewCell, ReuseIdentifying {
         }
     }
     
-    func configure(with nft: NFT) {
-        self.nftImageView.kf.setImage(with: URL(string: nft.images[0]),
+    func configure(with viewModel: FavoritesNFTCellViewModel) {
+        self.nftImageView.kf.setImage(with: viewModel.imageUrl,
                                       placeholder: UIImage(named: "nullImage"))
-        self.name.text = nft.name
-        self.setStarsState(nft.rating)
-        
-        if let formattedPrice = NumberFormatter.defaultPriceFormatter.string(from: NSNumber(value: nft.price)) {
-            self.currentPriceLabel.text = "\(formattedPrice) ETH"
-        }
+        self.setStarsState(viewModel.formattedRating)
+        self.name.text = viewModel.title
+        self.currentPriceLabel.text = viewModel.formattedPrice
     }
     
     private func setupViews() {

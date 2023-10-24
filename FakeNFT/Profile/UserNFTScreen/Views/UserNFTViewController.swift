@@ -113,12 +113,12 @@ final class UserNFTViewController: UIViewController {
             
             switch state {
             case .loading:
-                setUIInteraction(false)
-            case .loaded:
-                if self.viewModel.userNFT == nil {
-                    self.noNFTLabel.isHidden = false
-                } else {
+                self.setUIInteraction(false)
+            case .loaded(let hasData):
+                if hasData {
                     self.updateUIBasedOnNFTData()
+                } else {
+                    self.noNFTLabel.isHidden = false
                 }
             case .error(_):
                 print("Ошибка")
@@ -142,12 +142,6 @@ final class UserNFTViewController: UIViewController {
         }
     }
     
-    private func configNavigationBar() {
-        setupCustomBackButton()
-    }
-    
-    // MARK: - Layout methods
-    
     private func setupViews() {
         view.backgroundColor = .nftWhite
 
@@ -162,6 +156,10 @@ final class UserNFTViewController: UIViewController {
             noNFTLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             noNFTLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+    }
+    
+    private func configNavigationBar() {
+        setupCustomBackButton()
     }
 }
 
@@ -182,11 +180,11 @@ extension UserNFTViewController: UITableViewDataSource {
         }
         
         if let author = viewModel.authors[nft.author] {
-                cell.configure(nft: nft, authorName: author.name)
-            } else {
-                print("error to get author ID")
-                cell.configure(nft: nft, authorName: "Unknown author")
-            }
+            cell.configure(nft: nft, authorName: author.name)
+        } else {
+            print("error to get author ID")
+            cell.configure(nft: nft, authorName: "Unknown author")
+        }
         
         return cell
     }
