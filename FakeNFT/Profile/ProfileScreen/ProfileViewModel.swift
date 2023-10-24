@@ -40,7 +40,6 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             case .success(let userProfile):
                 self.userProfile = userProfile
             case .failure(let error):
-                //ToDo: - Уведомление об ошибке
                 print(error)
             }
             ProgressHUD.dismiss()

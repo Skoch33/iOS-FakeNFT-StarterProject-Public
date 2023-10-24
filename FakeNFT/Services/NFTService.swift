@@ -1,42 +1,25 @@
 import Foundation
 
 final class NFTService {
-    private let networkClient: NetworkClient
-    private var currentTasks: [NetworkTask] = []
-    static let shared = NFTService(networkClient: DefaultNetworkClient())
+    static let shared = NFTService(networkHelper: NetworkServiceHelper(networkClient: DefaultNetworkClient()))
     
-    init(networkClient: NetworkClient) {
-        self.networkClient = networkClient
+    private let networkHelper: NetworkServiceHelper
+    
+    init(networkHelper: NetworkServiceHelper) {
+        self.networkHelper = networkHelper
     }
     
-    func fetchNFT(nftID: String,
-                  completion: @escaping (Result<NFT, Error>) -> Void) {
+    func fetchNFT(nftID: String, completion: @escaping (Result<NFT, Error>) -> Void) {
         let request = FetchNFTNetworkRequest(nftID: nftID)
-        networkClient.send(request: request, type: NFT.self) { result in
-            switch result {
-            case .success(let nft):
-                completion(.success(nft))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+        networkHelper.fetchData(request: request, type: NFT.self, completion: completion)
+    }
+    
+    func fetchAuthor(authorID: String, completion: @escaping (Result<Author, Error>) -> Void) {
+        let request = FetchAuthorNetworkRequest(authorID: authorID)
+        networkHelper.fetchData(request: request, type: Author.self, completion: completion)
     }
     
     func stopAllTasks() {
-        currentTasks.forEach { $0.cancel() }
-        currentTasks.removeAll()
-    }
-    
-    func fetchAuthor(authorID: String,
-                  completion: @escaping (Result<Author, Error>) -> Void) {
-        let request = FetchAuthorNetworkRequest(authorID: authorID)
-        networkClient.send(request: request, type: Author.self) { result in
-            switch result {
-            case .success(let author):
-                completion(.success(author))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+        networkHelper.stopAllTasks()
     }
 }

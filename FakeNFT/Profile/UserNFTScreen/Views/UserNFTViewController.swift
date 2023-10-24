@@ -122,7 +122,6 @@ final class UserNFTViewController: UIViewController {
                 }
             case .error(_):
                 print("Ошибка")
-                // ToDo: - Error Alert
             default:
                 break
             }

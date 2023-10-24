@@ -1,8 +1,9 @@
 import UIKit
 
 final class FavoritesNFTViewController: UIViewController {
-    private let viewModel: FavoritesNFTViewModelProtocol
-    private let nftList: [String]
+    
+    // MARK: - UI properties
+    
     private let geometricParams: GeometricParams = {
         GeometricParams(cellPerRowCount: 2,
                         cellSpacing: 7,
@@ -26,6 +27,13 @@ final class FavoritesNFTViewController: UIViewController {
         label.isHidden = true
         return label
     }()
+    
+    // MARK: - Properties
+    
+    private let viewModel: FavoritesNFTViewModelProtocol
+    private let nftList: [String]
+    
+    // MARK: - Lifecycle
     
     init(nftList: [String], viewModel: FavoritesNFTViewModelProtocol) {
         self.nftList = nftList
@@ -51,6 +59,8 @@ final class FavoritesNFTViewController: UIViewController {
         viewModel.viewWillDisappear()
     }
     
+    // MARK: - Methods
+    
     private func bind() {
         viewModel.observeFavoritesNFT { [weak self] _ in
             guard let self = self else { return }
@@ -68,7 +78,6 @@ final class FavoritesNFTViewController: UIViewController {
                 self.nftCollectionView.reloadData()
             case .error(_):
                 print("Ошибка")
-                // ToDo: - Error Alert
             default:
                 break
             }
@@ -92,6 +101,8 @@ final class FavoritesNFTViewController: UIViewController {
     private func configNavigationBar() {
         setupCustomBackButton()
     }
+    
+    // MARK: - Layout methods
     
     private func setupViews() {
         view.backgroundColor = .white

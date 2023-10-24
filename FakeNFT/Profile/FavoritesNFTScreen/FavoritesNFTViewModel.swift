@@ -69,12 +69,10 @@ final class FavoritesNFTViewModel: FavoritesNFTViewModelProtocol {
                     case .success(_):
                         break
                     case .failure(let error):
-                        // ToDo: - обработать ошибку
                         print(error)
                     }
                 }
             case.failure(let error):
-                // ToDo: - обработать ошибку
                 print(error)
             }
         }
