@@ -30,7 +30,7 @@ final class CollectionViewModel: CollectionViewModelProtocol {
     var collectionCells: [CollectionCellModel] = []
     
     @Observable
-    var profile: ProfileModel = ProfileModel(name: "", website: "", likes: [])
+    var profile: ProfileModel = ProfileModel(name: "", avatar: "", description: "", website: "", nfts: [], likes: [], id: "")
     
     @Observable
     var collection: CollectionModel

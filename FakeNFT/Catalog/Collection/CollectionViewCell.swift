@@ -41,14 +41,14 @@ final class CollectionViewCell: UICollectionViewCell {
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.bodyBold
+        label.font = UIFont.NftBodyFonts.bold
         label.textColor = UIColor.nftBlack
         return label
     }()
     
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.caption3
+        label.font = UIFont.NftCaptionFonts.small
         label.textColor = UIColor.nftBlack
         return label
     }()

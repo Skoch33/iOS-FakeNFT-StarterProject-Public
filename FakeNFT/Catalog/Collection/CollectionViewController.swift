@@ -35,14 +35,14 @@ final class CollectionViewController: UIViewController {
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .headline2
+        label.font = .NftHeadlineFonts.medium
         label.textColor = .nftBlack
         return label
     }()
     
     private lazy var authorTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .caption2
+        label.font = .NftCaptionFonts.medium
         label.textColor = .nftBlack
         label.text = NSLocalizedString("Collection.AuthorLabel", comment: "")
         return label
@@ -50,7 +50,7 @@ final class CollectionViewController: UIViewController {
     
     private lazy var authorNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .caption2
+        label.font = .NftCaptionFonts.medium
         label.textColor = .nftBlueUniversal
         label.numberOfLines = 0
         return label
@@ -58,7 +58,7 @@ final class CollectionViewController: UIViewController {
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = .caption2
+        label.font = .NftCaptionFonts.medium
         label.textColor = .nftBlack
         label.numberOfLines = 0
         return label
@@ -231,7 +231,10 @@ final class CollectionViewController: UIViewController {
     
     @objc
     func didTapUserNameLabel(_ sender: Any) {
-        let webViewController = WebViewController(authorURL)
+        guard let urlString = authorURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let url = URL(string: urlString)
+        else { return }
+        let webViewController = WebViewViewController(webSite: url)
         navigationController?.pushViewController(webViewController, animated: true)
     }
     

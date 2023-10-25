@@ -16,7 +16,7 @@ final class CatalogCell: UITableViewCell {
     private var nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .nftBlack
-        label.font = .bodyBold
+        label.font = .NftBodyFonts.bold
         return label
     }()
     
