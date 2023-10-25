@@ -7,7 +7,7 @@
 # Profile Decomposition
 
 
-## Экран Profile (est 1090; fact x).
+## Экран Profile (est 1090 min; fact 805 min).
 
 
 ### Module 1: Экран профиля и редактирования профиля
@@ -37,11 +37,12 @@
 
 ### Module 3: Экран избранные NFT
 
-- Реализация NavigationBar (est: 30 min; fact: x min) 
-- Создание UICollectionView (est: 60 min; fact: x min) 
-- Верстка кастомной ячейки (est: 60 min; fact: x min) 
-- Создание модели (est: 40 min; fact: x min) 
-- Взаимодействие со страницей каталога (est: 30 min; fact: x min) 
-- Отображение UILabel (est: 60 min; fact: x min) 
+- Реализация NavigationBar (est: 30 min; fact: 15 min) 
+- Создание UICollectionView (est: 60 min; fact: 30 min) 
+- Верстка кастомной ячейки (est: 60 min; fact: 30 min) 
+- Создание модели (est: 40 min; fact: 20 min) 
+- Взаимодействие со страницей каталога (est: 30 min; fact: 60 min) 
+- Создание сетевого слоя (est: 60 min; fact: 50 min) 
 
-`Total:` est: 270 min; fact: x min
+`Total:` est: 270 min; fact: 205 min
+
