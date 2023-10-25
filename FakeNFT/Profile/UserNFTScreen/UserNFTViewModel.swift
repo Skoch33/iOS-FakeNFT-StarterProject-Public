@@ -70,7 +70,6 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
     
     func userSelectedSorting(by option: SortOption) {
         guard var nfts = userNFT else {
-            print("No NFTs available to sort")
             return
         }
         

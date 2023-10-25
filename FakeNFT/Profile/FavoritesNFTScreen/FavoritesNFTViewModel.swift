@@ -93,7 +93,6 @@ final class FavoritesNFTViewModel: FavoritesNFTViewModelProtocol {
                 case .success(let nft):
                     fetchedNFTs.append(nft)
                 case .failure(let error):
-                    print("Failed to fetch NFT with ID \(element): \(error)")
                     self.state = .error(error)
                 }
                 group.leave()
