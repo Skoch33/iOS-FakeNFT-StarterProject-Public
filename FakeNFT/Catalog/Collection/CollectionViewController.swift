@@ -5,9 +5,9 @@ import ProgressHUD
 final class CollectionViewController: UIViewController {
     
     private var collectionViewModel: CollectionViewModelProtocol
-    private var collection: CollectionModel
     private var collectionCells: [CollectionCellModel] = []
     private var authorURL: String = ""
+    private var nfts: [String] = []
     
     private enum Const {
         static let cellMargins: CGFloat = 9
@@ -52,6 +52,7 @@ final class CollectionViewController: UIViewController {
         let label = UILabel()
         label.font = .caption2
         label.textColor = .nftBlueUniversal
+        label.numberOfLines = 0
         return label
     }()
     
@@ -73,9 +74,9 @@ final class CollectionViewController: UIViewController {
         return collectionView
     }()
     
-    init(collectionViewModel: CollectionViewModel, collection: CollectionModel) {
+    init(collectionViewModel: CollectionViewModel) {
         self.collectionViewModel = collectionViewModel
-        self.collection = collection
+        //self.collection = collection
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -85,16 +86,14 @@ final class CollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindViewModel()
         setupNavigationBar()
         setupViews()
-        collectionViewModel.load(nftIds: collection.nfts)
+        bindViewModel()
     }
     
     private func bindViewModel() {
         let bindings = CollectionViewModelBindings(
-            isLoading: { [weak self] in
-                guard let self else { return }
+            isLoading: {
                 if $0 {
                     ProgressHUD.show()
                 } else {
@@ -112,18 +111,36 @@ final class CollectionViewController: UIViewController {
                 self.collectionCells = $0
                 self.collectionView.reloadData()
             },
+            collection: { [weak self] in
+                guard let self else { return }
+                
+                self.nfts = $0.nfts
+                
+                descriptionLabel.text = $0.description
+                
+                if
+                    let urlString = $0.cover.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                    let url = URL(string: urlString) {
+                    coverImage.kf.indicatorType = .activity
+                    coverImage.kf.setImage(with: url, placeholder: nulPhotoImage)
+                }
+                
+                let collectionHeight = (Const.cellHeight + Const.lineMargins) * ceil(CGFloat(self.nfts.count) / Const.cellCols)
+                collectionView.heightAnchor.constraint(equalToConstant: collectionHeight).isActive = true
+                
+                collectionViewModel.load(nftIds: self.nfts)
+            },
             isCollectionLoadError: { [weak self] in
                 guard let self else { return }
                 if $0 {
-                    AlertWithCountdownTimer().show(
+                    AlertWithCountdownTimer.shared.show(
                         view: self,
                         title: NSLocalizedString("Catalog.CollectionErrorAlertTitle", comment: ""),
                         timerCount: 20,
-                        action: {self.collectionViewModel.load(nftIds: self.collection.nfts)})
+                        action: {self.collectionViewModel.load(nftIds: self.nfts)})
                 }
             },
-            isFailed: { [weak self] in
-                guard let self else { return }
+            isFailed: {
                 if $0 {
                     ProgressHUD.showFailed()
                 }
@@ -154,8 +171,8 @@ final class CollectionViewController: UIViewController {
         setupDescriptionLabel()
         setupCollectionView()
         
-        let collectionHeight = (Const.cellHeight + Const.lineMargins) * ceil(CGFloat(collection.nfts.count) / Const.cellCols)
-        collectionView.heightAnchor.constraint(equalToConstant: collectionHeight).isActive = true
+//        let collectionHeight = (Const.cellHeight + Const.lineMargins) * ceil(CGFloat(collection.nfts.count) / Const.cellCols)
+//        collectionView.heightAnchor.constraint(equalToConstant: collectionHeight).isActive = true
     }
     
     private func setupScrollView() {
@@ -176,14 +193,6 @@ final class CollectionViewController: UIViewController {
             coverImage.heightAnchor.constraint(equalToConstant: 310),
             coverImage.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-        guard
-            let urlString = collection.cover.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-            let url = URL(string: urlString)
-        else {
-            return
-        }
-        coverImage.kf.indicatorType = .activity
-        coverImage.kf.setImage(with: url, placeholder: nulPhotoImage)
     }
     
     private func setupNameLabel() {
@@ -207,14 +216,14 @@ final class CollectionViewController: UIViewController {
         authorNameLabel.addGestureRecognizer(guestureRecognizer)
         NSLayoutConstraint.activate([
             authorNameLabel.topAnchor.constraint(equalTo: authorTitleLabel.topAnchor),
-            authorNameLabel.leadingAnchor.constraint(equalTo: authorTitleLabel.trailingAnchor, constant: 4)
+            authorNameLabel.leadingAnchor.constraint(equalTo: authorTitleLabel.trailingAnchor, constant: 4),
+            authorNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:  -Const.sideMargins)
         ])
     }
     
     private func setupDescriptionLabel() {
-        descriptionLabel.text = collection.description
         NSLayoutConstraint.activate([
-            descriptionLabel.topAnchor.constraint(equalTo: authorTitleLabel.bottomAnchor, constant: 5),
+            descriptionLabel.topAnchor.constraint(equalTo: authorNameLabel.bottomAnchor, constant: 5),
             descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Const.sideMargins),
             descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Const.sideMargins)
         ])

@@ -40,8 +40,7 @@ final class CatalogViewController: UIViewController {
     
     private func bindViewModel() {
         let bindings = CatalogViewModelBindings(
-            isLoading: { [weak self] in
-                guard let self else { return }
+            isLoading: {
                 if $0 {
                     ProgressHUD.show()
                 } else {
@@ -148,8 +147,8 @@ extension CatalogViewController: UITableViewDataSource {
 
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let collectionViewModel = CollectionViewModel(networkClient: DefaultNetworkClient())
-        let collectionViewController = CollectionViewController(collectionViewModel: collectionViewModel, collection: self.collections[indexPath.row])
+        let collectionViewModel = CollectionViewModel(networkClient: DefaultNetworkClient(), collection: self.collections[indexPath.row])
+        let collectionViewController = CollectionViewController(collectionViewModel: collectionViewModel)
         navigationController?.pushViewController(collectionViewController, animated: true)
         self.tabBarController?.tabBar.isHidden = true
     }

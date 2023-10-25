@@ -8,12 +8,14 @@ final class AlertWithCountdownTimer {
     private var view: UIViewController?
     private var action: () -> Void = { return }
     
+    private init() {}
+    
     private func message() -> String {
         NSLocalizedString("Catalog.ErrorAlertMessage", comment: "") + String.localizedStringWithFormat(
             NSLocalizedString("numberOfSeconds", comment: ""), timerCount)
     }
     
-    func show(view: UIViewController, 
+    func show(view: UIViewController,
               title: String,
               timerCount: Int,
               action: @escaping () -> Void) {

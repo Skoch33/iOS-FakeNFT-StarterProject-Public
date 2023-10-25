@@ -11,6 +11,7 @@ struct CollectionViewModelBindings {
     let isLoading: (Bool) -> Void
     let profile: (ProfileModel) -> Void
     let collectionCells: ([CollectionCellModel]) -> Void
+    let collection: (CollectionModel) -> Void
     let isCollectionLoadError: (Bool) -> Void
     let isFailed: (Bool) -> Void
 }
@@ -32,13 +33,17 @@ final class CollectionViewModel: CollectionViewModelProtocol {
     var profile: ProfileModel = ProfileModel(name: "", website: "", likes: [])
     
     @Observable
+    var collection: CollectionModel
+    
+    @Observable
     var isCollectionLoadError = false
     
     @Observable
     var isFailed = false
     
-    init(networkClient: NetworkClient) {
+    init(networkClient: NetworkClient, collection: CollectionModel) {
         self.networkClient = networkClient
+        self.collection = collection
     }
     
     func bind(_ bindings: CollectionViewModelBindings) {
@@ -47,6 +52,8 @@ final class CollectionViewModel: CollectionViewModelProtocol {
         self.$isCollectionLoadError.bind(action: bindings.isCollectionLoadError)
         self.$isFailed.bind(action: bindings.isFailed)
         self.$collectionCells.bind(action: bindings.collectionCells)
+        self.$collection.bind(action: bindings.collection)
+        self.collection = self.collection
     }
     
     private let loadGroup = DispatchGroup()
@@ -152,6 +159,7 @@ final class CollectionViewModel: CollectionViewModelProtocol {
     
     func reversLike(nftId: String) {
         isFailed = false
+        isLoading = true
         if profile.likes.contains(where: {$0 == nftId}) {
             profile.likes.removeAll(where: {$0 == nftId})
         } else {
@@ -169,6 +177,7 @@ final class CollectionViewModel: CollectionViewModelProtocol {
                         if let index = self.collectionCells.firstIndex(where: { $0.id == nftId}) {
                             self.collectionCells[index].isLiked =  self.profile.likes.contains(where: { $0 == nftId })
                         }
+                        self.isLoading = false
                     case .failure(_):
                         self.isFailed = true
                     }
@@ -179,6 +188,7 @@ final class CollectionViewModel: CollectionViewModelProtocol {
     
     func reversCart(nftId: String) {
         isFailed = false
+        isLoading = true
         if order.nfts.contains(where: {$0 == nftId}) {
             order.nfts.removeAll(where: {$0 == nftId})
         } else {
@@ -196,6 +206,7 @@ final class CollectionViewModel: CollectionViewModelProtocol {
                         if let index = self.collectionCells.firstIndex(where: { $0.id == nftId}) {
                             self.collectionCells[index].isInCart =  self.order.nfts.contains(where: { $0 == nftId })
                         }
+                        self.isLoading = false
                     case .failure(_):
                         self.isFailed = true
                     }
