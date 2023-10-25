@@ -12,4 +12,5 @@ extension UIColor {
     static var nftWhiteUniversal: UIColor { UIColor(named: "White Universal") ?? .white }
     static var nftWhite: UIColor { UIColor(named: "White") ?? .white }
     static var nftYellowUniversal: UIColor { UIColor(named: "Yellow Universal") ?? .yellow }
+    static var lightGradient: UIColor { UIColor(named: "LightGradientColor") ?? .white }
 }
