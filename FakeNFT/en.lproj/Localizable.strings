@@ -35,11 +35,15 @@
 "AlertAction.cancel" = "Cancel";
 "AlertAction.enterURL" = "Enter URL";
 "AlertAction.imageURL" = "Image URL";
+"AlertAction.UpdateError" = "Profile update error";
 
 //SortOptions
 "SortOptions.price" = "By price";
 "SortOptions.rate" = "By rating";
 "SortOptions.name" = "By name";
+
+//FavoritesNFTViewController
+"FavoritesNFTViewController.nonft" = "You don't have any favorite NFTs yet";
 
 
 

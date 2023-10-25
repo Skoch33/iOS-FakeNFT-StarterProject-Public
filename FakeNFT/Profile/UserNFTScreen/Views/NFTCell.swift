@@ -12,7 +12,7 @@ final class NFTCell: UITableViewCell, ReuseIdentifying {
     
     private var likeImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "favouritesIcons")
+        imageView.image = UIImage(named: "emptyHeartButtonImage")
         return imageView
     }()
     

@@ -1,6 +1,5 @@
 import UIKit
 import Kingfisher
-import ProgressHUD
 
 final class ProfileViewController: UIViewController {
 
@@ -54,6 +53,7 @@ final class ProfileViewController: UIViewController {
     private lazy var profileTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(ProfileCell.self)
+        tableView.isScrollEnabled = false
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
@@ -116,7 +116,6 @@ final class ProfileViewController: UIViewController {
             self?.profileTableView.reloadData()
             [self?.editButton, self?.profileImageView, self?.userNameLabel, self?.userDescriptionLabel, self?.userWebSiteTextView, self?.profileTableView].forEach { $0?.isHidden = false }
         }
-        ProgressHUD.dismiss()
     }
     
     // MARK: - Layout methods
@@ -199,7 +198,7 @@ extension ProfileViewController: UITableViewDelegate {
         case 0:
             router.routeToUserNFT(nftList: viewModel.userProfile?.nfts ?? [])
         case 1:
-            router.routeToFavoritesNFT()
+            router.routeToFavoritesNFT(nftList: viewModel.userProfile?.likes ?? [])
         case 2:
             if let url = URL(string: userWebSiteTextView.text) {
                 router.routeToWebView(url: url)

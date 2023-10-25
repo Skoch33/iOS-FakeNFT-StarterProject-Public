@@ -53,10 +53,16 @@ final class UserNFTViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.fetchNFT(nftList: nftList)
+        viewModel.viewDidLoad(nftList: self.nftList)
         setupViews()
         configNavigationBar()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewModel.viewWillDisappear()
+    }
+    
     
     // MARK: - Actions
     
@@ -107,16 +113,15 @@ final class UserNFTViewController: UIViewController {
             
             switch state {
             case .loading:
-                print("Загрузка")
-            case .loaded:
-                if self.viewModel.userNFT == nil {
-                    self.noNFTLabel.isHidden = false
-                } else {
+                self.setUIInteraction(false)
+            case .loaded(let hasData):
+                if hasData {
                     self.updateUIBasedOnNFTData()
+                } else {
+                    self.noNFTLabel.isHidden = false
                 }
             case .error(_):
                 print("Ошибка")
-                // ToDo: - Error Alert
             default:
                 break
             }
@@ -127,13 +132,14 @@ final class UserNFTViewController: UIViewController {
         let barButtonItem = UIBarButtonItem(customView: sortButton)
         navigationItem.rightBarButtonItem = barButtonItem
         navigationItem.title = NSLocalizedString("ProfileViewController.myNFT", comment: "")
+        setUIInteraction(true)
     }
     
-    private func configNavigationBar() {
-        setupCustomBackButton()
+    private func setUIInteraction(_ enabled: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationItem.leftBarButtonItem?.isEnabled = enabled
+        }
     }
-    
-    // MARK: - Layout methods
     
     private func setupViews() {
         view.backgroundColor = .nftWhite
@@ -150,6 +156,10 @@ final class UserNFTViewController: UIViewController {
             noNFTLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
+    
+    private func configNavigationBar() {
+        setupCustomBackButton()
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -164,16 +174,14 @@ extension UserNFTViewController: UITableViewDataSource {
         cell.selectionStyle = .none
         
         guard let nft = viewModel.userNFT?[indexPath.row] else {
-            print("error to get NFT")
             return cell
         }
         
         if let author = viewModel.authors[nft.author] {
-                cell.configure(nft: nft, authorName: author.name)
-            } else {
-                print("error to get author ID")
-                cell.configure(nft: nft, authorName: "Unknown author")
-            }
+            cell.configure(nft: nft, authorName: author.name)
+        } else {
+            cell.configure(nft: nft, authorName: "Unknown author")
+        }
         
         return cell
     }
