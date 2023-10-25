@@ -93,10 +93,10 @@ final class EditingViewModel: EditingViewModelProtocol {
                 
                 guard let self = self else { return }
 
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
                     switch result {
                     case .success(let updatedProfile):
-                        self.userProfile = updatedProfile
+                        self?.userProfile = updatedProfile
                         NotificationCenter.default.post(name: NSNotification.Name("profileUpdated"), object: nil)
                     case .failure(let error):
                         NotificationCenter.default.post(name: NSNotification.Name("profileUpdateErrorToastNotification"), object: NSLocalizedString("AlertAction.UpdateError", comment: ""))
@@ -121,8 +121,6 @@ final class EditingViewModel: EditingViewModelProtocol {
                     likes: currentProfile.likes,
                     id: currentProfile.id
                 )
-            } else {
-                // ToDo: Уведомьте пользователя, что URL не является действительным изображением.
             }
         }
     }

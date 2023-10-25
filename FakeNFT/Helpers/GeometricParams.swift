@@ -8,7 +8,13 @@ struct GeometricParams {
     let cellHeight: CGFloat
     let paddingWight: CGFloat
     
-    init(cellPerRowCount: CGFloat, cellSpacing: CGFloat, cellLeftInset: CGFloat, cellRightInset: CGFloat, cellHeight: CGFloat) {
+    init(
+        cellPerRowCount: CGFloat,
+        cellSpacing: CGFloat,
+        cellLeftInset: CGFloat,
+        cellRightInset: CGFloat,
+        cellHeight: CGFloat
+    ) {
         self.cellPerRowCount = cellPerRowCount
         self.cellSpacing = cellSpacing
         self.cellLeftInset = cellLeftInset

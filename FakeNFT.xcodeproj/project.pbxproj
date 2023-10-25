@@ -16,7 +16,6 @@
 		37BFE34C2AD8437700C553BA /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BFE34B2AD8437700C553BA /* AlertService.swift */; };
 		37BFE3502AD859DE00C553BA /* ImageValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BFE34F2AD859DE00C553BA /* ImageValidator.swift */; };
 		37BFE3522AD85A4E00C553BA /* ProfileUpdateDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BFE3512AD85A4E00C553BA /* ProfileUpdateDTO.swift */; };
-		37BFE3542AD94FE000C553BA /* Profile.md in Resources */ = {isa = PBXBuildFile; fileRef = 37BFE3532AD94FE000C553BA /* Profile.md */; };
 		37C5B9BF2ADD4946006FC37E /* NFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C5B9BE2ADD4946006FC37E /* NFTCell.swift */; };
 		37C5B9C12ADD4F25006FC37E /* NumberFormatter+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C5B9C02ADD4F25006FC37E /* NumberFormatter+Presets.swift */; };
 		37C5B9C32ADD51B1006FC37E /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C5B9C22ADD51B1006FC37E /* UserProfile.swift */; };
@@ -98,7 +97,6 @@
 		37BFE34B2AD8437700C553BA /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		37BFE34F2AD859DE00C553BA /* ImageValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageValidator.swift; sourceTree = "<group>"; };
 		37BFE3512AD85A4E00C553BA /* ProfileUpdateDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateDTO.swift; sourceTree = "<group>"; };
-		37BFE3532AD94FE000C553BA /* Profile.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = Profile.md; path = ../../Desktop/FakeNFT/Profile.md; sourceTree = "<group>"; };
 		37C5B9BE2ADD4946006FC37E /* NFTCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCell.swift; sourceTree = "<group>"; };
 		37C5B9C02ADD4F25006FC37E /* NumberFormatter+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Presets.swift"; sourceTree = "<group>"; };
 		37C5B9C22ADD51B1006FC37E /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
@@ -420,7 +418,6 @@
 			isa = PBXGroup;
 			children = (
 				715D0F192AD156EF00300497 /* Catalog.md */,
-				37BFE3532AD94FE000C553BA /* Profile.md */,
 			);
 			path = Doc;
 			sourceTree = "<group>";
@@ -577,7 +574,6 @@
 			files = (
 				715D0F1A2AD156EF00300497 /* Catalog.md in Resources */,
 				224B63392AD3340800084AC9 /* SF-Pro-Text-Regular.otf in Resources */,
-				37BFE3542AD94FE000C553BA /* Profile.md in Resources */,
 				224B633C2AD335AB00084AC9 /* SF-Pro-Text-Bold.otf in Resources */,
 				715D0F322AD1691D00300497 /* Localizable.strings in Resources */,
 				715D0F352AD1693200300497 /* LaunchScreen.storyboard in Resources */,

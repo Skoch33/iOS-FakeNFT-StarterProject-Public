@@ -85,10 +85,10 @@ final class FavoritesNFTViewController: UIViewController {
     }
     
     private func setUIInteraction(_ enabled: Bool) {
-        DispatchQueue.main.async {
-            self.nftCollectionView.isUserInteractionEnabled = enabled
-            self.navigationItem.leftBarButtonItem?.isEnabled = enabled
-            self.nftCollectionView.alpha = enabled ? 1.0 : 0.5
+        DispatchQueue.main.async { [weak self] in
+            self?.nftCollectionView.isUserInteractionEnabled = enabled
+            self?.navigationItem.leftBarButtonItem?.isEnabled = enabled
+            self?.nftCollectionView.alpha = enabled ? 1.0 : 0.5
         }
     }
     

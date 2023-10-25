@@ -136,8 +136,8 @@ final class UserNFTViewController: UIViewController {
     }
     
     private func setUIInteraction(_ enabled: Bool) {
-        DispatchQueue.main.async {
-            self.navigationItem.leftBarButtonItem?.isEnabled = enabled
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationItem.leftBarButtonItem?.isEnabled = enabled
         }
     }
     

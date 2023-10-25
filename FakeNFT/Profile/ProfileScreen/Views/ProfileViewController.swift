@@ -53,6 +53,7 @@ final class ProfileViewController: UIViewController {
     private lazy var profileTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(ProfileCell.self)
+        tableView.isScrollEnabled = false
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none

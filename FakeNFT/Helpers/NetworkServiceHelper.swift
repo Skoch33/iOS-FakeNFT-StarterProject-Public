@@ -17,7 +17,13 @@ final class NetworkServiceHelper {
         currentTasks.removeAll()
     }
     
-    private func fetchData<T: Decodable>(request: NetworkRequest, type: T.Type, retryCount: Int, delayInterval: Double, completion: @escaping (Result<T, Error>) -> Void) {
+    private func fetchData<T: Decodable>(
+        request: NetworkRequest,
+        type: T.Type,
+        retryCount: Int,
+        delayInterval: Double,
+        completion: @escaping (Result<T, Error>) -> Void
+    ) {
         let task = networkClient.send(request: request, type: T.self) { [weak self] result in
             guard let self = self else { return }
             
