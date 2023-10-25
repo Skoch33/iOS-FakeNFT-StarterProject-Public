@@ -38,14 +38,14 @@
 - WebView для страницы автора (not planned, fact: 40 min).
 
 
-## III. Экран Collection (est: 590 min; fact: x min) - логика
-- загрузка коллекции, индикатор загрузки (est: 180 min; fact: x min).
-- возврат к экрану каталога (est: 20 min; fact: x min).
-- переход на страницу автора (est: 20 min; fact: x min).
-- лайк (est: 60 min; fact: x min).
-- корзина (est: 60 min; fact: x min).
+## III. Экран Collection (est: 340 min; fact: 310 min) - логика
+- загрузка коллекции, индикатор загрузки (est: 180 min; fact: 120 min).
+- возврат к экрану каталога (est: 20 min; fact: 10 min).
+- переход на страницу автора (est: 20 min; fact: 30 min).
+- лайк (est: 60 min; fact: 120 min).
+- корзина (est: 60 min; fact: 30 min).
 
-`Total:` est: 340 min; fact: x min).
+`Total:` est: 340 min; fact: 310 min).
 
 # Дополнительные задачи, пересекающиеся с другими эпиками
 - лаунчскрин

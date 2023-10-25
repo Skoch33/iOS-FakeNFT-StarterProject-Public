@@ -8,6 +8,11 @@
 "Catalog.Sorting.ByCount" = "По количеству NFT";
 "Catalog.Sorting.Close" = "Закрыть";
 
-"Catalog.ErrorAlertButton" = "Повторить";
+"Catalog.ErrorAlertLoad" = "Ошибка загрузки";
+"Catalog.ErrorAlertButtonRetry" = "Повторить";
+
+"Catalog.CollectionErrorAlertTitle" = "Ошибка загрузки коллекции";
+"Catalog.ErrorAlertMessage" = "Повторная загрузка через ";
+"Catalog.ErrorAlertButtonCancel" = "Отмена";
 
 "Collection.AuthorLabel" = "Автор коллекции:";

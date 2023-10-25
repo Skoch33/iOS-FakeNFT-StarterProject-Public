@@ -1,9 +1,13 @@
 import UIKit
 import Kingfisher
+import ProgressHUD
 
 final class CollectionViewController: UIViewController {
     
-    let collectionCount = 19
+    private var collectionViewModel: CollectionViewModelProtocol
+    private var collectionCells: [CollectionCellModel] = []
+    private var authorURL: String = ""
+    private var nfts: [String] = []
     
     private enum Const {
         static let cellMargins: CGFloat = 9
@@ -36,13 +40,6 @@ final class CollectionViewController: UIViewController {
         return label
     }()
     
-    private var collection: CollectionModel
-    
-    init(collection: CollectionModel) {
-        self.collection = collection
-        super.init(nibName: nil, bundle: nil)
-    }
-    
     private lazy var authorTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .caption2
@@ -55,6 +52,7 @@ final class CollectionViewController: UIViewController {
         let label = UILabel()
         label.font = .caption2
         label.textColor = .nftBlueUniversal
+        label.numberOfLines = 0
         return label
     }()
     
@@ -72,8 +70,15 @@ final class CollectionViewController: UIViewController {
         collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.identifier)
         collectionView.delegate = self
         collectionView.isScrollEnabled = false
+        collectionView.backgroundColor = .clear
         return collectionView
     }()
+    
+    init(collectionViewModel: CollectionViewModel) {
+        self.collectionViewModel = collectionViewModel
+        //self.collection = collection
+        super.init(nibName: nil, bundle: nil)
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -81,11 +86,69 @@ final class CollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .nftWhite
         setupNavigationBar()
         setupViews()
+        bindViewModel()
     }
     
+    private func bindViewModel() {
+        let bindings = CollectionViewModelBindings(
+            isLoading: {
+                if $0 {
+                    ProgressHUD.show()
+                } else {
+                    ProgressHUD.dismiss()
+                }
+            },
+            profile: { [weak self] in
+                guard let self else { return }
+                let profileModel: ProfileModel = $0
+                self.authorURL = profileModel.website
+                self.authorNameLabel.text = profileModel.name
+            },
+            collectionCells: { [weak self] in
+                guard let self else { return }
+                self.collectionCells = $0
+                self.collectionView.reloadData()
+            },
+            collection: { [weak self] in
+                guard let self else { return }
+                
+                self.nfts = $0.nfts
+                
+                descriptionLabel.text = $0.description
+                
+                if
+                    let urlString = $0.cover.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                    let url = URL(string: urlString) {
+                    coverImage.kf.indicatorType = .activity
+                    coverImage.kf.setImage(with: url, placeholder: nulPhotoImage)
+                }
+                
+                let collectionHeight = (Const.cellHeight + Const.lineMargins) * ceil(CGFloat(self.nfts.count) / Const.cellCols)
+                collectionView.heightAnchor.constraint(equalToConstant: collectionHeight).isActive = true
+                
+                collectionViewModel.load(nftIds: self.nfts)
+            },
+            isCollectionLoadError: { [weak self] in
+                guard let self else { return }
+                if $0 {
+                    AlertWithCountdownTimer.shared.show(
+                        view: self,
+                        title: NSLocalizedString("Catalog.CollectionErrorAlertTitle", comment: ""),
+                        timerCount: 20,
+                        action: {self.collectionViewModel.load(nftIds: self.nfts)})
+                }
+            },
+            isFailed: {
+                if $0 {
+                    ProgressHUD.showFailed()
+                }
+            }
+        )
+        collectionViewModel.bind(bindings)
+    }
+        
     private func setupNavigationBar() {
         let backItem = UIBarButtonItem()
         backItem.title = nil
@@ -108,8 +171,8 @@ final class CollectionViewController: UIViewController {
         setupDescriptionLabel()
         setupCollectionView()
         
-        let collectionHeight = (Const.cellHeight + Const.lineMargins) * ceil(CGFloat(collectionCount) / Const.cellCols)
-        collectionView.heightAnchor.constraint(equalToConstant: collectionHeight).isActive = true
+//        let collectionHeight = (Const.cellHeight + Const.lineMargins) * ceil(CGFloat(collection.nfts.count) / Const.cellCols)
+//        collectionView.heightAnchor.constraint(equalToConstant: collectionHeight).isActive = true
     }
     
     private func setupScrollView() {
@@ -130,14 +193,6 @@ final class CollectionViewController: UIViewController {
             coverImage.heightAnchor.constraint(equalToConstant: 310),
             coverImage.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-        guard
-            let urlString = collection.cover.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-            let url = URL(string: urlString)
-        else {
-            return
-        }
-        coverImage.kf.indicatorType = .activity
-        coverImage.kf.setImage(with: url, placeholder: nulPhotoImage)
     }
     
     private func setupNameLabel() {
@@ -159,17 +214,16 @@ final class CollectionViewController: UIViewController {
         authorNameLabel.isUserInteractionEnabled = true
         let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapUserNameLabel(_:)))
         authorNameLabel.addGestureRecognizer(guestureRecognizer)
-        authorNameLabel.text = "Author Name"
         NSLayoutConstraint.activate([
             authorNameLabel.topAnchor.constraint(equalTo: authorTitleLabel.topAnchor),
-            authorNameLabel.leadingAnchor.constraint(equalTo: authorTitleLabel.trailingAnchor, constant: 4)
+            authorNameLabel.leadingAnchor.constraint(equalTo: authorTitleLabel.trailingAnchor, constant: 4),
+            authorNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:  -Const.sideMargins)
         ])
     }
     
     private func setupDescriptionLabel() {
-        descriptionLabel.text = collection.description
         NSLayoutConstraint.activate([
-            descriptionLabel.topAnchor.constraint(equalTo: authorTitleLabel.bottomAnchor, constant: 5),
+            descriptionLabel.topAnchor.constraint(equalTo: authorNameLabel.bottomAnchor, constant: 5),
             descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Const.sideMargins),
             descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Const.sideMargins)
         ])
@@ -177,7 +231,7 @@ final class CollectionViewController: UIViewController {
     
     @objc
     func didTapUserNameLabel(_ sender: Any) {
-        let webViewController = WebViewController("https://practicum.yandex.ru/go-basics/")
+        let webViewController = WebViewController(authorURL)
         navigationController?.pushViewController(webViewController, animated: true)
     }
     
@@ -194,7 +248,7 @@ final class CollectionViewController: UIViewController {
 extension CollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return collectionCount
+        return collectionCells.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -207,7 +261,9 @@ extension CollectionViewController: UICollectionViewDataSource {
             assertionFailure("Error get cell")
             return .init()
         }
-        cell.configure()
+        cell.configure(cellModel: collectionCells[indexPath.row],
+                       onReversLike: collectionViewModel.reversLike(nftId:),
+                       onReversCart: collectionViewModel.reversCart(nftId:))
         collectionViewCell = cell
         return collectionViewCell
     }

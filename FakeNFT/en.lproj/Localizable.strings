@@ -8,6 +8,11 @@
 "Catalog.Sorting.ByCount" = "By number of NFTs";
 "Catalog.Sorting.Close" = "Close";
 
-"Catalog.ErrorAlertButton" = "Retry";
+"Catalog.ErrorAlertLoad" = "Loading error";
+"Catalog.ErrorAlertButtonRetry" = "Retry";
+
+"Catalog.CollectionErrorAlertTitle" = "Error loading collection";
+"Catalog.ErrorAlertMessage" = "Redownload via ";
+"Catalog.ErrorAlertButtonCancel" = "Cancel";
 
 "Collection.AuthorLabel" = "Author of the collection:";
