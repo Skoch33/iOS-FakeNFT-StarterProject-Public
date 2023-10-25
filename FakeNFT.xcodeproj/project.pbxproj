@@ -41,6 +41,7 @@
 		37FD36DC2AE674AC000E14BC /* FavoritesNFTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD36DB2AE674AC000E14BC /* FavoritesNFTViewModel.swift */; };
 		37FD36E12AE7DA33000E14BC /* NetworkServiceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD36E02AE7DA33000E14BC /* NetworkServiceHelper.swift */; };
 		37FD36E32AE7DB72000E14BC /* FavoritesNFTCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD36E22AE7DB72000E14BC /* FavoritesNFTCellViewModel.swift */; };
+		37FD36E72AE8F679000E14BC /* Profile.md in Resources */ = {isa = PBXBuildFile; fileRef = 37FD36E62AE8F679000E14BC /* Profile.md */; };
 		3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ECE29DB474E00F6D39E /* Colors.swift */; };
 		3F478ED129DB476500F6D39E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ED029DB476500F6D39E /* Fonts.swift */; };
 		3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3F603CCC29DB4A53000C43D7 /* ProgressHUD */; };
@@ -122,6 +123,7 @@
 		37FD36DB2AE674AC000E14BC /* FavoritesNFTViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesNFTViewModel.swift; sourceTree = "<group>"; };
 		37FD36E02AE7DA33000E14BC /* NetworkServiceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceHelper.swift; sourceTree = "<group>"; };
 		37FD36E22AE7DB72000E14BC /* FavoritesNFTCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesNFTCellViewModel.swift; sourceTree = "<group>"; };
+		37FD36E62AE8F679000E14BC /* Profile.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = Profile.md; path = ../../Desktop/FakeNFT/Profile.md; sourceTree = "<group>"; };
 		3F478ECE29DB474E00F6D39E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		3F478ED029DB476500F6D39E /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		3F68069329CBBAF100B4F915 /* FakeNFT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FakeNFT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -417,6 +419,7 @@
 		715D0F182AD156EF00300497 /* Doc */ = {
 			isa = PBXGroup;
 			children = (
+				37FD36E62AE8F679000E14BC /* Profile.md */,
 				715D0F192AD156EF00300497 /* Catalog.md */,
 			);
 			path = Doc;
@@ -574,6 +577,7 @@
 			files = (
 				715D0F1A2AD156EF00300497 /* Catalog.md in Resources */,
 				224B63392AD3340800084AC9 /* SF-Pro-Text-Regular.otf in Resources */,
+				37FD36E72AE8F679000E14BC /* Profile.md in Resources */,
 				224B633C2AD335AB00084AC9 /* SF-Pro-Text-Bold.otf in Resources */,
 				715D0F322AD1691D00300497 /* Localizable.strings in Resources */,
 				715D0F352AD1693200300497 /* LaunchScreen.storyboard in Resources */,
