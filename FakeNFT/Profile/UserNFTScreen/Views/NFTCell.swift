@@ -18,7 +18,7 @@ final class NFTCell: UITableViewCell, ReuseIdentifying {
     
     private var name: UILabel = {
         let label = UILabel()
-        label.font = .bodyBold
+        label.font = .NftBodyFonts.bold
         return label
     }()
     
@@ -41,14 +41,14 @@ final class NFTCell: UITableViewCell, ReuseIdentifying {
     
     private let authorPrefix: UILabel = {
         let label = UILabel()
-        label.font = .caption1
+        label.font = .NftCaptionFonts.large
         label.text = NSLocalizedString("NFTCell.from", comment: "")
         return label
     }()
     
     private let author: UILabel = {
         let label = UILabel()
-        label.font = .caption2
+        label.font = .NftCaptionFonts.medium
         return label
     }()
     
@@ -70,13 +70,13 @@ final class NFTCell: UITableViewCell, ReuseIdentifying {
     private let priceLabel: UILabel = {
         let label = UILabel()
         label.text = NSLocalizedString("NFTCell.price", comment: "")
-        label.font = .caption2
+        label.font = .NftCaptionFonts.medium
         return label
     }()
     
     private let currentPriceLabel: UILabel = {
         let label = UILabel()
-        label.font = .bodyBold
+        label.font = .NftBodyFonts.bold
         return label
     }()
     

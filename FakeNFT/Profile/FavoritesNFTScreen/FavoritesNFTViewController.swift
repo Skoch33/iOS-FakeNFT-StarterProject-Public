@@ -23,7 +23,7 @@ final class FavoritesNFTViewController: UIViewController {
     private lazy var noNFTLabel: UILabel = {
         let label = UILabel()
         label.text = NSLocalizedString("FavoritesNFTViewController.nonft", comment: "")
-        label.font = .bodyBold
+        label.font = .NftBodyFonts.bold
         label.isHidden = true
         return label
     }()

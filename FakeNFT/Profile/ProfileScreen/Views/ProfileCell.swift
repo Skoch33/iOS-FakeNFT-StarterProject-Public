@@ -5,7 +5,7 @@ final class ProfileCell: UITableViewCell, ReuseIdentifying {
 
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .bodyBold
+        label.font = .NftBodyFonts.bold
         return label
     }()
 

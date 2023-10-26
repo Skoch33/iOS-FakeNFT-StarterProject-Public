@@ -15,16 +15,16 @@ protocol FavoritesNFTViewModelProtocol {
 }
 
 final class FavoritesNFTViewModel: FavoritesNFTViewModelProtocol {
-    @Observable
+    @ObservableProfile
     private (set) var favoritesNFT: [NFT] = []
     
-    @Observable
+    @ObservableProfile
     private (set) var state: LoadingState = .idle
 
-    private let nftService: NFTService
-    private let profileService: ProfileService
+    private let nftService: NFTServiceProfile
+    private let profileService: ProfileServiceProfile
     
-    init(nftService: NFTService, profileService: ProfileService) {
+    init(nftService: NFTServiceProfile, profileService: ProfileServiceProfile) {
         self.nftService = nftService
         self.profileService = profileService
     }

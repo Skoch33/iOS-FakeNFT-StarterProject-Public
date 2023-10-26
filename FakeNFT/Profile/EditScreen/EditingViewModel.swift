@@ -16,15 +16,15 @@ protocol EditingViewModelProtocol {
 }
 
 final class EditingViewModel: EditingViewModelProtocol {
-    @Observable
+    @ObservableProfile
     private(set) var userProfile: UserProfile?
     
-    private let profileService: ProfileService
+    private let profileService: ProfileServiceProfile
     private let imageValidator: ImageValidatorProtocol
     
     private var isChanged: Bool = false
     
-    init(profileService: ProfileService, imageValidator: ImageValidatorProtocol = ImageValidator()) {
+    init(profileService: ProfileServiceProfile, imageValidator: ImageValidatorProtocol = ImageValidator()) {
         self.profileService = profileService
         self.imageValidator = imageValidator
     }

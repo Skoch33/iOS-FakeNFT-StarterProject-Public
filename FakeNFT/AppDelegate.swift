@@ -3,6 +3,7 @@ import UIKit
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+    private let userDefaults = UserDefaults.standard
 
     func application(
         _ application: UIApplication,
@@ -10,7 +11,16 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         UINavigationBar.appearance().tintColor = UIColor.black
         window = UIWindow()
-        window?.rootViewController = TabBarController()
+
+        let isFirstLaunch = userDefaults.bool(forKey: "isFirstLaunch")
+
+        if isFirstLaunch {
+            window?.rootViewController = TabBarController()
+        } else {
+            window?.rootViewController = OnboardingViewController()
+            userDefaults.set(true, forKey: "isFirstLaunch")
+        }
+
         window?.makeKeyAndVisible()
         return true
     }

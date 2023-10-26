@@ -1,25 +1,23 @@
+//
+//  NFTService.swift
+//  FakeNFT
+//
+
 import Foundation
 
-final class NFTService {
-    static let shared = NFTService(networkHelper: NetworkServiceHelper(networkClient: DefaultNetworkClient()))
-    
-    private let networkHelper: NetworkServiceHelper
-    
-    init(networkHelper: NetworkServiceHelper) {
-        self.networkHelper = networkHelper
-    }
-    
-    func fetchNFT(nftID: String, completion: @escaping (Result<NFT, Error>) -> Void) {
-        let request = FetchNFTNetworkRequest(nftID: nftID)
-        networkHelper.fetchData(request: request, type: NFT.self, completion: completion)
-    }
-    
-    func fetchAuthor(authorID: String, completion: @escaping (Result<Author, Error>) -> Void) {
-        let request = FetchAuthorNetworkRequest(authorID: authorID)
-        networkHelper.fetchData(request: request, type: Author.self, completion: completion)
-    }
-    
-    func stopAllTasks() {
-        networkHelper.stopAllTasks()
+protocol NFTServiceProtocol: AnyObject {
+    func getNFTs(id: String, completion: @escaping (Result<NFTModel, Error>) -> Void)
+}
+
+final class NFTService: NFTServiceProtocol {
+    private let networkClient: NetworkClient = DefaultNetworkClient()
+
+    func getNFTs(id: String, completion: @escaping (Result<NFTModel, Error>) -> Void) {
+        let request = GetNFTRequest(id: id)
+        networkClient.send(request: request, type: NFTModel.self) { result in
+            DispatchQueue.main.async {
+                completion(result)
+            }
+        }
     }
 }

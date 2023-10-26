@@ -7,14 +7,14 @@ final class EditingViewController: UIViewController {
     // MARK: - UI properties
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .headline2
+        label.font = .NftHeadlineFonts.medium
         return label
     }()
     
     private lazy var nameTextView: UITextView = {
         let textView = UITextView()
         textView.isScrollEnabled = false
-        textView.font = .bodyRegular
+        textView.font = .NftBodyFonts.regular
         textView.backgroundColor = .nftLightgrey
         textView.layer.cornerRadius = 12
         textView.textContainerInset = UIEdgeInsets(top: 11, left: 10, bottom: 11, right: 10)
@@ -23,14 +23,14 @@ final class EditingViewController: UIViewController {
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = .headline2
+        label.font = .NftHeadlineFonts.medium
         return label
     }()
     
     private lazy var descriptionTextView: UITextView = {
         let textView = UITextView()
         textView.isScrollEnabled = false
-        textView.font = .bodyRegular
+        textView.font = .NftBodyFonts.regular
         textView.backgroundColor = .nftLightgrey
         textView.layer.cornerRadius = 12
         textView.textContainerInset = UIEdgeInsets(top: 11, left: 10, bottom: 11, right: 10)
@@ -39,14 +39,14 @@ final class EditingViewController: UIViewController {
     
     private lazy var webSiteLabel: UILabel = {
         let label = UILabel()
-        label.font = .headline2
+        label.font = .NftHeadlineFonts.medium
         return label
     }()
     
     private lazy var webSiteTextView: UITextView = {
         let textView = UITextView()
         textView.isScrollEnabled = false
-        textView.font = .bodyRegular
+        textView.font = .NftBodyFonts.regular
         textView.backgroundColor = .nftLightgrey
         textView.layer.cornerRadius = 12
         textView.textContainerInset = UIEdgeInsets(top: 11, left: 10, bottom: 11, right: 10)
@@ -89,7 +89,7 @@ final class EditingViewController: UIViewController {
 
     // MARK: - Properties
 
-    private lazy var alertService: AlertServiceProtocol = {
+    private lazy var alertService: AlertServiceProtocolProfile = {
         return AlertService(viewController: self)
     }()
 
@@ -125,17 +125,17 @@ final class EditingViewController: UIViewController {
 
     @objc
     private func changePhotoTapped() {
-        let confirmAction = AlertActionModel(title: NSLocalizedString("AlertAction.ok", comment: ""),
+        let confirmAction = AlertActionModelProfile(title: NSLocalizedString("AlertAction.ok", comment: ""),
                                              style: .default) { [weak self] urlText in
             guard let self = self else { return }
             if let urlText = urlText,
                let url = URL(string: urlText) {
                 self.viewModel.photoURLdidChanged(with: url)
             } else {
-                let errorModel = AlertModel(title: NSLocalizedString("AlertAction.error", comment: ""),
+                let errorModel = AlertModelProfile(title: NSLocalizedString("AlertAction.error", comment: ""),
                                             message: NSLocalizedString("AlertAction.incorrURL", comment: ""),
                                             style: .alert,
-                                            actions: [AlertActionModel(title: "OK",
+                                            actions: [AlertActionModelProfile(title: "OK",
                                                                        style: .cancel,
                                                                        handler: nil)],
                                             textFieldPlaceholder: nil)
@@ -143,11 +143,11 @@ final class EditingViewController: UIViewController {
             }
         }
         
-        let cancelAction = AlertActionModel(title: NSLocalizedString("AlertAction.cancel", comment: ""),
+        let cancelAction = AlertActionModelProfile(title: NSLocalizedString("AlertAction.cancel", comment: ""),
                                             style: .cancel,
                                             handler: nil)
         
-        let alertModel = AlertModel(title: NSLocalizedString("AlertAction.enterURL", comment: ""),
+        let alertModel = AlertModelProfile(title: NSLocalizedString("AlertAction.enterURL", comment: ""),
                                     message: nil,
                                     style: .alert,
                                     actions: [confirmAction, cancelAction],

@@ -3,6 +3,49 @@
 "TabBarController.Basket" = "Basket";
 "TabBarController.Statistics" = "Statistics";
 
+"Catalog.Sorting.Title" = "Sorting";
+"Catalog.Sorting.ByName" = "By name";
+"Catalog.Sorting.ByCount" = "By number of NFTs";
+"Catalog.Sorting.Close" = "Close";
+
+"Catalog.ErrorAlertLoad" = "Loading error";
+"Catalog.ErrorAlertButtonRetry" = "Retry";
+
+"Catalog.CollectionErrorAlertTitle" = "Error loading collection";
+"Catalog.ErrorAlertMessage" = "Redownload via ";
+"Catalog.ErrorAlertButtonCancel" = "Cancel";
+
+"Collection.AuthorLabel" = "Author of the collection:";
+"CartViewController.paymentButtonTitle" = "Pay";
+"CartViewController.emptyCartPlaceholderText" = "The cart is empty";
+"CartViewController.SortAlert.title" = "Sort";
+"CartViewController.SortAlert.byPrice" = "By price";
+"CartViewController.SortAlert.byRating" = "By rating";
+"CartViewController.SortAlert.byName" = "By name";
+"CartViewController.SortAlert.cancel" = "Close";
+
+"DefaultNetworkAlert.title" = "Network error";
+"DefaultNetworkAlert.message" = "Couldn't get data from network";
+"DefaultNetworkAlert.OkAction.title" = "Never mind";
+"DefaultNetworkAlert.RepeatAction.title" = "Repeat";
+
+"DefaultSomethingWrongAlert.title" = "Oops! Something went wrong :(";
+"DefaultSomethingWrongAlert.message" = "Try again!";
+"DefaultSomethingWrongAlert.OkAction.title" = "Ok";
+
+"CartViewCell.Price" = "Price";
+"Cart.DeleteNftViewController.deleteButton" = "Remove";
+"Cart.DeleteNftViewController.backButton" = "Back";
+"Cart.DeleteNftViewController.deleteMessage" = "Are you sure you want to delete the object from the cart?";
+
+"SelectCurrencyViewController.navigationItem.title" = "Select payment method";
+"SelectCurrencyViewController.paymentView.agreementLabel" = "By making this purchase, you agree to the terms of";
+"SelectCurrencyViewController.paymentView.agreementLink" = "The user agreement";
+"SelectCurrencyViewController.paymentView.buttonTitle" = "Pay";
+
+"SuccessfulPaymentViewController.message" = "Success! Payment has been completed, congratulations on your purchase!";
+"SuccessfulPaymentViewController.buttonTitle" = "Back to catalog";
+
 // MARK: - Profile
 
 // MainScreen

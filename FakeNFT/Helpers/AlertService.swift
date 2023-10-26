@@ -1,31 +1,31 @@
 import UIKit
 
-struct AlertActionModel {
+struct AlertActionModelProfile {
     let title: String
     let style: UIAlertAction.Style
     let handler: ((String?) -> Void)?
 }
 
-struct AlertModel {
+struct AlertModelProfile {
     let title: String?
     let message: String?
     let style: UIAlertController.Style
-    let actions: [AlertActionModel]
+    let actions: [AlertActionModelProfile]
     let textFieldPlaceholder: String?
 }
 
-protocol AlertServiceProtocol {
-    func showAlert(model: AlertModel)
+protocol AlertServiceProtocolProfile {
+    func showAlert(model: AlertModelProfile)
 }
 
-final class AlertService: AlertServiceProtocol {
+final class AlertService: AlertServiceProtocolProfile {
     private weak var viewController: UIViewController?
     
     init(viewController: UIViewController) {
         self.viewController = viewController
     }
     
-    func showAlert(model: AlertModel) {
+    func showAlert(model: AlertModelProfile) {
         let alertController = UIAlertController(
             title: model.title,
             message: model.message,

@@ -5,7 +5,7 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let profileViewController = ProfileViewController(viewModel: ProfileViewModel(service: ProfileService.shared))
+        let profileViewController = ProfileViewController(viewModel: ProfileViewModel(service: ProfileServiceProfile.shared))
         let profileNavigationController = UINavigationController(rootViewController: profileViewController)
         profileNavigationController.tabBarItem = UITabBarItem(
             title: NSLocalizedString("TabBarController.Profile", comment: ""),
@@ -13,7 +13,8 @@ final class TabBarController: UITabBarController {
             tag: 0
         )
 
-        let catalogViewController = CatalogViewController()
+        let catalogViewModel = CatalogViewModel(networkClient: DefaultNetworkClient())
+        let catalogViewController = CatalogViewController(catalogViewModel: catalogViewModel)
         let catalogNavigationController = UINavigationController(rootViewController: catalogViewController)
         catalogNavigationController.tabBarItem = UITabBarItem(
             title: NSLocalizedString("TabBarController.Catalog", comment: ""),
@@ -21,7 +22,13 @@ final class TabBarController: UITabBarController {
             tag: 1
         )
 
-        let basketViewController = BasketViewController()
+        let basketViewController = CartViewController()
+        let cartViewModel = CartViewModel(
+            dataProvider: CartDataProvider(),
+            settingsStorage: DefaultCartSettingsStorage(),
+            sortingService: DefaultNftSortingService()
+        )
+        basketViewController.viewModel = cartViewModel
         let basketNavigationController = UINavigationController(rootViewController: basketViewController)
         basketNavigationController.tabBarItem = UITabBarItem(
             title: NSLocalizedString("TabBarController.Basket", comment: ""),

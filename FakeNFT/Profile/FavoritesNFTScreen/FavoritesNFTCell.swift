@@ -11,7 +11,7 @@ final class FavoritesNFTCell: UICollectionViewCell, ReuseIdentifying {
     
     private let currentPriceLabel: UILabel = {
         let label = UILabel()
-        label.font = .caption1
+        label.font = .NftCaptionFonts.large
         return label
     }()
     
@@ -54,7 +54,7 @@ final class FavoritesNFTCell: UICollectionViewCell, ReuseIdentifying {
     
     private var name: UILabel = {
         let label = UILabel()
-        label.font = .bodyBold
+        label.font = .NftBodyFonts.bold
         return label
     }()
     

@@ -4,7 +4,7 @@ final class UserNFTViewController: UIViewController {
     
     // MARK: - UI properties
     
-    private lazy var alertService: AlertServiceProtocol = {
+    private lazy var alertService: AlertServiceProtocolProfile = {
         return AlertService(viewController: self)
     }()
     
@@ -27,7 +27,7 @@ final class UserNFTViewController: UIViewController {
     private lazy var noNFTLabel: UILabel = {
         let label = UILabel()
         label.text = NSLocalizedString("UserNFTViewController.nonft", comment: "")
-        label.font = .bodyBold
+        label.font = .NftBodyFonts.bold
         label.isHidden = true
         return label
     }()
@@ -68,26 +68,26 @@ final class UserNFTViewController: UIViewController {
     
     @objc
     private func sortButtonTapped() {
-        let priceAction = AlertActionModel(title: SortOption.price.description, style: .default) { [weak self] _ in
+        let priceAction = AlertActionModelProfile(title: SortOption.price.description, style: .default) { [weak self] _ in
             guard let self = self else { return }
             self.viewModel.userSelectedSorting(by: .price)
         }
         
-        let ratingAction = AlertActionModel(title: SortOption.rating.description, style: .default) { [weak self] _ in
+        let ratingAction = AlertActionModelProfile(title: SortOption.rating.description, style: .default) { [weak self] _ in
             guard let self = self else { return }
             self.viewModel.userSelectedSorting(by: .rating)
         }
         
-        let titleAction = AlertActionModel(title: SortOption.title.description, style: .default) { [weak self] _ in
+        let titleAction = AlertActionModelProfile(title: SortOption.title.description, style: .default) { [weak self] _ in
             guard let self = self else { return }
             self.viewModel.userSelectedSorting(by: .title)
         }
         
-        let cancelAction = AlertActionModel(title: NSLocalizedString("AlertAction.close", comment: ""),
+        let cancelAction = AlertActionModelProfile(title: NSLocalizedString("AlertAction.close", comment: ""),
                                             style: .cancel,
                                             handler: nil)
         
-        let alertModel = AlertModel(title: NSLocalizedString("AlertAction.sort", comment: ""),
+        let alertModel = AlertModelProfile(title: NSLocalizedString("AlertAction.sort", comment: ""),
                                     message: nil,
                                     style: .actionSheet,
                                     actions: [priceAction, ratingAction, titleAction, cancelAction],

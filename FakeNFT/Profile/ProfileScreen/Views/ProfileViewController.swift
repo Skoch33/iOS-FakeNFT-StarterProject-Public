@@ -7,14 +7,14 @@ final class ProfileViewController: UIViewController {
 
     private let userNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .headline2
+        label.font = .NftCaptionFonts.medium
         label.numberOfLines = 2
         return label
     }()
 
     private let userDescriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = .caption2
+        label.font = .NftCaptionFonts.medium
         label.numberOfLines = .zero
         return label
     }()
@@ -30,7 +30,7 @@ final class ProfileViewController: UIViewController {
         textView.isSelectable = true
         textView.isScrollEnabled = false
         textView.dataDetectorTypes = .link
-        textView.font = .caption1
+        textView.font = .NftCaptionFonts.large
         textView.textContainer.lineFragmentPadding = 16
         return textView
     }()
@@ -215,7 +215,7 @@ extension ProfileViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         if viewController is ProfileViewController {
             navigationController.setNavigationBarHidden(true, animated: animated)
-        } else if viewController is UserNFTViewController || viewController is FavoritesNFTViewController || viewController is WebViewViewController {
+        } else if viewController is UserNFTViewController || viewController is FavoritesNFTViewController || viewController is WebViewViewControllerProfile {
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
     }

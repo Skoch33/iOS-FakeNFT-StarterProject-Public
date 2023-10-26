@@ -9,12 +9,12 @@ protocol ProfileViewModelProtocol {
 }
 
 final class ProfileViewModel: ProfileViewModelProtocol {
-    @Observable
+    @ObservableProfile
     private(set) var userProfile: UserProfile?
     
-    private let profileService: ProfileService
+    private let profileService: ProfileServiceProfile
     
-    init(service: ProfileService) {
+    init(service: ProfileServiceProfile) {
         self.profileService = service
         NotificationCenter.default.addObserver(self, selector: #selector(profileUpdated), name: NSNotification.Name("profileUpdated"), object: nil)
     }
