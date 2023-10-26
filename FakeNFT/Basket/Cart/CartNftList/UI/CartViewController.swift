@@ -57,8 +57,8 @@ final class CartViewController: UIViewController {
             guard let self else { return }
             self.nftList = $0
             self.nftCartTableView.reloadData()
-            if nftCartTableView.refreshControl?.isRefreshing == true {
-                nftCartTableView.refreshControl?.endRefreshing()
+            if self.nftCartTableView.refreshControl?.isRefreshing == true {
+                self.nftCartTableView.refreshControl?.endRefreshing()
             }
             ProgressHUD.dismiss()
         }
