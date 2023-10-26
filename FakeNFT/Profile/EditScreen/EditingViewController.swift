@@ -8,6 +8,7 @@ final class EditingViewController: UIViewController {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = .NftHeadlineFonts.medium
+        label.textColor = .nftBlack
         return label
     }()
     
@@ -23,6 +24,7 @@ final class EditingViewController: UIViewController {
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .nftBlack
         label.font = .NftHeadlineFonts.medium
         return label
     }()
@@ -40,6 +42,7 @@ final class EditingViewController: UIViewController {
     private lazy var webSiteLabel: UILabel = {
         let label = UILabel()
         label.font = .NftHeadlineFonts.medium
+        label.textColor = .nftBlack
         return label
     }()
     
@@ -188,7 +191,7 @@ final class EditingViewController: UIViewController {
     // MARK: - Layout methods
 
     private func setupViews() {
-        view.backgroundColor = .white
+        view.backgroundColor = .nftWhite
         view.addTapGestureToHideKeyboard()
 
         [exitButton, userPhotoImageView, overlayView,

@@ -7,8 +7,7 @@ final class ProfileViewController: UIViewController {
 
     private let userNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .NftCaptionFonts.medium
-        label.numberOfLines = 2
+        label.font = .NftHeadlineFonts.medium
         return label
     }()
 
@@ -25,6 +24,7 @@ final class ProfileViewController: UIViewController {
         let attributedString = NSMutableAttributedString(string: text)
         let linkRange = NSRange(location: 0, length: text.count)
         attributedString.addAttribute(.link, value: text, range: linkRange)
+        textView.backgroundColor = .clear
         textView.attributedText = attributedString
         textView.isEditable = false
         textView.isSelectable = true
@@ -165,7 +165,7 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ProfileCell = tableView.dequeueReusableCell()
         var cellTitle = ""
@@ -179,14 +179,18 @@ extension ProfileViewController: UITableViewDataSource {
         default:
             break
         }
-
+        
         cell.configure(title: cellTitle)
         cell.selectionStyle = .none
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         54
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = .nftWhite
     }
 }
 

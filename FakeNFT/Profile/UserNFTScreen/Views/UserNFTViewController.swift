@@ -14,6 +14,7 @@ final class UserNFTViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .nftWhite
         return tableView
     }()
     
@@ -184,6 +185,10 @@ extension UserNFTViewController: UITableViewDataSource {
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = .nftWhite
     }
 }
 
