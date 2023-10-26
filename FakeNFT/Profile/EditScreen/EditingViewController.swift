@@ -142,7 +142,7 @@ final class EditingViewController: UIViewController {
                                                                        style: .cancel,
                                                                        handler: nil)],
                                             textFieldPlaceholder: nil)
-                alertService.showAlert(model: errorModel)
+                self.alertService.showAlert(model: errorModel)
             }
         }
         

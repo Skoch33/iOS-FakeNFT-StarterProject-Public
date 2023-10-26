@@ -111,7 +111,7 @@ final class EditingViewModel: EditingViewModelProtocol {
         imageValidator.isValidImageURL(url) { [weak self] isValid in
             guard let self = self else { return }
             if isValid,
-               let currentProfile = userProfile {
+               let currentProfile = self.userProfile {
                 self.userProfile = UserProfile(
                     name: currentProfile.name,
                     avatar: url.absoluteString,
