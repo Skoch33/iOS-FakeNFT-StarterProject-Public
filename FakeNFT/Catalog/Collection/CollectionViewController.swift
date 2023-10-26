@@ -116,19 +116,19 @@ final class CollectionViewController: UIViewController {
                 
                 self.nfts = $0.nfts
                 
-                descriptionLabel.text = $0.description
+                self.descriptionLabel.text = $0.description
                 
                 if
                     let urlString = $0.cover.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
                     let url = URL(string: urlString) {
-                    coverImage.kf.indicatorType = .activity
-                    coverImage.kf.setImage(with: url, placeholder: nulPhotoImage)
+                    self.coverImage.kf.indicatorType = .activity
+                    self.coverImage.kf.setImage(with: url, placeholder: nulPhotoImage)
                 }
                 
                 let collectionHeight = (Const.cellHeight + Const.lineMargins) * ceil(CGFloat(self.nfts.count) / Const.cellCols)
-                collectionView.heightAnchor.constraint(equalToConstant: collectionHeight).isActive = true
+                self.collectionView.heightAnchor.constraint(equalToConstant: collectionHeight).isActive = true
                 
-                collectionViewModel.load(nftIds: self.nfts)
+                self.collectionViewModel.load(nftIds: self.nfts)
             },
             isCollectionLoadError: { [weak self] in
                 guard let self else { return }
