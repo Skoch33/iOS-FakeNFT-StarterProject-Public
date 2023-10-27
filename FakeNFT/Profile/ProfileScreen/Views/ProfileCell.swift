@@ -11,7 +11,7 @@ final class ProfileCell: UITableViewCell, ReuseIdentifying {
 
     private let arrowImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "forward")
+        imageView.image = UIImage(named: "chevron.forward")
         imageView.tintColor = .nftBlack
         return imageView
     }()
