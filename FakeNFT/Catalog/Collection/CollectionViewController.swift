@@ -53,6 +53,7 @@ final class CollectionViewController: UIViewController {
         label.font = .NftCaptionFonts.medium
         label.textColor = .nftBlueUniversal
         label.numberOfLines = 0
+        label.text = " "
         return label
     }()
     
@@ -76,7 +77,6 @@ final class CollectionViewController: UIViewController {
     
     init(collectionViewModel: CollectionViewModel) {
         self.collectionViewModel = collectionViewModel
-        //self.collection = collection
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -170,9 +170,6 @@ final class CollectionViewController: UIViewController {
         setupAuthorNameLabel()
         setupDescriptionLabel()
         setupCollectionView()
-        
-//        let collectionHeight = (Const.cellHeight + Const.lineMargins) * ceil(CGFloat(collection.nfts.count) / Const.cellCols)
-//        collectionView.heightAnchor.constraint(equalToConstant: collectionHeight).isActive = true
     }
     
     private func setupScrollView() {
