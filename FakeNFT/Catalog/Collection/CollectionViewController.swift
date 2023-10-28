@@ -148,6 +148,11 @@ final class CollectionViewController: UIViewController {
         )
         collectionViewModel.bind(bindings)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = true
+    }
         
     private func setupNavigationBar() {
         let backItem = UIBarButtonItem()

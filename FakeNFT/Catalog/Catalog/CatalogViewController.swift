@@ -150,6 +150,5 @@ extension CatalogViewController: UITableViewDelegate {
         let collectionViewModel = CollectionViewModel(networkClient: DefaultNetworkClient(), collection: self.collections[indexPath.row])
         let collectionViewController = CollectionViewController(collectionViewModel: collectionViewModel)
         navigationController?.pushViewController(collectionViewController, animated: true)
-        self.tabBarController?.tabBar.isHidden = true
     }
 }
