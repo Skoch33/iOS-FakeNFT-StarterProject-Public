@@ -114,7 +114,16 @@ extension UserCollectionViewController: UICollectionViewDataSource {
         let nft = viewModel.nfts[indexPath.row]
         let rating = nft.rating
         let isLiked = viewModel.isLikedNFT(at: indexPath.row)
-        cell.configure(nft: nft, rating: rating, isLiked: isLiked)
+        let isOrder = viewModel.isOrderNFT(at: indexPath.row)
+
+        cell.likeButtonTappedHandler = {
+            self.viewModel.putLikeButtonTapped(at: indexPath.row)
+        }
+        cell.basketButtonTappedHandler = {
+            self.viewModel.putOrderTapped(at: indexPath.row)
+        }
+        cell.configure(nft: nft, rating: rating, isLiked: isLiked, isOrder: isOrder)
+
         return cell
     }
 }
