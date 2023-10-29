@@ -8,6 +8,8 @@ import Kingfisher
 
 final class UsersCollectionCell: UICollectionViewCell {
     static let identifier = "UsersCollectionCell"
+    var likeButtonTappedHandler: (() -> Void)?
+    var basketButtonTappedHandler: (() -> Void)?
     // MARK: - Private Properties
     private var isLiked: Bool = false
     private var isOrder: Bool = false
@@ -82,11 +84,14 @@ final class UsersCollectionCell: UICollectionViewCell {
     private func isLikeTapped() {
         isLiked.toggle()
         setIsLiked(isLiked: isLiked)
+        likeButtonTappedHandler?()
     }
 
     @objc
     private func isOrderTapped() {
         isOrder.toggle()
+        setIsOrder(isOrder: isOrder)
+        basketButtonTappedHandler?()
         let lightOrder: UIImage? = isOrder ? .basketLightIsOrder : .basketDark
         let darkOrder: UIImage? = isOrder ? .basketDarkIsOrder : .basketLight
         if traitCollection.userInterfaceStyle == .light {
@@ -141,7 +146,7 @@ final class UsersCollectionCell: UICollectionViewCell {
         ])
     }
     // MARK: - Setup
-    func configure(nft: NFTModel, rating: Int, isLiked: Bool) {
+    func configure(nft: NFTModel, rating: Int, isLiked: Bool, isOrder: Bool) {
         let cache = ImageCache.default
         cache.clearMemoryCache()
         cache.clearDiskCache()
@@ -157,12 +162,23 @@ final class UsersCollectionCell: UICollectionViewCell {
         nameNFT.text = nft.name
         priceLabel.text = "\(nft.price) ETH"
         setIsLiked(isLiked: isLiked)
+        setIsOrder(isOrder: isOrder)
         setupStarRating(with: rating)
     }
 
     private func setIsLiked(isLiked: Bool) {
         let like: UIImage? = isLiked ? .activeLike : .noActiveLike
         favoriteButton.setImage(like, for: .normal)
+    }
+
+    private func setIsOrder(isOrder: Bool) {
+        let lightOrder: UIImage? = isOrder ? .basketLightIsOrder : .basketDark
+        let darkOrder: UIImage? = isOrder ? .basketDarkIsOrder : .basketLight
+        if traitCollection.userInterfaceStyle == .light {
+            basketButton.setImage(lightOrder, for: .normal)
+        } else {
+            basketButton.setImage(darkOrder, for: .normal)
+        }
     }
 
     private func setupStarRating(with rating: Int) {
