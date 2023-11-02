@@ -1,0 +1,91 @@
+"TabBarController.Profile" = "Профиль";
+"TabBarController.Catalog" = "Каталог";
+"TabBarController.Basket" = "Корзина";
+"TabBarController.Statistics" = "Статистика";
+
+"Catalog.Sorting.Title" = "Сортировка";
+"Catalog.Sorting.ByName" = "По названию";
+"Catalog.Sorting.ByCount" = "По количеству NFT";
+"Catalog.Sorting.Close" = "Закрыть";
+
+"Catalog.ErrorAlertLoad" = "Ошибка загрузки";
+"Catalog.ErrorAlertButtonRetry" = "Повторить";
+
+"Catalog.CollectionErrorAlertTitle" = "Ошибка загрузки коллекции";
+"Catalog.ErrorAlertMessage" = "Повторная загрузка через ";
+"Catalog.ErrorAlertButtonCancel" = "Отмена";
+
+"Collection.AuthorLabel" = "Автор коллекции:";
+"CartViewController.paymentButtonTitle" = "К оплате";
+"CartViewController.emptyCartPlaceholderText" = "Корзина пуста";
+"CartViewController.SortAlert.title" = "Сортировка";
+"CartViewController.SortAlert.byPrice" = "По цене";
+"CartViewController.SortAlert.byRating" = "По рейтингу";
+"CartViewController.SortAlert.byName" = "По названию";
+"CartViewController.SortAlert.cancel" = "Закрыть";
+
+"DefaultNetworkAlert.title" = "Сетевая ошибка";
+"DefaultNetworkAlert.message" = "Не удалось получить данные из сети";
+"DefaultNetworkAlert.OkAction.title" = "Попробую позже";
+"DefaultNetworkAlert.RepeatAction.title" = "Повторить";
+
+"DefaultSomethingWrongAlert.title" = "Упс! Что-то пошло не так :(";
+"DefaultSomethingWrongAlert.message" = "Попробуйте еще раз!";
+"DefaultSomethingWrongAlert.OkAction.title" = "OK";
+
+"CartViewCell.Price" = "Цена";
+"Cart.DeleteNftViewController.deleteButton" = "Удалить";
+"Cart.DeleteNftViewController.backButton" = "Вернуться";
+"Cart.DeleteNftViewController.deleteMessage" = "Вы уверены, что хотите удалить объект из корзины?";
+
+"SelectCurrencyViewController.navigationItem.title" = "Выберите способ оплаты";
+"SelectCurrencyViewController.paymentView.agreementLabel" = "Совершая покупку, вы соглашаетесь с условиями";
+"SelectCurrencyViewController.paymentView.agreementLink" = "Пользовательского соглашения";
+"SelectCurrencyViewController.paymentView.buttonTitle" = "Оплатить";
+
+"SuccessfulPaymentViewController.message" = "Успех! Оплата прошла, поздравляем с покупкой!";
+"SuccessfulPaymentViewController.buttonTitle" = "Вернуться в каталог";
+
+// MARK: - Profile
+
+// MainScreen
+"ProfileViewController.myNFT" = "Мои NFT";
+"ProfileViewController.favouritesNFT" = "Избранные NFT";
+"ProfileViewController.aboutDeveloper" = "О разработчике";
+
+// EditScreen
+"EditingViewController.changePhoto" = "Сменить фото";
+"EditingViewController.name" = "Имя";
+"EditingViewController.description" = "Описание";
+"EditingViewController.site" = "Cайт";
+
+//ProgressHUD
+"ProgressHUD.loading" = "Загрузка ...";
+
+//NFTCell
+"NFTCell.from" = "от";
+"NFTCell.price" = "Цена";
+
+//UserNFTViewController
+"UserNFTViewController.nonft" = "У вас еще нет NFT";
+
+//AlertAction
+"AlertAction.close" = "Закрыть";
+"AlertAction.sort" = "Сортировка";
+"AlertAction.ok" = "Подтвердить";
+"AlertAction.error" = "Ошибка";
+"AlertAction.incorrURL" = "Введен не корректный URL адрес";
+"AlertAction.cancel" = "Отмена";
+"AlertAction.enterURL" = "Введите URL";
+"AlertAction.imageURL" = "URL изображения";
+"AlertAction.UpdateError" = "Ошибка обновления профиля";
+
+//SortOptions
+"SortOptions.price" = "По цене";
+"SortOptions.rate" = "По рейтингу";
+"SortOptions.name" = "По названию";
+
+//FavoritesNFTViewController
+"FavoritesNFTViewController.nonft" = "У вас еще нет избранных NFT";
+
+
